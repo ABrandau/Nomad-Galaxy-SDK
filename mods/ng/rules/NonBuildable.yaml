@@ -1,0 +1,217 @@
+#################################################################################
+# G KOR
+#################################################################################
+
+GMOTHERSHIP:
+	Inherits: MOTHERSHIP
+	Tooltip:
+		Name: G'kor Mothership
+	ProximityExternalCondition@LogisticShipWanderer:
+		Condition: LogisticShipWanderer
+		Range: 5c0
+		AffectsParent: False
+
+GHABITATSHIP:
+	Inherits: ^CapitalShip
+	Inherits@1: ^SupplyShipHP
+	Valued:
+		Cost: 900
+	RenderSprites:
+		Image: ghabitatship
+	Transforms:
+		IntoActor: dgsupplyship
+		Offset: 0,0
+		Facing: 128
+	ProvidesPrerequisite@ghabitatship:
+		Prerequisite: ghabitatship
+
+GENGINEER:
+	Inherits: ^CapitalShip
+	Inherits@1: ^EngineerShipLogo
+	Inherits@2: ^EngineerCrewHP
+	Transforms:
+		IntoActor: dgengineer
+		Offset: 0,0
+		Facing: 64
+	RenderSprites:
+		Image: gengineer
+
+GSURVEYFRIGATE:
+	Inherits: ^CapitalShip
+	Inherits@3: ^SurveyFrigateHP
+	Transforms:
+		IntoActor: dgsurveyfrigate
+		Offset: 0,0
+		Facing: 0
+	SpawnActorOnDeath:
+		Actor: gsurveyfrigateh
+		OwnerType: InternalName
+		InternalOwner: Neutral
+
+GMERCENARYHUB:
+	Inherits: ^CapitalShip
+	Inherits@2: ^AIWanderer
+	Inherits@3: ^MercenaryHubHP
+	Transforms:
+		IntoActor: dgmercenaryhub
+		Offset: 0,0
+	SpawnActorOnDeath:
+		Actor: gresearchshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	RenderSprites:
+		Image: gmercenaryhub
+
+GRESEARCHSHIP:
+	Inherits: ^CapitalShip
+	Inherits@2: ^AIWanderer
+	Inherits@3: ^ResearchShipHP
+	Transforms:
+		IntoActor: dgresearchship
+		Offset: 0,0
+	SpawnActorOnDeath:
+		Actor: gresearchshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	RenderSprites:
+		Image: gresearchship
+
+GSUBSPESS:
+	Inherits: ^CapitalShip
+	Inherits@2: ^CivilianShipWeaponsGkor
+    Inherits@3: ^SubspessHP
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Subspace Gate
+	Mobile:
+		Speed: 45
+	Transforms:
+		IntoActor: dgsubspess
+		Offset: 0,0
+		Facing: 192
+
+GFIGHTERTURRET:
+	Inherits: ^DeployableTurret
+	Inherits@1: ^CivShipHP
+	Tooltip:
+		Name: Anti Fighter Defence
+	ExplodeWeapon:
+		Weapon: GKorGasBulletSpawner
+		RequiresCondition: !deployed
+	ExplodeWeapon@1:
+		Weapon: GKorGasBulletSpawner
+		RequiresCondition: !deployed
+	WithRangeCircle:
+		Range: 7c0
+		Type: GkorFlakTurret
+    
+GNORMALTURRET:
+	Inherits: ^DeployableTurret
+	Inherits@Autotarget: ^AutoTargetAll
+	Inherits@1: ^CivShipHP
+	Turreted:
+	AttackTurreted:
+	Interactable:
+		Bounds: 60,60
+	Selectable:
+  		Bounds: 60,60      
+	Tooltip:
+		Name: Needler Defence
+	Armament@AntiCorvette:
+		Weapon: GPlatformNeedle
+		LocalYaw: 255, -255, 255, -255, 255, -255
+		LocalOffset: 175, -250, 5, 175, 250, 5, 0, -250, 5, 0, 250, 5, -175, -250, 5, -175, 250, 5
+		RequiresCondition: !deployed
+	RenderRangeCircle:
+
+GPATROLCRUISER:
+	Inherits@1: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Inherits@2: ^AICorvetteProduction
+	Tooltip:
+		Name: Patrol Cruiser
+	Transforms:
+		IntoActor: dgpatrolcruiser
+		Offset: 0,0
+		Facing: 64
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+
+GFRIGATEASSEMBLYBAY:
+	Inherits: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Inherits@2: ^AIFrigateProduction
+	Tooltip:
+		Name: Frigate Assembly Bay
+	Transforms:
+		IntoActor: dgfrigateassemblybay
+		Offset: 0,0
+		Facing: 192
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+
+GSHIPYARD:
+	Inherits: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Inherits@2: ^AIBaseShipProduction
+	Exit:
+	RallyPoint:
+	Tooltip:
+		Name: Shipyard
+	Transforms:
+		IntoActor: dgshipyard
+		Offset: 0,0
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+
+#######Fighter
+
+GFIGHTER3:
+	Inherits: ^Fighter
+	Inherits@1: ^AutoTargetAll
+	Valued:
+		Cost: 60
+	Tooltip:
+		Name: Piranha
+	Health:
+		HP: 2500
+	CarrierSlave:
+	RejectsOrders:
+	Aircraft:
+		Speed: 60
+		CruiseAltitude: 106
+		IdealSeparation: 100
+	Armament:
+		Weapon: PiranhaBite
+		TargetStances: Ally
+	MustBeDestroyed:
+	-AttackAircraft:
+	-Explodes:
+	AttackAircraft:
+	SelectionDecorations:
+		VisualBounds: 20,20
+	AutoTarget:
+		ScanRadius: 20
+	AmmoPool:
+		Ammo: 2
+	KillsSelf:
+		RequiresCondition: KillFighter
+	GrantPeriodicCondition:
+		Condition: KillFighter
+		CooldownDuration: 500
+	ExternalCondition@KillFighter:
+		Condition: KillFighter
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: CapitalShip, Frigate, Corvette, Fighter, Station
+		InvalidTargets: NoAutoTarget
+		Priority: 2
+	AttackWander:
+		MinMoveDelay: 1
+		MaxMoveDelay: 9999
+
+GFIGHTER4:
+    Inherits: GFIGHTER3
+	Armament:
+		Weapon: ResearchShipUnitBuffer

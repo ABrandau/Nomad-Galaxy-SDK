@@ -1,0 +1,181 @@
+#################################################################################
+# G KOR
+#################################################################################
+
+GFIGHTER1MASTER:
+	Inherits: MOBSPANWERMASTER
+	Buildable:
+		Queue: CorvetteQueue
+		BuildPaletteOrder: 1
+		Description: Fighter Squadron, only effective versus fighters.
+	Interactable:
+		Bounds: 70,70
+	Power:
+		Amount: -1
+	Aircraft:
+		Speed: 90
+	Tooltip:
+		Name: Interceptor Squadron
+	MobSpawnerMaster:
+    WithSpriteBody:
+        Sequence: dot
+	WithTextDecoration@deployed:
+		Text: F
+		ReferencePoint: Bottom
+		Color: E0D048
+		ZOffset: 9999
+		ValidStances: Ally, Enemy
+
+GFIGHTER1:
+	Inherits: ^Fighter
+	Valued:
+		Cost: 50
+	Tooltip:
+		Name: Interceptor
+	Health:
+		HP: 30000
+	Aircraft:
+		Speed: 90
+	MobSpawnerSlave:
+    -SelectionDecorations:
+    -Selectable:
+    Interactable:
+    RejectsOrders:
+	Armament:
+		Weapon: InterceptorBullet
+	Armament@1:
+		Weapon: DummyContinuousInterceptorBullet
+
+GFIGHTER2MASTER:
+	Inherits: MOBSPANWERMASTER
+	Valued:
+		Cost: 800
+	Buildable:
+		Queue: CorvetteQueue
+		BuildPaletteOrder: 3
+		Description: Effective versus units other than interceptors
+		Prerequisites: gmercenaryhub
+	Interactable:
+		Bounds: 30,30
+	Power:
+		Amount: -2
+	Aircraft:
+		Speed: 75
+    WithSpriteBody:
+        Sequence: dot
+	Tooltip:
+		Name: Bomber Squadron
+	MobSpawnerMaster:
+		Actors: gfighter2b, gfighter2b, gfighter2b
+	WithTextDecoration@deployed:
+		Text: B
+		ReferencePoint: Bottom
+		Color: E0D048
+		ZOffset: 9999
+		ValidStances: Ally, Enemy
+	Armament@PRIMARY:
+		Weapon: PlatformBomberSpawn
+	RenderSprites:
+		Image: gfighter2
+
+GFIGHTER2B:
+	Inherits: ^Fighter
+	Tooltip:
+		Name: Bomber
+	Health:
+		HP: 15000
+	Valued:
+		Cost: 50
+	Armament:
+		Weapon: BomberAcid
+    -SelectionDecorations:
+    -Selectable:
+    Interactable:
+	Aircraft:
+		Speed: 95
+	MobSpawnerSlave:
+	RenderSprites:
+		Image: gfighter2
+
+GCORV1:
+	Inherits: ^Corvette
+	Inherits@2: ^CorvetteTargetPriority
+	Buildable:
+		Queue: CorvetteQueue
+		BuildPaletteOrder: 2
+		Description: Armed with a heavy cannon.\nEffective against Frigates.\nIneffective against Fighters and Corvettes.
+	Valued:
+		Cost: 150
+	Tooltip:
+		Name: Peace Keeper
+	Power:
+		Amount: -1
+	Health:
+		HP: 170000
+	-WithFacingSpriteBody:
+    WithSpriteTurret:
+	RevealsShroud:
+		Range: 5c0
+	Armament:
+		Weapon: CorvetteAntiFighterBullet
+	Armament@1:
+		Weapon: DummyContinuousInterceptorBullet
+	Armament@2:
+		Weapon: BasicAutocannon
+		RequiresCondition: !HyperSpaceFadeOut
+		LocalOffset: 200,0,0
+	Armament@3:
+		Weapon: DummyContinuousAutoCannon
+		RequiresCondition: !HyperSpaceFadeOut
+		LocalOffset: 200,0,0
+
+GCORV3:
+	Inherits: ^Corvette
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Torpedo Corvette
+	Buildable:
+		Queue: CorvetteQueue
+		BuildPaletteOrder: 4
+		Prerequisites: gmercenaryhub
+		Description: Light corvette equipped to engage fighters and missiles.
+	-WithFacingSpriteBody:
+	Power:
+		Amount: -2
+	Health:
+		HP: 100000
+	RevealsShroud:
+		Range: 5c0
+	Armament:
+		Weapon: CorvetteMissile
+	MustBeDestroyed:
+	AttackFrontal:
+    WithSpriteTurret:
+
+GCORV2:
+	Inherits: ^Corvette
+	Inherits@2: ^FrigateTargetPriority
+	Buildable:
+		Queue: CorvetteQueue
+		BuildPaletteOrder: 5
+		Prerequisites: gresearchship
+		Description: Cloaked corvette, fires glaives that bounce 6 times.
+	Valued:
+		Cost: 450
+	Tooltip:
+		Name: Silencer
+	Power:
+		Amount: -2
+	Health:
+		HP: 170000
+	RevealsShroud:
+		Range: 5c0
+	Cloak:
+		IsPlayerPalette: True
+		CloakDelay: 100
+	Armament@1:
+		Weapon: SilencerGlaive
+		LocalOffset: 200, 0, 0
+		RequiresCondition: !HyperSpaceFadeOut
+	MustBeDestroyed:

@@ -1,0 +1,101 @@
+MapFormat: 11
+
+RequiresMod: ng
+
+Title: Asteroid Belt
+
+Author: Nolt
+
+Tileset: SPACE
+
+MapSize: 66,50
+
+Bounds: 1,1,64,48
+
+Visibility: Lobby
+
+Categories: Conquest
+
+Players:
+	PlayerReference@Neutral:
+		Name: Neutral
+		OwnsWorld: True
+		NonCombatant: True
+		Faction: gkor
+	PlayerReference@Creeps:
+		Name: Creeps
+		NonCombatant: True
+		Faction: gkor
+		Enemies: Multi0, Multi1
+	PlayerReference@Multi0:
+		Name: Multi0
+		Playable: True
+		Faction: Random
+		Enemies: Creeps
+	PlayerReference@Multi1:
+		Name: Multi1
+		Playable: True
+		Faction: Random
+		Enemies: Creeps
+
+Actors:
+	Actor0: mpspawn
+		Owner: Neutral
+		Location: 10,24
+	Actor25: dangerbeacon
+		Owner: Neutral
+		Location: 23,15
+	Actor26: dangerbeacon
+		Owner: Neutral
+		Location: 32,15
+	Actor27: dangerbeacon
+		Owner: Neutral
+		Location: 40,15
+	Actor23: dangerbeaconend
+		Owner: Neutral
+		Location: 22,31
+	Actor24: dangerbeaconend
+		Owner: Neutral
+		Location: 32,31
+	Actor28: dangerbeaconend
+		Owner: Neutral
+		Location: 40,31
+	Actor37: crystaltibtree4
+		Owner: Neutral
+		Location: 13,22
+	Actor38: crystaltibtree
+		Owner: Neutral
+		Location: 17,22
+	Actor39: crystaltibtree2
+		Owner: Neutral
+		Location: 13,29
+	Actor42: crystaltibtree4
+		Owner: Neutral
+		Location: 52,22
+	Actor43: crystaltibtree3
+		Owner: Neutral
+		Location: 48,22
+	Actor41: mpspawn
+		Owner: Neutral
+		Location: 55,24
+	Actor30: crystaltibtree3
+		Owner: Neutral
+		Location: 52,29
+	Actor35: crystaltibtree4
+		Owner: Neutral
+		Location: 48,29
+	Actor36: crystaltibtree4
+		Owner: Neutral
+		Location: 17,29
+	Actor22: dustcloud1
+		Owner: Neutral
+		Location: 29,43
+	Actor29: dustcloud3
+		Owner: Neutral
+		Location: 33,43
+	Actor31: dustcloud4
+		Owner: Neutral
+		Location: 29,6
+	Actor32: dustcloud5
+		Owner: Neutral
+		Location: 33,6

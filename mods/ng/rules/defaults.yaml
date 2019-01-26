@@ -1,0 +1,1722 @@
+^ExistsInWorld:
+	AppearsOnRadar:
+	UpdatesPlayerStatistics:
+	CombatDebugOverlay:
+	GivesExperience:
+		PlayerExperienceModifier: 1
+	ScriptTriggers:
+	ConditionManager:
+	RenderDebugState:
+
+^SpriteActor:
+	Inherits: ^1x1Shape
+	BodyOrientation:
+	QuantizeFacingsFromSequence:
+		Sequence: idle
+	RenderSprites:
+
+^1x1Shape:
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -512, -512
+			BottomRight: 512, 512
+
+^2x1Shape:
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -1024, -512
+			BottomRight: 1024, 512
+
+^2x2Shape:
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -1024, -1024
+			BottomRight: 1024, 1024
+
+^3x2Shape:
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -1536, -1024
+			BottomRight: 1536, 1024
+
+^AutoTargetAll:
+	AutoTarget:
+		AttackAnythingCondition: stance-attackanything
+		MinimumScanTimeInterval: 16
+		MaximumScanTimeInterval: 20
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: CapitalShip, Frigate, Corvette, Fighter, Station
+		InvalidTargets: NoAutoTarget
+		Priority: 1
+	AutoTargetPriority@ATTACKANYTHING:
+		RequiresCondition: stance-attackanything
+		ValidTargets: CapitalShip, Frigate, Corvette, Fighter, Station
+		InvalidTargets: NoAutoTarget
+		Priority: 1
+
+^FrigateTargetPriority:
+	Inherits: ^AutoTargetAll
+	AutoTargetPriority@1:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: CapitalShip, Frigate, Station
+		InvalidTargets: NoAutoTarget
+		Priority: 2
+
+^CorvetteTargetPriority:
+	Inherits: ^AutoTargetAll
+	AutoTargetPriority@1:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: Corvette
+		InvalidTargets: NoAutoTarget
+		Priority: 2
+
+^FighterTargetPriority:
+	Inherits: ^AutoTargetAll
+	AutoTargetPriority@1:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: Fighter
+		InvalidTargets: NoAutoTarget
+		Priority: 2
+
+^EmpDisable:
+	WithColoredOverlay@EMPDISABLE:
+		RequiresCondition: empdisable
+		Palette: disabled
+	TimedConditionBar@EMPDISABLE:
+		Condition: empdisable
+		Color: FFFFFF
+	ExternalCondition@empdisable:
+		Condition: empdisable
+	SpeedMultiplier@empdisable:
+		RequiresCondition: empdisable
+		Modifier: 1
+	ReloadDelayMultiplier@empdisable:
+		RequiresCondition: empdisable
+		Modifier: 2000
+
+^Leachable:
+	DelayedWeaponDetector:
+	DelayedWeaponAttachable:
+        Type: bomb
+        Condition: LeechEat
+	ExternalCondition@LeechEat:
+		Condition: LeechEat
+	SelfHealing@LeechEat:
+		RequiresCondition: LeechEat
+		Step: 0
+		PercentageStep: -2
+		DamageCooldown: 0
+		Delay: 25
+		HealIfBelow: 105
+	Targetable@LeechEat:
+		TargetTypes: Leached
+		RequiresCondition: LeechEat
+
+^Boardable:
+	TemporaryOwnerManager:
+	ExternalCondition@Boarded:
+		Condition: Boarded
+	Targetable@Boardable:
+		TargetTypes: Boardable
+		RequiresCondition: Boarded > 7
+
+^Cloakable:
+	Cloak@DustCloud:
+		CloakTypes: DustCloudCloak
+		InitialDelay: 100
+		CloakDelay: 100
+		RequiresCondition: DustCloudCloak || ArtificialCloak
+		IsPlayerPalette: True
+	DetectCloaked:
+		CloakTypes: DustCloudCloak
+		Range: 3c0
+		RequiresCondition: DustCloudCloak || ArtificialCloak
+	ExternalCondition@DustCloudCloak:
+		Condition: DustCloudCloak
+	ExternalCondition@ArtificialCloak:
+		Condition: ArtificialCloak
+
+^GenericBuffs:
+	Inherits: ^EmpDisable
+	Inherits@1: ^ResearchShipBoosted
+	Inherits@2: ^Cloakable
+	Inherits@3: ^Leachable
+	BlocksProjectiles:
+	ConditionManager:
+
+^HyperSpaceAble:
+	SpeedMultiplier@HyperSpace:
+		Modifier: 200000
+		RequiresCondition: HyperSpace
+	ExternalCondition@HyperSpace:
+		Condition: HyperSpace
+		TotalCap: 1
+		SourceCap: 1
+	ExternalCondition@HyperSpaceFadeOut:
+		Condition: HyperSpaceFadeOut
+		TotalCap: 1
+		SourceCap: 1
+	ExternalCondition@HyperSpace2:
+		Condition: HyperSpace2:
+		TotalCap: 1
+		SourceCap: 1
+	WithIdleOverlay@subspaceanim:
+		Sequence: subspaceanim
+		RequiresCondition: HyperSpace
+		Palette: darkbluepal
+	DamageMultiplier@HyperSpace:
+		Modifier: 350
+		RequiresCondition: HyperSpace || HyperSpaceFadeOut
+	ExternalCondition@WORKPIECEOFSHIT:
+		Condition: WORKPIECEOFSHIT
+		TotalCap: 1
+		SourceCap: 1
+	SelfHealing@WORKPIECEOFSHIT:
+		Step: 0
+		PercentageStep: -1
+		Delay: 16
+		HealIfBelow: 101
+		RequiresCondition: HyperSpaceFadeOut && WORKPIECEOFSHIT
+	DamageMultiplier@WORKPIECEOFSHIT:
+		Modifier: 200
+		RequiresCondition: HyperSpaceFadeOut && WORKPIECEOFSHIT
+	RevealsShroud:
+		Range: 2c0
+		Type: CenterPosition
+		RequiresCondition: !HyperSpaceFadeOut
+	SpeedMultiplier@HyperSpaceFadeOut:
+		Modifier: 0
+		RequiresCondition: !HyperSpace && HyperSpaceFadeOut
+	SpeedMultiplier@HyperspaceInhibit:
+		Modifier: 0
+		RequiresCondition: HyperspaceInhibit && HyperSpace
+	ExternalCondition@HyperspaceInhibit:
+		Condition: HyperspaceInhibit
+		TotalCap: 1
+		SourceCap: 1
+	ExplodeWeapon@HyperSpaceFadeOutAnim:
+		Weapon: HyperSpaceFadeOutAnim
+		RequiresCondition: !HyperSpace && HyperSpaceFadeOut
+
+^DeployableText:
+	WithTextDecoration@deployed:
+		Text: DEPLOYED
+		ReferencePoint: Bottom
+		Color: E0D048
+		ZOffset: 9999
+		RequiresCondition: deployed
+	Targetable@DeployedShip:
+		TargetTypes: DeployedShip
+		RequiresCondition: deployed
+	# # Mobile:
+	# 	# RequiresCondition: !deployed
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+	GrantConditionOnMovement:
+		Condition: moving
+
+^Upgrades:
+	FirepowerMultiplier@UpgradeT1:
+		RequiresCondition: WeaponT1
+		Modifier: 105
+	DamageMultiplier@UpgradeT1:
+		RequiresCondition: DamageT1
+		Modifier: 95
+	SpeedMultiplier@UpgradeT1:
+		RequiresCondition: SpeedT1
+		Modifier: 105
+	ReloadDelayMultiplier@UpgradeT1:
+		RequiresCondition: ReloadSpeedT1
+		Modifier: 95
+	RangeMultiplier@UpgradeT1:
+		RequiresCondition: RangeT1
+		Modifier: 105
+	GrantConditionOnPrerequisite@WeaponT1:
+		Prerequisites: research.WeaponT1
+		Condition: WeaponT1
+	GrantConditionOnPrerequisite@DamageT1:
+		Prerequisites: research.DamageT1
+		Condition: DamageT1
+	GrantConditionOnPrerequisite@RangeT1:
+		Prerequisites: research.RangeT1
+		Condition: RangeT1
+	GrantConditionOnPrerequisite@ReloadSpeedT1:
+		Prerequisites: research.ReloadSpeedT1
+		Condition: ReloadSpeedT1
+	GrantConditionOnPrerequisite@SpeedT1:
+		Prerequisites: research.SpeedT1
+		Condition: SpeedT1
+	ExternalCondition@WeaponT1:
+		Condition: WeaponT1
+	ExternalCondition@UpgradeT1:
+		Condition: DamageT1
+	ExternalCondition@SpeedT1:
+		Condition: SpeedT1
+	ExternalCondition@ReloadSpeedT1:
+		Condition: ReloadSpeedT1
+	ExternalCondition@UpgradeT1:
+		Condition: RangeT1
+
+^ResearchShipBoosted:
+	FirepowerMultiplier@ResearchShipBoosted:
+		RequiresCondition: ResearchShipBoosted
+		Modifier: 120
+	DamageMultiplier@ResearchShipBoosted:
+		RequiresCondition: ResearchShipBoosted
+		Modifier: 80
+	SpeedMultiplier@ResearchShipBoosted:
+		RequiresCondition: ResearchShipBoosted
+		Modifier: 150
+	ExternalCondition@ResearchShipBoosted:
+		Condition: ResearchShipBoosted
+	Targetable@ResearchShipBoosted:
+		TargetTypes: ResearchShipBoosted
+		RequiresCondition: ResearchShipBoosted
+
+^NebulaEffects:
+	SpeedMultiplier@SpeedBuoy:
+		RequiresCondition: SpeedBuoy
+		Modifier: 150
+	ExternalCondition@SpeedBuoy:
+		Condition: SpeedBuoy
+	ExternalCondition@RedNebula:
+		Condition: RedNebula
+	SelfHealing@RedNebula:
+		Step: 100
+		PercentageStep: -1
+		Delay 50:
+		HealIfBelow: 101
+		RequiresCondition: RedNebula
+	DamageMultiplier@RedNebula:
+		RequiresCondition: RedNebula
+		Modifier: 110
+
+^GainsExperience:
+	Inherits: ^GenericBuffs
+	Inherits@2: ^Upgrades
+	Inherits@3: ^NebulaEffects
+	GainsExperience:
+		Conditions:
+			300: rank-veteran
+			600: rank-veteran
+			900: rank-veteran
+	GrantCondition@RANK-ELITE:
+		RequiresCondition: rank-veteran >= 3
+		Condition: rank-elite
+	DamageMultiplier@RANK-1:
+		RequiresCondition: rank-veteran == 1
+		Modifier: 90
+	DamageMultiplier@RANK-2:
+		RequiresCondition: rank-veteran == 2
+		Modifier: 80
+	DamageMultiplier@RANK-ELITE:
+		RequiresCondition: rank-elite
+		Modifier: 70
+	FirepowerMultiplier@RANK-1:
+		RequiresCondition: rank-veteran == 1
+		Modifier: 110
+	FirepowerMultiplier@RANK-2:
+		RequiresCondition: rank-veteran == 2
+		Modifier: 120
+	FirepowerMultiplier@RANK-ELITE:
+		RequiresCondition: rank-elite
+		Modifier: 130
+	ReloadDelayMultiplier@RANK-1:
+		RequiresCondition: rank-veteran == 1
+		Modifier: 90
+	ReloadDelayMultiplier@RANK-2:
+		RequiresCondition: rank-veteran == 2
+		Modifier: 80
+	ReloadDelayMultiplier@RANK-ELITE:
+		RequiresCondition: rank-elite
+		Modifier: 70
+	SelfHealing@ELITE:
+		PercentageStep: 5
+		Delay: 75
+		HealIfBelow: 100
+		DamageCooldown: 150
+		RequiresCondition: rank-elite
+	WithDecoration@RANK-1:
+		Image: rank
+		Sequence: rank-veteran-1
+		Palette: effect
+		ReferencePoint: Bottom, Right
+		RequiresCondition: rank-veteran == 1
+		ZOffset: 256
+	WithDecoration@RANK-2:
+		Image: rank
+		Sequence: rank-veteran-2
+		Palette: effect
+		ReferencePoint: Bottom, Right
+		RequiresCondition: rank-veteran == 2
+		ZOffset: 256
+	WithDecoration@RANK-3:
+		Image: rank
+		Sequence: rank-elite
+		Palette: effect
+		ReferencePoint: Bottom, Right
+		RequiresCondition: rank-veteran == 3
+		ZOffset: 256
+	GivesExperienceMultiplier@RANK-1:
+		Modifier: 150
+		RequiresCondition: rank-veteran == 1
+	GivesExperienceMultiplier@RANK-2:
+		Modifier: 200
+		RequiresCondition: rank-veteran == 2
+	GivesExperienceMultiplier@RANK-ELITE:
+		Modifier: 250
+		RequiresCondition: rank-elite
+
+^CapitalShip:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^GainsExperience
+	Inherits@3: ^SpriteActor
+	Inherits@4: ^Boardable
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -550, -750
+			BottomRight: 550, 750
+		TargetableOffsets: 0,0,0, 450,0,0, -450,0,0, 0,450,0, 0,-450,0
+	Valued:
+		Cost: 1
+	Huntable:
+	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
+	TeleportNetworkTransportable:
+	Chronoshiftable:
+	Health:
+		HP: 750000
+	WithFacingSpriteBody:
+	Armor:
+		Type: Big
+	RevealsShroud:
+		Range: 9c0
+		Type: CenterPosition
+	Mobile:
+		Speed: 25
+		TurnSpeed: 5
+		Locomotor: Frigate
+	Targetable:
+		TargetTypes: CapitalShip
+	ProvidesPrerequisite:
+	Hovers:
+		OffsetModifier: -10
+	Repairable:
+	Guard:
+	Guardable:
+	Tooltip:
+		GenericName: Capital Ship
+	ActorLostNotification:
+	HiddenUnderFog:
+		Type: GroundPosition
+	AttackMove:
+	DrawLineToTarget:
+	Selectable:
+		Priority: 5
+	WithDamageOverlay:
+	BodyOrientation:
+		UseClassicFacingFudge: True
+	SelfHealing@CombatCapitalShipAutoRepair:
+		Step: 0
+		PercentageStep: 1
+		DamageCooldown: 100
+		Delay: 200
+		HealIfBelow: 105
+	Voiced:
+		VoiceSet: GenericVoice
+	Selectable:
+	MustBeDestroyed:
+	Explodes:
+		Weapon: CapShipExplode
+		EmptyWeapon: CapShipExplode
+	MapEditorData:
+		Categories: Capital Ships
+
+^CombatCapitalShip:
+	Inherits@1: ^CapitalShip
+	Inherits@Autotarget: ^AutoTargetAll
+	SpeedMultiplier@LancerSlow:
+		RequiresCondition: LancerSlow
+		Modifier: 30
+	ReloadDelayMultiplier@LancerSlow:
+		RequiresCondition: LancerSlow
+		Modifier: 200
+	ExternalCondition@LancerSlow:
+		Condition: LancerSlow
+
+^Frigate:
+	Inherits@1: ^CapitalShip
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -480, -480
+			BottomRight: 480, 480
+	Armor:
+		Type: Medium
+	TeleportNetworkTransportable:
+	Mobile:
+		Speed: 45
+		TurnSpeed: 5
+	Selectable:
+		Priority: 10
+	RevealsShroud:
+		Range: 7c0
+		Type: CenterPosition
+	Power:
+		Amount: -7
+	WithFacingSpriteBody:
+		RequiresCondition: !HyperSpaceFadeOut
+	Health:
+	Selectable:
+		Bounds: 60,60
+	SelectionDecorations:
+		VisualBounds: 60,60
+	Hovers:
+	Targetable:
+		TargetTypes: Frigate
+	QuantizeFacingsFromSequence:
+	DetectCloaked:
+		Range: 2c0
+	Voiced:
+		VoiceSet: GenericVoice
+	AppearsOnRadar:
+		UseLocation: yes
+	HiddenUnderFog:
+		Type: CenterPosition
+		AlwaysVisibleStances: None
+	Explodes:
+		Weapon: FrigateExplode
+		EmptyWeapon: FrigateExplode
+	MapEditorData:
+		Categories: Frigates
+	Voiced:
+		VoiceSet: GenericVoice
+
+^AFrontalFrigate:
+	Inherits: ^Frigate
+	Inherits@Autotarget: ^AutoTargetAll
+	AttackFrontal:
+
+^TurretedFrigate:
+	Inherits: ^Frigate
+	Inherits@Autotarget: ^AutoTargetAll
+	Turreted:
+	AttackTurreted:
+
+^Figther&CorvetteDefaults:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Inherits@3: ^GainsExperience
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -96, -96
+			BottomRight: 96, 96
+	Huntable:
+	AppearsOnRadar:
+		UseLocation: yes
+	WithTextControlGroupDecoration:
+	Health:
+	Selectable:
+		Bounds: 15,15
+	SelectionDecorations:
+		VisualBounds: 15,15
+	WithFacingSpriteBody:
+		RequiresCondition: !HyperSpaceFadeOut
+	Armor:
+		Type: Small
+	RevealsShroud:
+		Range: 4c0
+		Type: CenterPosition
+	DrawLineToTarget:
+	HiddenUnderFog:
+		Type: CenterPosition
+		AlwaysVisibleStances: None
+	ActorLostNotification:
+	AttackMove:
+	WithFacingSpriteBody:
+	Hovers:
+	Voiced:
+		VoiceSet: GenericVoice
+	#####################################
+	# Gravity Generator Debuff
+	#####################################
+	FirepowerMultiplier@GravGenSlow:
+		RequiresCondition: GravGenSlow
+		Modifier: 0
+	SpeedMultiplier@GravGenSlow:
+		RequiresCondition: GravGenSlow
+		Modifier: 0
+	ExternalCondition@GravGenSlow:
+		Condition: GravGenSlow
+
+^Fighter:
+	Inherits: ^Figther&CorvetteDefaults
+	Inherits@4: ^HyperSpaceAble
+	AttackAircraft:
+		AttackTurnDelay: 10
+		FacingTolerance: 90
+	Targetable:
+		TargetTypes: Fighter
+	Armor:
+		Type: Fighter
+	Aircraft:
+		CruiseAltitude: 5
+		IdealSeparation: 400
+		MoveIntoShroud: true
+		RepulsionSpeed: 25
+		Speed: 120
+		TurnSpeed: 14
+		CanHover: True
+		LandWhenIdle: False
+	Passenger:
+		CargoType: Fighter
+	Hovers:
+	AmmoPool:
+		Ammo: 9999
+		PipCount: 0
+		ReloadCount: 1
+		ReloadDelay: 1
+		PipType: Ammo
+		PipTypeEmpty: AmmoEmpty
+		SelfReloads: True
+		SelfReloadDelay: 1
+	Explodes:
+		Weapon: FighterExplode
+		EmptyWeapon: FighterExplode
+	SmokeTrailWhenDamaged:
+		Interval: 1
+		Sequence: fighterflametrails
+		Palette: gensmkexploj
+		MinDamage: Critical
+	SpeedMultiplier@BUFF1:
+		RequiresCondition: SlowdownFighter
+		Modifier: 150
+	SpeedMultiplier@BUFF2:
+		RequiresCondition: SlowdownFighter && DogfightEnabled
+		Modifier: 150
+	GrantConditionOnDamageState@fighterflametrails:
+		Condition: fighterflametrails
+		ValidDamageStates: Critical
+	SelfHealing@fighterflametrails:
+		Step: 0
+		PercentageStep: -2
+		Delay: 10
+		HealIfBelow: 25
+	ExternalCondition@SlowdownFighter:
+		Condition: SlowdownFighter
+    GrantConditionOnAttack@SlowdownFighter:
+        Condition: DogfightEnabled
+        RevokeDelay: 100
+	Voiced:
+		VoiceSet: GFighterVoice
+	MustBeDestroyed:
+	RevealsShroud:
+		Range: 3c0
+		Type: CenterPosition
+	MapEditorData:
+		Categories: Fighter
+
+^Corvette:
+	Inherits@1: ^Figther&CorvetteDefaults
+	Inherits@5: ^Cloakable
+	Inherits@Autotarget: ^AutoTargetAll
+	Guard:
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -200, -200
+			BottomRight: 200, 200
+	TeleportNetworkTransportable:
+	Armor:
+		Type: Small
+	Mobile:
+		Speed: 80
+		TurnSpeed: 10
+		SharesCell: True
+		Locomotor: Corvette
+	AttackTurreted:
+    Turreted:
+	Targetable:
+		TargetTypes: Corvette
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Health:
+	Explodes:
+		Weapon: CorvetteExplode
+		EmptyWeapon: CorvetteExplode
+	SpeedMultiplier@LancerSlow:
+		RequiresCondition: LancerSlow
+		Modifier: 50
+	Selectable:
+		Bounds: 30,30
+	SelectionDecorations:
+		VisualBounds: 30,30
+	MapEditorData:
+		Categories: Corvette
+	Voiced:
+		VoiceSet: GenericVoice
+	MustBeDestroyed:
+
+^ShootableMissile:
+	Inherits@1: ^ExistsInWorld
+	Inherits@4: ^SpriteActor
+	Targetable:
+		TargetTypes: Fighter
+	HiddenUnderFog:
+		Type: GroundPosition
+	Tooltip:
+		GenericName: Missile
+	WithShadow:
+		Offset: 43, 128, 0
+		ZOffset: -129
+	WithFacingSpriteBody:
+	HitShape:
+
+^Building:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Huntable:
+	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
+	Selectable:
+	Targetable:
+		TargetTypes: CapitalShip, DeployedShip
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -550, -750
+			BottomRight: 550, 750
+		TargetableOffsets: 840,0,0, -840,0,0
+	Armor:
+		Type: Big
+	Health:
+		HP: 300000
+	Building:
+		Dimensions: 3,3
+		Footprint: ___ _x_ ___
+		TerrainTypes: Clear, Ground
+		Adjacent: 2
+		RequiresBaseProvider: True
+	WithSpriteBody:
+	GivesBuildableArea:
+		AreaTypes: building
+	RequiresBuildableArea:
+		AreaTypes: building
+		Adjacent: 3
+	ActorLostNotification:
+		Notification: BuildingLost
+	Guardable:
+		Range: 3c0
+	Tooltip:
+		GenericName: Structure
+	FrozenUnderFog:
+	SelfHealing@CombatCapitalShipAutoRepair:
+		Step: 0
+		PercentageStep: 1
+		DamageCooldown: 100
+		Delay: 100
+		HealIfBelow: 105
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Explodes:
+		Weapon: CapShipExplode
+		EmptyWeapon: CapShipExplode
+	Selectable:
+		Bounds: 60,60
+	Interactable:
+		Bounds: 60,60
+	MapEditorData:
+		Categories: Station or Deployed Ship
+
+^BuildableStation:
+	Inherits: ^Building
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+		TerrainTypes: Clear
+	Health:
+		HP: 1250000
+	Armor:
+		Type: Big
+	Targetable:
+		TargetTypes: Station
+	Power:
+		Amount: -10
+	Valued:
+		Cost: 1000
+	RevealsShroud:
+		Range: 7c0
+		Type: CenterPosition
+	SelfHealing@CombatCapitalShipAutoRepair:
+		Step: 0
+		PercentageStep: 1
+		DamageCooldown: 100
+		Delay: 100
+		HealIfBelow: 105
+	RevealsShroud:
+		Range: 6c0
+	Selectable:
+		Priority: 2
+	Explodes:
+		Weapon: FrigateExplode
+		EmptyWeapon: FrigateExplode
+	WithColoredOverlay:
+		Palette: disabled
+		RequiresCondition: empdisable
+
+
+^CivFieldHusk:
+	Inherits@1: ^SpriteActor
+	AppearsOnRadar:
+	Building:
+		Dimensions: 1,1
+		Footprint: _
+	Tooltip:
+		Name: Field (Destroyed)
+		GenericVisibility: None
+		ShowOwnerRow: false
+	RenderSprites:
+		Palette: terrain
+	WithSpriteBody:
+	FrozenUnderFog:
+	ScriptTriggers:
+
+^TibTree:
+	Inherits@1: ^SpriteActor
+	Tooltip:
+		Name: Asteroid Field
+		ShowOwnerRow: false
+	RenderSprites:
+		Palette: apolcybl
+	Health:
+		HP: 1000000
+	WithSpriteBody:
+	Building:
+		Footprint: x
+		Dimensions: 1,1
+	AppearsOnRadar:
+	RadarColorFromTerrain:
+		Terrain: Tiberium
+	Interactable:
+		Bounds 600,600
+	HiddenUnderShroud:
+	WithMakeAnimation:
+	MapEditorData:
+		Categories: Resources
+
+^Station:
+	Inherits@1: ^ExistsInWorld
+	Inherits@2: ^SpriteActor
+	Immobile:
+		OccupiesSpace: false
+	Huntable:
+	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
+	WithSpriteBody:
+	Selectable:
+		Priority: 3
+	Targetable:
+		TargetTypes: CapitalShip
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	Armor:
+		Type: Big
+	SoundOnDamageTransition:
+		DamagedSounds: xplos.aud
+		DestroyedSounds: crumble.aud
+	WithMakeAnimation:
+	CaptureNotification:
+		Notification: BuildingCaptured
+		NewOwnerVoice: no
+	ActorLostNotification:
+		Notification: BuildingLost
+	ShakeOnDeath:
+	Guardable:
+		Range: 3c0
+	Tooltip:
+		GenericName: Structure
+	HiddenUnderFog:
+	ProximityExternalCondition:
+		Condition: DisablePlanetCapture
+		Range: 2c0
+		ValidStances: Ally, Enemy, Neutral
+	MapEditorData:
+		Categories: Stations
+
+^Nebula:
+	Inherits@1: ^SpriteActor
+	RenderSprites:
+		Palette: staticterrain
+	AppearsOnRadar:
+		UseLocation: True
+	RadarColorFromTerrain:
+		Terrain: BlueTiberium
+	WithSpriteBody:
+	Immobile:
+		OccupiesSpace: false
+	AppearsOnRadar:
+	RadarColorFromTerrain:
+		Terrain: Tree
+	HiddenUnderShroud:
+		AlwaysVisibleStances: Enemy, Neutral, Ally
+	ScriptTriggers:
+	Interactable:
+		Bounds 1920,1440
+
+^NeutralObject:
+	Inherits: ^Nebula
+	ConditionManager:
+	Selectable:
+		Bounds: 150,150
+		Priority: 1
+	Interactable:
+		Bounds 150,150
+	Health:
+		HP: 99999
+	RenderSprites:
+		-Palette: player
+		PlayerPalette: player
+	MapEditorData:
+		Categories: Space Objects
+
+^Planet:
+	Inherits: ^Nebula
+	RenderSprites:
+		Palette: planetearth
+	Health:
+		HP: 99999999
+	ConditionManager:
+	Targetable:
+		TargetTypes: Planet
+		RequiresCondition: !DisablePlanetCapture
+	ExternalCondition@DisablePlanetCapture:
+		Condition: DisablePlanetCapture
+	-Interactable:
+	MapEditorData:
+		Categories: Planets
+
+^Rock:
+	Inherits@1: ^SpriteActor
+	Tooltip:
+		Name: Rock
+		ShowOwnerRow: false
+	RenderSprites:
+		Palette: staticterrain
+	WithSpriteBody:
+	Building:
+		Footprint: __ x_
+		Dimensions: 2,2
+	AppearsOnRadar:
+	RadarColorFromTerrain:
+		Terrain: Tree
+	HiddenUnderShroud:
+	ScriptTriggers:
+	MapEditorData:
+		RequireTilesets: DESERT
+
+^Crate:
+	HiddenUnderFog:
+	Tooltip:
+		Name: Crate
+		GenericName: Crate
+		ShowOwnerRow: false
+	Crate:
+		TerrainTypes: Clear, Rough, Road, Tiberium, BlueTiberium, Beach
+	RenderSprites:
+	Interactable:
+
+	#########################################################################
+	# Base Rules Starts here
+	#########################################################################
+
+^CivilianShipWeaponsGkor:
+	ExplodeWeapon@1:
+		Weapon: FieldDefenceLaserSpawnAntiFighter
+
+^ProducesCorvettes:
+	ProductionQueue:
+		Type: CorvetteQueue
+		Group: Defence
+        LowPowerSlowdown: 10
+	Production:
+		Produces: CorvetteQueue
+	ProductionBar:
+		ProductionType: CorvetteQueue
+	Exit:
+
+^ProducesFrigates:
+	Inherits: ^ProducesCorvettes
+	ProductionQueue:
+		Type: FrigateQueue
+		Group: Infantry
+        LowPowerSlowdown: 10
+	Production:
+		Produces: FrigateQueue
+	ProductionBar:
+		ProductionType: FrigateQueue
+
+^ProducesBaseShips:
+	Inherits: ^ProducesCorvettes
+	ProductionQueue:
+		Type: BaseShipQueue
+		Group: Building
+        LowPowerSlowdown: 1
+	Production:
+		Produces: BaseShipQueue
+	ProductionBar:
+		ProductionType: BaseShipQueue
+
+^AICorvetteProduction:
+	Inherits: ^ProducesCorvettes
+	Production:
+		RequiresCondition: AIWanderer
+
+^AIFrigateProduction:
+	Inherits: ^ProducesFrigates
+	Production:
+		RequiresCondition: AIWanderer
+
+^AIBaseShipProduction:
+	Inherits: ^ProducesBaseShips
+	Production:
+		RequiresCondition: AIWanderer
+
+^AIWanderer:
+	Wanders:
+		MinMoveDelay: 500
+		MaxMoveDelay: 5000
+		RequiresCondition: AIWanderer
+	GrantConditionOnPrerequisite@AIWanderer:
+		Condition: AIWanderer
+		Prerequisites: AIWanderer
+	CashTrickler@AIWanderer:
+		RequiresCondition: AIWanderer
+		Interval: 200
+	Power@AIWanderer:
+		Amount: 20
+		RequiresCondition: AIWanderer
+
+^CivShipHP:
+	ProvidesPrerequisite@gcivship:
+		Prerequisite: gcivship
+
+^SupplyShipHP:
+    Inherits: ^CivShipHP
+	Health:
+		HP: 400000
+	Tooltip:
+		Name: Supply Ship
+	ProvidesPrerequisite@ghabitatship:
+		Prerequisite: ghabitatship
+	StoresResources:
+		PipCount: 10
+		Capacity: 250
+	SpawnActorOnDeath@husk:
+		Actor: ghabitatshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	Power:
+		Amount: 50
+
+^SurveyFrigateHP:
+    Inherits: ^CivShipHP
+	Health:
+		HP: 400000
+	Tooltip:
+		Name: Survey Frigate
+	ProvidesPrerequisite@gsurveyfrigate:
+		Prerequisite: gsurveyfrigate
+	Power:
+		Amount: -15
+    DetectCloaked:
+		Range: 10c0
+	RevealsShroud:
+		Range: 10c0
+		Type: CenterPosition
+	SpawnActorOnDeath@husk:
+		Actor: gsurveyfrigateh
+		OwnerType: InternalName
+		InternalOwner: Neutral
+
+^EngineerCrewHP:
+    Inherits: ^CivShipHP
+	Health:
+		HP: 400000
+	Power:
+		Amount: -15
+	Tooltip:
+		Name: Engineering Crew
+	ProvidesPrerequisite@gengineer:
+		Prerequisite: gengineer
+	SpawnActorOnDeath@husk:
+		Actor: gengineerh
+		OwnerType: InternalName
+		InternalOwner: Neutral
+
+^ResearchCoreShipHP:
+	ProvidesPrerequisite@gresearchcoreship:
+		Prerequisite: gresearchcoreship
+
+^ResearchShipBuffer:
+	CarrierMaster:
+		Actors: gfighter4
+		RespawnTicks: 10
+		ReamTicks: 10
+		NoRegeneration: True
+		InstaRepair: true
+		SpawnAllAtOnce: True
+	RenderRangeCircle:
+	Armament@PRIMARY:
+		Weapon: ResearchShipFighterSpawn
+		TargetStances: Ally
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: CapitalShip, Frigate, Corvette, Fighter, Station
+		InvalidTargets: NoAutoTarget
+		Priority: 2
+	AttackOmni:
+
+^ResearchShipHP:
+    Inherits: ^ResearchCoreShipHP
+	Health:
+		HP: 400000
+	Tooltip:
+		Name: Research Ship
+	Power:
+		Amount: -50
+	ProvidesPrerequisite@RearchshipAI:
+		Prerequisite: gresearchship
+		RequiresCondition: AIWanderer
+	SpawnActorOnDeath@husk:
+		Actor: gresearchshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
+
+^MercenaryHubHP:
+    Inherits: ^ResearchCoreShipHP
+	Health:
+		HP: 400000
+	Tooltip:
+		Name: Mercenary Hub
+	Power:
+		Amount: -25
+	ProvidesPrerequisite@gmercenaryhubAI:
+		Prerequisite: gmercenaryhub
+		RequiresCondition: AIWanderer
+	SpawnActorOnDeath@husk:
+		Actor: gresearchshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
+
+^ProductionShipHP:
+	Health:
+		HP: 800000
+	ProvidesPrerequisite@gproductionship:
+		Prerequisite: gproductionship 
+
+^PatrolCruiserHP:
+	Inherits: ^ProductionShipHP
+	Inherits@1: ^CivilianShipWeaponsGkor
+	ProvidesPrerequisite@gpatrolcruiser:
+		Prerequisite: gpatrolcruiser
+	SpawnActorOnDeath:
+		Actor: gpatrolcruiserh
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	Power:
+		Amount: -20
+	StoresResources:
+		PipCount: 5
+		Capacity: 500
+
+^FrigateAssemblyBayHP:
+	Inherits: ^ProductionShipHP
+	Inherits@1: ^CivilianShipWeaponsGkor
+	ProvidesPrerequisite@gfrigateassemblybay:
+		Prerequisite: gfrigateassemblybay
+	SpawnActorOnDeath:
+		Actor: gfrigateassemblybayh
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	Power:
+		Amount: -40
+	StoresResources:
+		PipCount: 5
+		Capacity: 500
+
+^ShipyardHP:
+	Inherits: ^ProductionShipHP
+	Inherits@1: ^CivilianShipWeaponsGkor
+	ProvidesPrerequisite@gshipyard:
+		Prerequisite: gshipyard
+	SpawnActorOnDeath:
+		Actor: gshipyardh
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	Power:
+		Amount: -40
+	StoresResources:
+		PipCount: 5
+		Capacity: 500
+
+^SupportShipHP:
+	Health:
+		HP: 800000
+
+^SubspessHP:
+	Health:
+		HP: 3500000
+	Power:
+		Amount: -40
+
+MOTHERSHIP:
+	Inherits: ^Building
+	Inherits@3: ^ProducesBaseShips
+	ProductionQueue:
+		BuildDurationModifier: 100
+	Valued:
+		Cost: 10000
+	Tooltip:
+		Name: Mothership
+	ProvidesPrerequisite@buildingname:
+	Building:
+		Dimensions: 1,1
+		Footprint: =
+	CashTrickler:
+	Health:
+		HP: 1500000
+	AppearsOnRadar:
+		UseLocation: True
+	Interactable:
+		Bounds: 60,60
+	Targetable@supplyship:
+		TargetTypes: supplyship
+	StoresResources:
+		PipCount: 10
+		Capacity: 1000
+	Refinery:
+		DockOffset: 0,0
+	RallyPoint:
+	Power:
+		Amount: 30
+	RevealsShroud:
+		Range: 9c0
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	SelectionDecorations:
+		VisualBounds: 60,60
+	RenderSprites:
+	SelfHealing@CapitalShipAutoRepair:
+		Step: 0
+		PercentageStep: 1
+		Delay: 50
+	Exit:
+		ExitCell: -1,-1
+		SpawnOffset: 0,0,0
+	Exit@1:
+		ExitCell: 1,1
+		SpawnOffset: 0,0,0
+	Exit@2:
+		ExitCell: -1,1
+		SpawnOffset: 0,0,0
+	Exit@3:
+		ExitCell: 1,-1
+		SpawnOffset: 0,0,0
+	ExplodeWeapon:
+		Weapon: FieldDefenceLaserSpawnMothership
+		LocalOffset: 0,-500,1150
+	ExplodeWeapon@2:
+		Weapon: FieldDefenceLaserSpawnMothership
+		LocalOffset: 0,500,1150
+	ExplodeWeapon@3:
+		Weapon: FieldRepairLaserSpawn
+		LocalOffset: 0,0,0
+	Explodes:
+		Weapon: MotherShipExplode
+		EmptyWeapon: MotherShipExplode
+	Targetable@CargoFreighterMagnet:
+		TargetTypes: CargoFreighterMagnet
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	ProximityExternalCondition@ChaseMothership:
+		Condition: ChaseMothership
+		Range: 3c0
+	ProvidesPrerequisite@mothership:
+		Prerequisite: mothership
+	ProvidesPrerequisite@buildingname:
+
+CIVILIANCORESHIP:
+	Inherits: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Inherits@2: ^DeployableText
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Coreship
+		RequiresCondition: !supplyship && !surveyfrigate && !engineeringcrew && !antismallturret && !antifighterturret
+	Health:
+		HP: 400000
+	RevealsShroud:
+		Range: 5c0
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	RenderSprites:
+	Selectable:
+		Priority: 5
+		Bounds: 80,80
+	SelectionDecorations:
+		VisualBounds: 80,80
+	RenderSprites:
+	SpawnActorOnDeath:
+		Actor: ghabitatshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	#######################################
+	# PRODUCTION STUFF
+	#######################################
+	Exit:
+        SpawnOffset: 99999,99999,99999
+        ExitCell: 3,3
+	ProvidesPrerequisite@unitname:
+	ProductionBar:
+        ProductionType: DefenceStationUpgrade
+	#######################################
+	# Deployment related traits
+	#######################################
+	WithFacingSpriteBody:
+		RequiresCondition: !supplyship && !surveyfrigate && !engineeringcrew && !antismallturret && !antifighterturret
+	#######################################
+	# SELF UPGRADE
+	#######################################
+	ProductionQueue@CivilianShipUpgrade:
+		Type: CivilianShipUpgrade
+		Group: Vehicle
+		LowPowerSlowdown: 10
+
+REFINERY:
+	Inherits: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Refinery
+	Selectable:
+		Priority: 5
+	Mobile:
+		Speed: 30
+		TerrainSpeeds:
+		TurnSpeed: 3
+	Power:
+		Amount: -10
+	Health:
+		HP: 400000
+	MustBeDestroyed:
+	RenderSprites:
+	MustBeDestroyed:
+	WithDecoration@Role:
+		Image: rank
+		Sequence: houseicon
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
+	StoresResources:
+		PipCount: 10
+		Capacity: 1000
+
+PRODUCTIONSHIP:
+	Inherits: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Inherits@2: ^CivilianShipWeaponsGkor
+	Inherits@3: ^DeployableText
+	Inherits@4: ^FactoryShipLogo
+	ProvidesPrerequisite@T1Carrier: 
+	Valued:
+		Cost: 400
+	Tooltip:
+		Name: Production Coreship
+	BaseBuilding:
+	Health:
+		HP: 800000
+	Power:
+		Amount: -20
+	StoresResources:
+		PipCount: 5
+		Capacity: 500
+	RenderSprites:
+	Mobile:
+		Speed: 40
+	Exit:
+        SpawnOffset: 99999,99999,99999
+        ExitCell: 3,3
+	RevealsShroud:
+		Range: 5c0
+	MustBeDestroyed:
+	Selectable:
+		Priority: 5
+		Bounds: 80,80
+	SelectionDecorations:
+		VisualBounds: 80,80
+	RenderSprites:
+	SpawnActorOnDeath:
+		Actor: gfrigateassemblybayh
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	WithFacingSpriteBody:
+		RequiresCondition: !CorvetteQueue && !FrigateQueue && !BaseShipQueue
+	#######################################
+	# PRODUCTION
+	#######################################
+	ProductionQueue@AssemblyBayUpgrade:
+		Type: AssemblyBayUpgrade
+		Group: Vehicle
+		LowPowerSlowdown: 10
+
+RESEARCHCORESHIP:
+	Inherits: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Inherits@3: ^DeployableText
+	Inherits@4: ^ResearchCoreShipHP
+	ProvidesPrerequisite@T1Carrier: 
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Research Coreship
+	BaseBuilding:
+	Health:
+		HP: 800000
+	Power:
+		Amount: -20
+	RenderSprites:
+	Mobile:
+		Speed: 40
+	Exit:
+        SpawnOffset: 99999,99999,99999
+        ExitCell: 3,3
+	RevealsShroud:
+		Range: 5c0
+	MustBeDestroyed:
+	Selectable:
+		Priority: 5
+		Bounds: 80,80
+	SelectionDecorations:
+		VisualBounds: 80,80
+	RenderSprites:
+	SpawnActorOnDeath:
+		Actor: gfrigateassemblybayh
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	WithFacingSpriteBody:
+		RequiresCondition: !mercenaryhub && !researchship && !Coreship1 && !Coreship2 && !warpgate
+	#######################################
+	# PRODUCTION
+	#######################################
+	ProductionQueue@ResearchShipUpgrade:
+		Type: ResearchShipUpgrade
+		Group: Vehicle
+		LowPowerSlowdown: 10
+
+SERVICEFRIGATE:
+	Inherits: ^TurretedFrigate
+	Valued:
+		Cost: 550
+	Tooltip:
+		Name: Interceptor service frigate
+	Power:
+		Amount: -7
+	Mobile:
+		TurnSpeed: 7
+	Health:
+		HP: 60000
+	Exit:
+	RevealsShroud:
+		Range: 7c0
+	Armament@PRIMARY:
+		Weapon: PlatformFighterSpawn
+	MustBeDestroyed:
+	Turreted:
+	AttackTurreted:
+	SelectionDecorations:
+		VisualBounds: 60,60
+	CarrierMaster:
+		Actors: gfighter1, gfighter1, gfighter1, gfighter1
+		RespawnTicks: 700
+		ReamTicks: 10
+		InstaRepair: true
+	SpawnActorOnDeath:
+		Actor: gfrig1h
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	Voiced:
+		VoiceSet: GenericVoice
+	ExplodeWeapon@AntiFighter:
+		Weapon: FieldDefenceLaserSpawnAntiFighter
+
+MINER:
+	Inherits: ^Frigate
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Miner
+	Selectable:
+		Priority: 6
+		Class: Miner
+	Power:
+		Amount: -15
+	Armor:
+		Type: Medium
+	Health:
+		HP: 170000
+	WithHarvestOverlay:
+		Palette: terrain
+	Explodes:
+		Weapon: CorvetteExplode
+	Mobile:
+		Speed: 40
+		SharesCell: False
+		TurnSpeed: 20
+	RevealsShroud:
+		Range: 5c0
+	MustBeDestroyed:
+	Harvester:
+		DeliveryBuildings: dgrefinery, gmothership, dgsupplyship
+		Resources: CyanOre, BlueOre, Gas, Junk, Minerals
+		BaleLoadDelay: 12
+		BaleUnloadDelay: 3
+		Capacity: 30
+		SearchForDeliveryBuildingDelay: 150
+		MaxIdleDuration: 20
+		WaitDuration: 20
+		UnblockCell: 1,1
+		SearchFromProcRadius: 10
+		SearchFromOrderRadius: 10
+		MaxUnloadQueue: 5
+		Slaved: true
+	WithDockingAnimation:
+		DockSequence: idle
+		DockLoopSequence: idle
+	ProvidesPrerequisite@miner:
+		Prerequisite: miner
+	Selectable:
+		Bounds: 60,60
+	Interactable:
+		Bounds: 60,60
+	Voiced:
+		VoiceSet: GenericVoice
+	-Hovers:
+
+SlaveFighter:
+	Inherits: ^Fighter
+	Valued:
+		Cost: 120
+	Tooltip:
+		Name: Interceptor
+	Health:
+		HP: 30000
+	-SelectionDecorations:
+	-ActorLostNotification:
+	Aircraft:
+		CruiseAltitude: 3
+		RearmBuildings: carrier
+		LandWhenIdle: True
+		Repulsable: False
+		CanHover: False
+	Armament:
+		Weapon: InterceptorBullet
+	MustBeDestroyed:
+	RejectsOrders:
+	Voiced:
+		VoiceSet: GFighterVoice
+	CarrierSlave:
+		LandingDistance: 1c0
+		CloseEnoughDistance: 600
+
+MOBSPANWERMASTER:
+	Inherits: ^ExistsInWorld
+	Inherits@1: ^SpriteActor
+	Inherits@4: ^AutoTargetAll
+	Valued:
+		Cost: 350
+	RenderSprites:
+		Image: gfighter1
+	MobSpawnerMaster:
+		Actors: gfighter1, gfighter1
+		ExitByBudding: False
+	DrawLineToTarget:
+	AttackOmni:
+	Armament@PRIMARY:
+		Weapon: InterceptorOrder
+	Health:
+		HP: 30000
+	AttackMove:
+	Aircraft:
+		CruiseAltitude: 7
+		IdealSeparation: 500
+		MoveIntoShroud: true
+		RepulsionSpeed: 50
+		Speed: 100
+		TurnSpeed: 14
+		CanHover: True
+		LandWhenIdle: False
+	HiddenUnderFog:
+		Type: CenterPosition
+	SpeedMultiplier@Generic:
+		Modifier: 200
+	DamageMultiplier@INVINCIBLE:
+		Modifier: 0
+	SelectionDecorations:
+	WithSpriteControlGroupDecoration:
+	Selectable:
+		Bounds: 45, 45
+
+#The turret will start deployed so this has to be inverted
+^DeployableTurret:
+	Inherits: ^CapitalShip
+	Inherits@1: ^DeployableText
+	Valued:
+		Cost: 400
+	Power:
+		Amount: -15
+	GrantConditionOnDeploy:
+		DeployedCondition: deployed
+	Interactable:
+		Bounds: 60,60
+	Health:
+		HP: 800000
+	Mobile:
+		Speed: 40
+		RequiresCondition: deployed
+	WithTextDecoration@deployed:
+		RequiresCondition: !deployed
+	Targetable@DeployedShip:
+		TargetTypes: DeployedShip
+		RequiresCondition: !deployed
+
+^DefenceStation:
+	Inherits: ^BuildableStation
+	Tooltip:
+		Name: Trade Station
+	Valued:
+		Cost: 400
+	Power:
+		Amount: -15
+	Sellable:
+	Selectable:
+		Bounds: 24,24
+	SelectionDecorations:
+		VisualBounds: 22,48,0,-12
+	RevealsShroud:
+		Range: 8c0
+	BodyOrientation:
+		QuantizedFacings: 8
+	DetectCloaked:
+		Range: 5c0
+	Exit:
+	ProvidesPrerequisite@unitname:
+	ProductionBar:
+        ProductionType: DefenceStationUpgrade
+	AttackTurreted:
+		RequiresCondition: antifighterstation || anticorvettestation
+	Turreted:
+		TurnSpeed: 5
+	#######################################
+	# SELF UPGRADE
+	#######################################
+	ProductionQueue@DefenceStationUpgrade:
+		Type: DefenceStationUpgrade
+		Group: Vehicle
+		LowPowerSlowdown: 3
+
+PROBE:
+	Inherits: ^Fighter
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Probe
+	Power:
+		Amount: -1
+	Selectable:
+		Priority: 3
+	GrantConditionOnMovement@StaticProbe:
+		Condition: StaticProbe
+		ConsiderVerticalMovement: False
+	RevealsShroud:
+		Range: 9c0
+		RequiresCondition: !StaticProbe && !LockProbe
+	ExternalCondition@StaticProbe:
+		Condition: StaticProbe
+	-Armor:
+	Health:
+		HP: 15000
+	Aircraft:
+		Speed: 120
+		CruiseAltitude: 0
+		IdealSeparation: 100
+	MustBeDestroyed:
+	SelectionDecorations:
+		VisualBounds: 20,20
+	Cloak@ProbeCloak:
+		UncloakOn: Move
+		IsPlayerPalette: true
+		RequiresCondition: ProbeCloak
+	GrantConditionOnPrerequisite@ProbeCloak:
+		Prerequisites: research.Probe.Cloak
+		Condition: ProbeCloak
+	ExternalCondition@ProbeCloak:
+		Condition: ProbeCloak
+
+STATIONFIGHTER:
+	Inherits: ^Fighter
+	Valued:
+		Cost: 30
+	Tooltip:
+		Name: Scout
+	Health:
+		HP: 13000
+	RevealsShroud:
+		Range: 10c0
+	Armament:
+		Weapon: ScoutBullet
+	MustBeDestroyed:
+	SelectionDecorations:
+		VisualBounds: 20,20
+	-ActorLostNotification:
+	RenderSprites:
+	RejectsOrders:
+	AutoTarget:
+		ScanRadius: 20
+		InitialStance: AttackAnything
+	GrantPeriodicCondition:
+		Condition: RTB
+		CooldownDuration: 250
+	TransformOnCondition:
+		IntoActor: stationfighterreturn
+		RequiresCondition: RTB
+	ExternalCondition@RTB:
+		Condition: RTB
+
+STATIONFIGHTERRETURN:
+	Inherits: STATIONFIGHTER
+	Armament:
+		Weapon: ChaseAIPlatform
+		TargetStances: Ally
+		ForceTargetStances: Ally
+	KillsSelf:
+		RemoveInstead: True
+		RequiresCondition: StationKillFighter
+	ExternalCondition@StationKillFighter:
+		Condition: StationKillFighter
+	AutoTarget:
+		ScanRadius: 100
+	RenderSprites:
+		Image: stationfighter
+

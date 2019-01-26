@@ -1,0 +1,364 @@
+^Research:
+	AlwaysVisible:
+	Buildable:
+		BuildPaletteOrder: 50
+		Queue: Research
+		BuildLimit: 1
+		IconPalette: pirateicon
+	ProvidesPrerequisite@upgradename:
+	Valued:
+		Cost: 25000
+	RenderSprites:
+		Image: upgradeicon
+	Power:
+		Amount: -5
+	Interactable:
+
+research.Crystal.Harvest:
+	Inherits: ^Research
+	Tooltip:
+		Name: Crystal Harvesting
+	Valued:
+		Cost: 750
+	-Buildable:
+	ProvidesPrerequisite@upgradename:
+		Prerequisite: research.Crystal.Harvest
+	RenderSprites:
+		Image: crystalicon
+
+	###############################################################
+	# Individual Upgrades Start Here
+	###############################################################
+
+^default.upgrade:
+	Interactable:
+	AlwaysVisible:
+	Buildable:
+		Queue: Vehicle
+		BuildDurationModifier: 100
+		BuildLimit: 1
+		IconPalette: pirateicon
+	RenderSprites:
+		Image: upgradeicon
+	Immobile:
+	Doctrine:
+	ProvidesPrerequisite@upgradename:
+	KillsSelf:
+		RemoveInstead: true
+		Delay: 1
+	ProductionQueue:
+		Type: DummyQueue
+		Group: DummyQueues
+
+	###############################################################
+	# PRODUCTION SHIP UPGRADES
+	###############################################################
+
+upgrade.corvettequeue:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Corvette bay
+	Buildable:
+		Queue: AssemblyBayUpgrade
+		Description: Allows corvette production.
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: gpatrolcruiser
+	Power:
+		Amount: -20
+
+upgrade.frigatequeue:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Frigate assembly bay
+	Buildable:
+		Queue: AssemblyBayUpgrade
+		Description: Allows frigate production.
+		Prerequisites: gresearchcoreship
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 2000
+	RenderSprites:
+		Image: gfrigateassemblybay
+	Power:
+		Amount: -40
+
+upgrade.baseshipqueue:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Shipyard
+	Buildable:
+		Queue: AssemblyBayUpgrade
+		Prerequisites: gresearchship
+		Description: Allows base ship production.
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 3000
+	RenderSprites:
+		Image: gshipyard
+	Power:
+		Amount: -40
+
+	###############################################################
+	# CIVILIAN SHIP UPGRADES
+	###############################################################
+
+upgrade.supplyship:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Supply Ship
+	Buildable:
+		Queue: CivilianShipUpgrade
+		Description: Provides supply when deployed
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 500
+	RenderSprites:
+		Image: ghabitatship
+	Power:
+		Amount: 90
+
+upgrade.surveyfrigate:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Survey Frigate
+	Buildable:
+		Queue: CivilianShipUpgrade
+		Description: High vision ship that provides radar and\nstealth detection, vision increases when deployed.
+		Prerequisites: gmercenaryhub
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 1500
+	RenderSprites:
+		Image: gsurveyfrigate
+	Power:
+		Amount: -15
+
+upgrade.engineeringcrew:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Engineering Crew
+	Buildable:
+		Queue: CivilianShipUpgrade
+		Description: Cruiser that High vision ship that provides radar,\nstealth detection, and technology when deployed.
+		Prerequisites: gmercenaryhub
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 1000
+	RenderSprites:
+		Image: gengineer
+		HP: 400000
+	Power:
+		Amount: -15
+
+upgrade.antifighterturret:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Acid Turret
+	Buildable:
+		Queue: CivilianShipUpgrade
+		Description: Anti fighter deployable defence
+		Prerequisites: gsurveyfrigate
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 250
+	RenderSprites:
+		Image: gaiplatform
+
+upgrade.antismallturret:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Needler Turret
+	Buildable:
+		Queue: CivilianShipUpgrade
+		Description: Anti Corvette deployable defence
+		Prerequisites: gengineer
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 250
+	RenderSprites:
+		Image: gapplatform
+
+	###############################################################
+	# RESEARCH CORESHIP UPGRADES
+	###############################################################
+
+upgrade.mercenaryhub:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Mercenary Hun Ship
+	Buildable:
+		Queue: ResearchShipUpgrade
+		Description: Provides extra technology and allows to hire mercenary forces to bolster your fleet.
+		Prerequisites: gresearchcoreship
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 1000
+	Power:
+		Amount: -25
+	RenderSprites:
+		Image: gmercenaryhub
+
+upgrade.researchship:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Research Ship
+	Buildable:
+		Queue: ResearchShipUpgrade
+		Description: Provides advanced technologies.
+		Prerequisites: gsurveyfrigate, gengineer
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 1500
+	Power:
+		Amount: -50
+	RenderSprites:
+		Image: gresearchship
+
+upgrade.warpgate:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Warp Gate
+	Buildable:
+		Queue: ResearchShipUpgrade
+		Description: Experimental ship that provides instant travel, cannot be undeployed.
+		Prerequisites: gresearchship
+		BuildLimit: 0
+		IconPalette: terrain
+	Valued:
+		Cost: 1000
+	Power:
+		Amount: -50
+	RenderSprites:
+		Image: gsubspess
+
+	###############################################################
+	# MERCENARY RESERACH
+	###############################################################
+
+^Tier1Contract:
+	AlwaysVisible:
+	Buildable:
+		BuildPaletteOrder: 50
+		Queue: MercContract
+		BuildLimit: 1
+		IconPalette: pirateicon
+        Prerequisites: ~!T1Contract
+		BuildDurationModifier: 240
+	ProvidesPrerequisite@upgradename:
+	ProvidesPrerequisite@T1Contract:
+		Prerequisite: T1Contract
+	Valued:
+		Cost: 750
+	Interactable:
+
+^Tier2Contract:
+	AlwaysVisible:
+	Buildable:
+		BuildPaletteOrder: 50
+		Prerequisites: ~T1Contract, ~!T2Contract
+		Queue: MercContract
+		BuildLimit: 1
+		IconPalette: pirateicon
+		BuildDurationModifier: 240
+	ProvidesPrerequisite@T2Contract:
+		Prerequisite: T2Contract
+	Valued:
+		Cost: 750
+	Interactable:
+
+research.pirates:
+	Inherits: ^Tier1Contract
+	Tooltip:
+		Name: Blood Dust clan contact
+	Buildable:
+		Description: Establishes connections with the pirate clans in the sector.\nPirate units focus on boarding actions and hit and run tactics.\n\nUnits unlocked:\n-Boarding Frigate.\n-Corsair.\n-Battle Axe Fighter Bomber.
+	RenderSprites:
+		Image: punit3
+
+research.hyperion:
+	Inherits: ^Tier1Contract
+	Tooltip:
+		Name: Hyperion co Contact
+	Buildable:
+		Description: Establishes connections with the Hyperion weapons company.\nHyperion units focus on denying mobility to th enemy\nand defence.\n\nUnits unlocked:\n-G.O.D. Platform.\n-Minelayer Frigate.\n-Defender.
+	RenderSprites:
+		Image: dunit1
+
+research.technomage:
+	Inherits: ^Tier1Contract
+	Tooltip:
+		Name: Technomage Clan Contact
+	Buildable:
+		Description: Establishes connections with the Technomage clans in the sector.\nTechnomage units focus on deceiving enemies and spying.\n\nUnits unlocked:\n-Cloak Generator Frigate.\n-Hologram Projector Frigate.\n-Cloaked Fighter.
+	RenderSprites:
+		Image: iunit1
+
+research.controller:
+	Inherits: ^Tier1Contract
+	Tooltip:
+		Name: League of Science Contract
+	Buildable:
+		Description: Establishes connections with the League of Science.\nLoS units focus on controlling the flow of battle stopping units.\n\nUnits unlocked:\n-Gravity Generator Frigate.\n-Lancer Corvette.\n-Leech.
+	RenderSprites:
+		Image: cunit1
+
+researchT2.pirates:
+	Inherits: ^Tier2Contract
+	Tooltip:
+		Name: Blood Dust clan contact
+	Buildable:
+		Prerequisites: ~T1Contract, ~!T2Contract, ~!research.pirates
+		Description: Establishes connections with the pirate clans in the sector.\nPirate units focus on boarding actions and hit and run tactics.\n\nUnits unlocked:\n-Boarding Frigate.\n-Corsair.\n-Battle Axe Fighter Bomber.
+	RenderSprites:
+		Image: punit3
+	ProvidesPrerequisite@upgradename:
+		Prerequisite: research.pirates
+
+researchT2.hyperion:
+	Inherits: ^Tier2Contract
+	Tooltip:
+		Name: Hyperion co Contact
+	Buildable:
+		Prerequisites: ~T1Contract, ~!T2Contract, ~!research.hyperion
+		Description: Establishes connections with the Hyperion weapons company.\nHyperion units focus on denying mobility to th enemy\nand defence.\n\nUnits unlocked:\n-G.O.D. Platform.\n-Minelayer Frigate.\n-Defender.
+	RenderSprites:
+		Image: dunit1
+	ProvidesPrerequisite@upgradename:
+		Prerequisite: research.hyperion
+
+researchT2.technomage:
+	Inherits: ^Tier2Contract
+	Tooltip:
+		Name: Technomage Clan Contact
+	Buildable:
+		Prerequisites: ~T1Contract, ~!T2Contract, ~!research.technomage
+		Description: Establishes connections with the Technomage clans in the sector.\nTechnomage units focus on deceiving enemies and spying.\n\nUnits unlocked:\n-Cloak Generator Frigate.\n-Hologram Projector Frigate.\n-Cloaked Fighter.
+	RenderSprites:
+		Image: iunit1
+	ProvidesPrerequisite@upgradename:
+		Prerequisite: research.technomage
+
+researchT2.controller:
+	Inherits: ^Tier2Contract
+	Tooltip:
+		Name: League of Science Contract
+	Buildable:
+		Prerequisites: ~T1Contract, ~!T2Contract, ~!research.controller
+		Description: Establishes connections with the League of Science.\nLoS units focus on controlling the flow of battle stopping units.\n\nUnits unlocked:\n-Gravity Generator Frigate.\n-Lancer Corvette.\n-Leech.
+	RenderSprites:
+		Image: cunit1
+	ProvidesPrerequisite@upgradename:
+		Prerequisite: research.controller

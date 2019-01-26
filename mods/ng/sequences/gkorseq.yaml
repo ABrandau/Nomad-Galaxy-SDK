@@ -1,0 +1,346 @@
+gmothership:
+	Inherits: mothership
+	idle:
+		ZOffset: -2000
+
+gbc1:
+	Inherits: ^shipdefault
+	icon: gbc1icon
+
+gbc2:
+	Inherits: ^shipdefault
+	icon: gbc2icon
+
+gpatrolcruiser:
+	Inherits: ^shipdefault
+	icon: gpatrolcruisericon
+	deployed: gpatrolcruisermake
+		Start: 78
+	make: gpatrolcruisermake
+		Length: *
+
+gproductionship:
+	Inherits: ^shipdefault
+	CorvetteQueue: gpatrolcruiser
+		Facings: -32
+		UseClassicFacingFudge: True
+	FrigateQueue: gfrigateassemblybay
+		Facings: -32
+		UseClassicFacingFudge: True
+	BaseShipQueue: gshipyard
+		Facings: -32
+		UseClassicFacingFudge: True
+	deployed:
+		Start: 13
+	icon: gproductionshipicon
+
+gcivship:
+	Inherits: ^shipdefault
+	##### Civ Stuff
+	supplyship: ghabitatship
+		Facings: -32
+		UseClassicFacingFudge: True
+	engineeringcrew: gengineer
+		Facings: -32
+		UseClassicFacingFudge: True
+	surveyfrigate: gsurveyfrigate
+		Facings: -32
+		UseClassicFacingFudge: True
+	##### Turrets
+	anticovertteturret: gacplatform
+		Facings: -32
+	antifighteridle: gaiplatform
+	icon: gcivshipicon
+
+gfighterturret:
+	Inherits: ^shipdefault
+	idle: gaiplatform
+		Facings: 1
+		UseClassicFacingFudge: False
+
+gnormalturret:
+	Inherits: ^shipdefault
+	idle: gacplatform
+
+ghabitatship:
+	Inherits: ^shipdefault
+	icon: ghabitatshipicon
+	deployed: ghabitatshipmake
+		Start: 56
+	make: ghabitatshipmake
+		Length: *
+
+grefinery:
+	Inherits: ^shipdefault
+	idle:
+		ZOffset: -1000
+	harvest: harvestanim
+	crystal: orecrystal
+		Facings: -32
+	box: box
+		Facings: -20
+	icon: grefineryicon
+
+gfrigateassemblybay:
+	Inherits: ^shipdefault
+	icon: gfrigateassemblybayicon
+	deployed: gfrigateassemblybaymake
+		Start: 76
+	make: gfrigateassemblybaymake
+		Length: 77
+
+gshipyard:
+	Inherits: ^shipdefault
+	deployed: gshipyardmake
+		Start: 88
+	make: gshipyardmake
+		Length: *
+	icon: gshipyardicon
+
+gengineer:
+	Inherits: ^shipdefault
+	icon: gengineericon
+	deployed: gengineermake
+		Start: 56
+	make: gengineermake
+		Length: *
+
+gresearchcoreship
+	Inherits: ^shipdefault
+	icon: gresearchcoreshipicon
+	##### Civ Stuff
+	researchship: gresearchship
+		Facings: -32
+		UseClassicFacingFudge: True
+	mercenaryhub: gmercenaryhub
+		Facings: -32
+		UseClassicFacingFudge: True
+	warpgate: gsubspess
+		Facings: -32
+		UseClassicFacingFudge: True
+
+gresearchship:
+	Inherits: ^shipdefault
+	icon: gresearchshipicon
+	deployed: gresearchshipmake
+		Start: 78
+	make: gresearchshipmake
+		Length: *
+
+gmercenaryhub:
+	Inherits: ^shipdefault
+	icon: gmercenaryhubicon
+	deployed: gmercenaryhubmake
+		Start: 68
+	make: gmercenaryhubmake
+		Length: *
+
+gsubspess:
+	Inherits: ^shipdefault
+	subpessanimship: subpessanimship
+		Length: *
+	icon: gsubspessicon
+	deployed: gsubspessmake
+		Start: 69
+	roof: gsubspessmake
+		Start: 70
+		ZOffset: 5000
+	make: gsubspessmake
+		Length: 68
+
+gstationmobile:
+	Inherits: ^shipdefault
+	icon: gstationicon
+
+gstationt1:
+	defaults:
+		Offset: 0,15
+	idle:
+		Tick: 75
+gstationt2:
+	Inherits: stationt1
+
+gstationt3:
+	Inherits: stationt1	
+
+gfrig1:
+	Inherits: ^shipdefault
+	icon: gfrig1icon
+	turret: gkorturr
+		Facings: -32
+
+gfrig2:
+	Inherits: ^shipdefault
+	icon: gfrig2icon
+
+gfrig3:
+	Inherits: ^shipdefault
+	icon: gfrig3icon
+
+gfrig4:
+	Inherits: ^shipdefault
+	shoot: gfrig4d
+		Facings: -32
+	icon: gfrig4icon
+
+gfrig5:
+	Inherits: ^shipdefault
+	icon: gfrig5icon
+
+gsurveyfrigate:
+	Inherits: ^shipdefault
+	icon: gsurveyfrigateicon
+	deployed: gsurveyfrigatemake
+		Start: 57
+	make: gsurveyfrigatemake
+		Length: *
+
+gcargofrig:
+	Inherits: ^shipdefault
+
+gcorv1:
+	Inherits: ^shipdefault
+	icon: corvetteicon
+    turret: #gturret2
+		Facings: -32
+	# # turret-top: tentacletorpedotop
+	# 	# Facings: 16
+	# 	# Stride: 18
+	# # turret-top-aim: tentacletorpedotop
+	# 	# Facings: 16
+	# 	# Length: 18
+	# # turret-left: tentacletorpedoleft
+	# 	# Facings: 16
+	# 	# Stride: 18
+	# # turret-left-aim: tentacletorpedoleft
+	# 	# Facings: 16
+	# 	# Length: 18
+	# # turret-right: tentacletorpedoright
+	# 	# Facings: 16
+	# 	# Stride: 18
+	# # turret-right-aim: tentacletorpedoright
+	# 	# Facings: 16
+	# 	# Length: 18
+	# # turret-bot: tentacletorpedobot
+	# 	# Facings: 16
+	# 	# Stride: 18
+	# 	# ZOffset: -256
+	# # turret-bot-aim: tentacletorpedobot
+	# 	# Facings: 16
+	# 	# Length: 18
+	# 	# ZOffset: -256
+
+gcorv2:
+	Inherits: ^shipdefault
+	icon: corvette2icon
+
+gcorv3:
+	Inherits: ^shipdefault
+	icon: gcorv3icon
+    turret: #gturret2
+		Facings: -32
+
+gminer:
+	Inherits: ^shipdefault
+	icon: minericon
+	harvest: harvestanim
+	crystal: orecrystal
+		Facings: -32
+	box: box
+		Facings: -20
+
+gfightercarrier:
+	Inherits: ^shipdefault
+	Inherits@2: ^fighterdefault
+	icon: gfightercarriericon
+
+gbombercarrier:
+	Inherits: ^shipdefault
+	Inherits@2: ^fighterdefault
+	icon: gbombercarriericon
+
+gfighter1:
+	Inherits: ^shipdefault
+	Inherits@2: ^fighterdefault
+    dot: dot
+	icon: gfighter1icon
+
+gfighter2:
+	Inherits: ^shipdefault
+	Inherits@2: ^fighterdefault
+    dot: dot
+	icon: gfighter2icon
+
+gfighter3:
+	Inherits: ^shipdefault
+	Inherits@2: ^fighterdefault
+	icon: gfighter3icon
+
+gfighter4:
+	Inherits: ^shipdefault
+	Inherits@2: ^fighterdefault
+
+gprobe:
+	Inherits: ^shipdefault
+	Inherits@2: ^fighterdefault
+	icon: gprobeicon
+
+gaderrick:
+	idle:
+		Length: *
+	stand:
+		Length: *
+	icon: gaderrickicon
+	anticovertteturret: gacplatform
+		Facings: -32
+	antifighteridle: gaiplatform
+	antifighterturret: gturret
+		Facings: -32
+
+gaiplatform:
+	idle:
+	turret: gturret
+		Facings: -32
+	icon: gaiplatformicon
+
+gacplatform:
+	idle:
+		Length: *
+	stand:
+		Length: *
+	turret:
+		Facings: -32
+	icon: gacplatformicon
+
+gasensorplatform:
+	idle:
+		Length: 1
+	stand:
+		Length: 1
+	icon: gasensorplatformicon
+
+gapplatform:
+	Inherits: ^shipdefault
+	turret:
+		Facings: -32
+	icon: gapplatformicon
+
+garepairplatform:
+	Inherits: ^shipdefault
+	turret:
+		Facings: -32
+	icon: garepairplatformicon
+
+shipyardummy:
+	Inherits: ^shipdefault
+	deployed: gshipyardmake
+		Start: 88
+	make: gshipyardmake
+		Length: *
+	icon: gshipyardicon
+
+combatstationdummy:
+	Inherits: ^shipdefault
+	deployed: gshipyard
+		Start: 13
+	icon: stationt2icon

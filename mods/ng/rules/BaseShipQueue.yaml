@@ -1,0 +1,148 @@
+#################################################################################
+# G KOR
+#################################################################################
+
+GCIVSHIP:
+	Inherits: CIVILIANCORESHIP
+    Inherits@2: ^CivShipHP
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: Upgradable ship, it can assume different utility roles depending on the upgrade.\n\nCurrent roles are the following.\n- Fleet capacity provider (Supply ship).\n- Radar provider & Mercenary Contractor (Survey Frigate).\n- Repairs and static defence builder (Engineering Crew)\n- Tech Center and upgrader (Research Ship).
+
+GMINER:
+	Inherits: MINER
+	Buildable:
+		Queue: BaseShipQueue
+		Prerequisites: ghabitatship
+		BuildPaletteOrder: 2
+		Description: Utility Ship
+	RenderSprites:
+		Image: grefinery
+
+GPRODUCTIONSHIP:
+	Inherits: PRODUCTIONSHIP
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 3
+		Prerequisites: ghabitatship
+		Description: Upgradable Ship, it can assume different utility roles depending on the upgrade.\n\nCurrent queues are the following.\n- Fighter and Corvette production\n- Frigate production.\n- Core ship production.
+
+GRESEARCHCORESHIP:
+	Inherits: RESEARCHCORESHIP
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 4
+		Prerequisites: gproductionship, gminer, gcivship
+		Description: Upgradable ship, provides different bonuses depending on the upgrade.\n\nCurrent roles are the following.\n- Mercenary Provider (Mercenary Hub).\n- Late game tech provider (Research Ship).\n- Faction specific buffs (Core ships)\n- Map detection (Sensor array)\n- Instant travel (Warp Gate)
+	ProvidesPrerequisite@GRESEARCHCORESHIP: 
+
+GADERRICK:
+	Inherits: ^DefenceStation
+	Valued:
+		Cost: 400
+	Interactable:
+		Bounds: 40,40
+	ExplodeWeapon:
+		Weapon: GKorGasBulletSpawner
+		RequiresCondition: antifighterstation
+	ExplodeWeapon@1:
+		Weapon: GKorGasBulletSpawner
+		RequiresCondition: antifighterstation
+	WithSpriteBody:
+		RequiresCondition: !antifighterstation && !anticorvettestation
+	WithSpriteBody@antifighterstation:
+		Sequence: antifighteridle
+		RequiresCondition: antifighterstation
+	WithSpriteTurret@anticorvettestation:
+		RequiresCondition: anticorvettestation
+		Sequence: anticovertteturret
+	Tooltip:
+		Name: Defence Station
+		RequiresCondition: !antifighterstation && !anticorvettestation
+	Tooltip@antifighterstation:
+		Name: Acid Turret (Anti Fighter)
+		RequiresCondition: antifighterstation
+	Tooltip@anticorvettestation:
+		Name: Needler Turret (Anti Corvette)
+		RequiresCondition: anticorvettestation
+
+GBC2:
+	Inherits: ^CapitalShip
+	Inherits@2: ^FrigateTargetPriority
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 9
+		Prerequisites: ~gmothership, gresearchship
+		Description: Heavy capital ship, armed with heavy cannons, and ion cannons. It's\nheavy armor allows it to Take great amounts of punshiment.
+	Valued:
+		Cost: 3500
+	Tooltip:
+		Name: Dreadnaught
+	Power:
+		Amount: -70
+	Mobile:
+		Speed: 20
+	Health:
+		HP: 4500000
+	RevealsShroud:
+		Range: 5c0
+	MustBeDestroyed:
+	SelectionDecorations:
+		VisualBounds: 120,120
+	AttackFrontal:
+	Armament:
+		Weapon: IonBeamCharge
+	PortableChrono:
+		ChargeDelay: 1500
+		TargetCursor: deploy
+		MaxDistance: 6
+		TargetBlockedCursor: deploy-blocked
+	Armament@1:
+		Weapon: IonBeam
+		LocalOffset: 1000,800,0
+		RequiresCondition: BeamReady
+	Armament@2:
+		Weapon: IonBeam2
+		LocalOffset: 1000,800,0
+		RequiresCondition: BeamReady
+	Armament@3:
+		Weapon: IonBeam
+		LocalOffset: 1000,-800,0
+		RequiresCondition: BeamReady
+	Armament@4:
+		Weapon: IonBeam2
+		LocalOffset: 1000,-800,0
+		RequiresCondition: BeamReady
+	ExplodeWeapon@4:
+		Weapon: FieldDefenceLaserSpawnMothership
+		LocalOffset: 250,-250,0
+	ExplodeWeapon@5:
+		Weapon: FieldDefenceLaserSpawnMothership
+		LocalOffset: 250,250,0
+	ExternalCondition@BeamReady:
+		Condition: BeamReady
+
+	# # WithDecoration@Role:
+	# 	# Image: rank
+	# 	# Sequence: vialicon
+	# 	# Palette: effect
+	# 	# ReferencePoint: Top, Right
+	# 	# RequiresCondition: !weonqloweonlawea
+	# 	# ZOffset: 256
+	# # WithIdleOverlay@HyperSpaceGenerator:
+	# 	# Sequence: subpessanimship
+	# 	# Palette: darkbluepal
+	# 	# Offset: 25,0,-500
+	# 	# RequiresCondition: HyperSpaceGenerator && !HyperSpaceFadeOut
+	# # GrantTimedConditionOnDeploy:
+	# 	# DeployedCondition: HyperSpaceGenerator
+	# 	# CooldownTicks: 1500
+	# 	# DeployedTicks: 350
+	# 	# StartsFullyCharged: True
+	# # ExplodeWeapon@HyperSpace:
+	# 	# Weapon: HyperSpaceGenerator
+	# 	# RequiresCondition: HyperSpaceGenerator && !HyperSpaceFadeOut
+	# # ExternalCondition@HyperSpaceGenerator:
+	# 	# Condition: HyperSpaceGenerator

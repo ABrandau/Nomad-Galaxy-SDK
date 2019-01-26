@@ -1,0 +1,322 @@
+^SupplyShipLogo:
+	WithDecoration@supplyship:
+		Image: rank
+		Sequence: houseicon
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
+		RequiresCondition: !surveyfrigate && !engineeringcrew && !researchship && !antismallturret && !antifighterturret
+
+^EngineerShipLogo:
+	WithDecoration@engineeringcrew:
+		Image: rank
+		Sequence: wrenchicon
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
+
+^SurveyFrigateShipLogo:
+	WithDecoration@surveyfrigate:
+		Image: rank
+		Sequence: dishicon
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
+
+^ResearchShipLogo:
+	WithDecoration@researchship:
+		Image: rank
+		Sequence: vialicon
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
+
+^DefenceShipLogo:
+	WithDecoration@antifighterturret:
+		Image: rank
+		Sequence: towericon
+		Palette: effect
+		ReferencePoint: Top, Right
+		RequiresCondition: antifighterturret
+		ZOffset: 256
+
+^FactoryShipLogo:
+	WithDecoration@Role:
+		Image: rank
+		Sequence: factoryicon
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
+
+DGSUPPLYSHIP:
+	Inherits@1: ^Building
+	Inherits@1: ^SupplyShipHP
+	Building:
+		Dimensions: 1,1
+		Footprint: =
+		TerrainTypes: Clear, SpaceGray, SpaceGray2
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	AppearsOnRadar:
+		UseLocation: True
+	Transforms:
+		IntoActor: ghabitatship
+		Offset: 0,0
+		Facing: 128
+	RenderSprites:
+		Image: ghabitatship
+	Selectable:
+		Priority: 5
+	Power@2:
+		Amount: 40
+	Refinery:
+		DockOffset: 0,0
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
+DGSURVEYFRIGATE:
+	Inherits@1: ^Building
+	Inherits@2: ^SurveyFrigateShipLogo
+	Inherits@3: ^SurveyFrigateHP
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	Transforms:
+		IntoActor: gsurveyfrigate
+		Offset: 0,0
+		Facing: 0
+	RenderSprites:
+		Image: gsurveyfrigate
+	Selectable:
+		Priority: 5
+	ProvidesRadar:
+	RevealsShroud@surveyfrigate:
+		Range: 20c0
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
+DGENGINEER:
+	Inherits@1: ^Building
+	Inherits@2: ^EngineerShipLogo
+	Inherits@3: ^EngineerCrewHP
+	Inherits@4: ^AutoTargetAll
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gengineer
+		Offset: 0,0
+		Facing: 64
+	RenderSprites:
+		Image: gengineer
+	RenderRangeCircle:
+	Selectable:
+		Priority: 5
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+	AttackOmni:
+	ExplodeWeapon:
+		Weapon: EngineerCrewFighterSpawn
+	CarrierMaster:
+		Actors: gfighter3, gfighter3, gfighter3
+		RespawnTicks: 10
+		ReamTicks: 10
+		NoRegeneration: True
+		InstaRepair: true
+		SpawnAllAtOnce: True
+	Armament@PRIMARY:
+		Weapon: EngineerCrewFighterSpawn
+		TargetStances: Ally
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: CapitalShip, Frigate, Corvette, Fighter, Station
+		InvalidTargets: NoAutoTarget
+		Priority: 2
+
+DGMERCENARYHUB:
+	Inherits@1: ^Building
+	Inherits@2: ^ResearchShipBuffer
+	Inherits@3: ^MercenaryHubHP
+	Inherits@4: ^AutoTargetAll
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gmercenaryhub
+		Offset: 0,0
+	RenderSprites:
+		Image: gmercenaryhub
+	ProvidesPrerequisite@gmercenaryhub:
+		Prerequisite: gmercenaryhub
+    Exit:
+	Selectable:
+		Priority: 5
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+	ProductionQueue:
+		Type: MercContract
+		Factions: gkor, terran
+		Group: Aircraft
+		LowPowerSlowdown: 10
+		QueuedAudio: Building
+		ReadyAudio: ConstructionComplete
+	Production:
+        Produces: MercContract
+        RequiresCondition: !ContractsFinished
+	GrantConditionOnPrerequisite@T2Contract:
+		Condition: ContractsFinished
+		Prerequisites: T2Contract
+
+DGRESEARCHSHIP:
+	Inherits@1: ^Building
+	Inherits@2: ^ResearchShipBuffer
+	Inherits@3: ^ResearchShipHP
+	Inherits@4: ^AutoTargetAll
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gresearchship
+		Offset: 0,0
+	RenderSprites:
+		Image: gresearchship
+	Selectable:
+		Priority: 5
+	ProvidesPrerequisite@gresearchship:
+		Prerequisite: gresearchship
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
+DGPATROLCRUISER:
+	Inherits@1: ^Building
+	Inherits@2: ^ProducesCorvettes
+	Inherits@3: ^PatrolCruiserHP
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	Tooltip:
+		Name: Patrol Cruiser
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gpatrolcruiser
+		Offset: 0,0
+		Facing: 64
+	RenderSprites:
+		Image: gpatrolcruiser
+	Selectable:
+		Priority: 5
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+	RallyPoint:
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
+DGFRIGATEASSEMBLYBAY:
+	Inherits@1: ^Building
+	Inherits@2: ^ProducesFrigates
+	Inherits@3: ^FrigateAssemblyBayHP
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	Tooltip:
+		Name: Frigate Assembly Bay
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gfrigateassemblybay
+		Offset: 0,0
+		Facing: 192
+	RenderSprites:
+		Image: gfrigateassemblybay
+	Selectable:
+		Priority: 5
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+	RallyPoint:
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
+DGSHIPYARD:
+	Inherits@1: ^Building
+	Inherits@2: ^ProducesBaseShips
+	Inherits@3: ^ShipyardHP
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	Tooltip:
+		Name: Shipyard
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gshipyard
+		Offset: 0,0
+	RenderSprites:
+		Image: gshipyard
+	Selectable:
+		Priority: 5
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+	RallyPoint:
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
+DGSUBSPESS:
+	Inherits@1: ^Building
+    Inherits@2: ^SubspessHP
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	Tooltip:
+		Name: Subspace Gate
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Power:
+		Amount: -30
+	RenderSprites:
+		Image: gsubspess
+	Selectable:
+		Priority: 5
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+	TeleportNetworkPrimaryExit:
+	TeleportNetwork:
+		Type: hyperspace
+	RallyPoint:
+	Exit:
+	WithTextDecoration@primary:
+		Text: PRIMARY
+		ReferencePoint: Top
+		Color: E0D048
+		ZOffset: 9999
+		RequiresCondition: primary
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+	WithIdleOverlay@subspaceanim:
+		Sequence: subspaceanim
+		Palette: darkbluepal
+	WithIdleOverlay@roof:
+		Sequence: roof

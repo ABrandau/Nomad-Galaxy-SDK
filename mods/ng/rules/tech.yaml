@@ -1,0 +1,225 @@
+DANGERBEACON:
+	Inherits: ^NeutralObject
+	RenderSprites:
+		Palette: player
+	Tooltip:
+		Name: Hazzard Buoy
+	ExplodeWeapon:
+		Weapon: DangerBuoyShrapnel1
+	DamageMultiplier@Beacom:
+		Modifier: 0
+	-Interactable:
+
+NAVBEACON:
+	Inherits: ^NeutralObject
+	RenderSprites:
+		Palette: player
+	Tooltip:
+		Name: Navigational Buoy
+	DamageMultiplier@Beacom:
+		Modifier: 0
+	-Interactable:
+	Selectable:
+		Bounds: 10,10
+	ProximityExternalCondition@SpeedBuoy:
+		Condition: SpeedBuoy
+		ValidStances: Enemy, Ally, Neutral
+
+MINESTATION:
+	Inherits: ^NeutralObject
+	RenderSprites:
+		Palette: player
+	Tooltip:
+		Name: Minelayer Station
+	Health:
+		HP: 1000000
+	Armor:
+		Type: CapitalShip
+	Armor@1:
+		Type: Station
+	Targetable:
+		TargetTypes: Station, CapitalShip
+	Selectable:
+		Bounds: 50,50
+	ExplodeWeapon@MineSpawn:
+		Weapon: MinelayerStationMineSpawn
+
+MINELAYERSTATIONMINE:
+	Inherits: ^Fighter
+	Valued:
+		Cost: 50
+	Tooltip:
+		Name: Mine
+	Health:
+		HP: 10000
+	-ActorLostNotification:
+	Aircraft:
+		Speed: 25
+	RenderSprites:
+		Image: dmine
+	Armament:
+		Weapon: MineBullet2
+		TargetStances: Enemy, Neutral
+	Aircraft:
+		CruiseAltitude: 10
+		IdealSeparation: 2c0
+		RepulsionSpeed: 20
+	MustBeDestroyed:
+	AttackAircraft:
+	SelectionDecorations:
+	Interactable:
+	-Selectable:
+	ExternalCondition@MineDie:
+		Condition: MineDie
+	Explodes:
+		EmptyWeapon: MineBullet2
+		Weapon: MineBullet2
+	KillsSelf:
+		RequiresCondition: MineDie
+	WithFacingSpriteBody:
+		-RequiresCondition: !Oli
+	Targetable@Mine:
+		TargetTypes: Mine
+	-WithIdleOverlay@subspaceanim:
+	-ExplodeWeapon@HyperSpaceFadeOutAnim:
+	-ExternalCondition@HyperSpace:
+	-ExternalCondition@HyperSpaceFadeOut:
+	-ExternalCondition@HyperSpace2:
+	Voiced:
+		VoiceSet: GenericVoice
+	Cloak@ProbeCloak:
+		UncloakOn: Move
+		IsPlayerPalette: true
+		RequiresCondition: !MineCloak
+	GrantPeriodicCondition:
+		Condition: KillMine
+		CooldownDuration: 1000
+		ActiveDuration: 5
+	KillsSelf@KillMine:
+		RequiresCondition: KillMine
+	ExternalCondition@KillMine:
+		Condition: KillMine
+
+LANE:
+	Inherits: ^NeutralObject
+	Inherits@2: ^AutoTargetAll
+	RenderSprites:
+		Palette: player
+	Tooltip:
+		Name: Trade Lane
+	DamageMultiplier@Beacom:
+		Modifier: 0
+	-Interactable:
+	Selectable:
+		Bounds: 10,10
+	AttackOmni:
+	AutoTarget:
+		InitialStanceAI: Defend
+	RevealsShroud:
+		Range: 6c0
+		Type: CenterPosition
+	Armament:
+		Weapon: LaneSpeedShock
+		TargetStances: Enemy, Neutral, Ally
+
+DANGERBEACONEND:
+	Inherits: DANGERBEACON
+	RenderSprites:
+		Image: dangerbeacon
+	Targetable@DangerBeacon:
+		TargetTypes: DangerBeacons
+	Targetable@DangerBeacon2:
+		TargetTypes: DangerBeacon
+	Targetable@DangerBeacon3:
+		TargetTypes: CapitalShip
+	-ExplodeWeapon:
+
+^CapturableObject:
+	Targetable:
+		TargetTypes: CarrierCaptor
+        
+WARPGATE:
+	Inherits: ^NeutralObject
+	Inherits@1: ^CapturableObject
+	Tooltip:
+		Name: Warp Gate
+	Selectable:
+		Bounds: 200,200
+	ExplodeWeapon@1:
+		Weapon: SpawnCargoFreighter
+		LocalOffset: 0,100,0
+		RequiresCondition: GSpawnFreighters
+		ResetReloadWhenEnabled: False
+	GrantConditionOnPrerequisite@GSpawnFreighters:
+		Prerequisites: gmothership
+		Condition: GSpawnFreighters
+	ExternalCondition@GSpawnFreighters:
+		Condition: GSpawnFreighters
+	TransformOnCapture:
+		IntoActor: warpgate
+	ProximityExternalCondition:
+		Condition: ShipOut
+		Range: 3c0
+	Targetable@NavBeacon:
+		TargetTypes: NavBeacon
+
+STARBASE:
+	Inherits: ^NeutralObject
+	Tooltip:
+		Name: Starbase
+	DamageMultiplier@Beacom:
+		Modifier: 0
+	Inherits@1: ^CapturableObject
+	-Interactable:
+	CashTrickler:
+
+CONVOYSHIP:
+	Inherits: ^CapitalShip
+	Tooltip:
+		Name: Convoy Ship
+	Valued:
+		Cost: 1
+	Health:
+		HP: 1000000
+	RevealsShroud:
+		Range: 5c0
+	Armament:
+		Weapon: NavBuoyNavigation
+		TargetStances: Ally
+		RequiresCondition: ConvoyAdvance
+	MustBeDestroyed:
+	Turreted:
+	AttackTurreted:
+	SelectionDecorations:
+		VisualBounds: 60,60
+	AutoTarget:
+		ScanRadius: 200
+	ExternalCondition@ShipOut:
+		Condition: ShipOut
+	ExternalCondition@ConvoyAdvance:
+		Condition: ConvoyAdvance
+	KillsSelf:
+		RequiresCondition: ShipOut
+		RemoveInstead: True
+	SpawnActorOnDeath:
+		Actor: BOX
+	GrantConditionOnDamageState:
+		ValidDamageStates: Undamaged
+		Condition: ConvoyAdvance
+
+BOX:
+	Inherits: ^Planet
+	Health:
+		HP: 500000
+	Tooltip:
+		Name: Cargo Box
+	Targetable:
+		TargetTypes: CapitalShip, DeployedShip
+	RenderSprites:
+		Palette: player
+	TransformOnCapture:
+		IntoActor: glbminer
+	Armor:
+		Type: Frigate
+	Capturable:
+		Types: crate

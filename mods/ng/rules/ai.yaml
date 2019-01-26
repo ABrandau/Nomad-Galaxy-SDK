@@ -1,0 +1,71 @@
+Player:
+	ModularBot@Beast:
+		Name: Beast
+		Type: Beast
+	GrantConditionOnBotOwner@Beast:
+		Condition: Beast
+		Bots: Beast
+	HarvesterBotModule@Beast:
+		RequiresCondition: Beast
+	BaseBuilderBotModule@Beast:
+		RequiresCondition: Beast
+		UnitsToBuild:
+			gfighter1master: 15%
+			gfighter2master: 1%
+			gcorv1: 5%
+			gcorv2: 10%
+			gfrig1: 20%
+			gfrig2: 20%
+			gfrig3: 5%
+			gminer: 5%
+			gsurveyfrigate: 50%
+			gfightercarrier: 2%
+			gbombercarrier: 10%
+			gcivship: 5%
+			gproductionship: 5%
+			gresearchcoreship: 5%
+			grefinery: 100%
+			gpatrolcruiser: 5%
+			ghabitatship: 20%
+			gfrigateassemblybay: 5%
+			gshipyard: 5%
+			gengineer: 5%
+			gstationmobile: 20%
+			tcorv1: 10%
+			tcorv2: 5%
+			tfrig1: 20%
+			tfrig2: 20%
+			tfrig3: 5%
+			tsf: 20%
+			tisf: 2%
+			tbsf: 10%
+			tref: 100%
+			tpatrolcruiser: 5%
+			thab: 20%
+			tfab: 5%
+			teng: 5%
+		UnitLimits:
+			gfighter1master: 3
+			gfighter2master: 4
+			GFIGHTER2MASTER: 4
+			gcivship: 10
+			gminer: 5
+			gproductionship: 5
+			gfightercarrier: 3
+			gbombercarrier: 5
+			gpatrolcruiser: 5
+			grefinery: 1
+			ghabitatship: 2
+			gfrigateassemblybay: 5
+			gsurveyfrigate: 2
+			gengineer: 1
+			tisf: 3
+			tbsf: 5
+			tpatrolcruiser: 2
+			tref: 1
+			thaf: 5
+			tfab: 1
+			tsf: 2
+			gshipyard: 1
+			teng: 1
+		SquadSize: 15
