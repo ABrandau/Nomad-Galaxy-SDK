@@ -138,6 +138,7 @@ World:
 	ProductionQueueFromSelection:
 		ProductionTabsWidget: PRODUCTION_TABS
 	DomainIndex:
+	TerrainRenderer:
 	SmudgeLayer@SCORCH:
 		Type: Scorch
 		Sequence: scorches

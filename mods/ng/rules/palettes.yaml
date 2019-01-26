@@ -13,6 +13,7 @@
 		Name: chrome
 		Filename: temperatra.pal
 		ShadowIndex: 3
+		CursorPalette: true
 		AllowModifiers: false
 	PaletteFromFile@temperatra:
 		Name: temperatra

@@ -1281,27 +1281,6 @@ CIVILIANCORESHIP:
 		Actor: ghabitatshiph
 		OwnerType: InternalName
 		InternalOwner: Neutral
-	#######################################
-	# PRODUCTION STUFF
-	#######################################
-	Exit:
-        SpawnOffset: 99999,99999,99999
-        ExitCell: 3,3
-	ProvidesPrerequisite@unitname:
-	ProductionBar:
-        ProductionType: DefenceStationUpgrade
-	#######################################
-	# Deployment related traits
-	#######################################
-	WithFacingSpriteBody:
-		RequiresCondition: !supplyship && !surveyfrigate && !engineeringcrew && !antismallturret && !antifighterturret
-	#######################################
-	# SELF UPGRADE
-	#######################################
-	ProductionQueue@CivilianShipUpgrade:
-		Type: CivilianShipUpgrade
-		Group: Vehicle
-		LowPowerSlowdown: 10
 
 REFINERY:
 	Inherits: ^CapitalShip

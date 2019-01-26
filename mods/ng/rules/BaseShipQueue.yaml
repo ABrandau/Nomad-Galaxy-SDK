@@ -4,7 +4,7 @@
 
 GCIVSHIP:
 	Inherits: CIVILIANCORESHIP
-    Inherits@2: ^CivShipHP
+	Inherits@2: ^CivShipHP
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
