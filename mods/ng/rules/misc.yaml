@@ -565,41 +565,6 @@ GAREPAIRPLATFORM:
 		Range: 5c0
 	AutoTarget:
 
-GADERRICK:
-	Inherits: ^DefenceStation
-	Valued:
-		Cost: 400
-	Interactable:
-		Bounds: 40,40
-	Armament@AntiCorvette:
-		Weapon: GPlatformNeedle
-		LocalYaw: 255, -255, 255, -255, 255, -255
-		LocalOffset: 175, -250, 5, 175, 250, 5, 0, -250, 5, 0, 250, 5, -175, -250, 5, -175, 250, 5
-		RequiresCondition: anticorvettestation
-	ExplodeWeapon:
-		Weapon: GKorGasBulletSpawner
-		RequiresCondition: antifighterstation
-	ExplodeWeapon@1:
-		Weapon: GKorGasBulletSpawner
-		RequiresCondition: antifighterstation
-	WithSpriteBody:
-		RequiresCondition: !antifighterstation && !anticorvettestation
-	WithSpriteBody@antifighterstation:
-		Sequence: antifighteridle
-		RequiresCondition: antifighterstation
-	WithSpriteTurret@anticorvettestation:
-		RequiresCondition: anticorvettestation
-		Sequence: anticovertteturret
-	Tooltip:
-		Name: Defence Station
-		RequiresCondition: !antifighterstation && !anticorvettestation
-	Tooltip@antifighterstation:
-		Name: Acid Turret (Anti Fighter)
-		RequiresCondition: antifighterstation
-	Tooltip@anticorvettestation:
-		Name: Needler Turret (Anti Corvette)
-		RequiresCondition: anticorvettestation
-
 #####################################################################################
 # TERRAN
 #####################################################################################

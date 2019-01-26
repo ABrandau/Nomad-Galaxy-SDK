@@ -37,6 +37,10 @@ gproductionship:
 gcivship:
 	Inherits: ^shipdefault
 	##### Civ Stuff
+    deployed: ghabitatship
+        Start: 1
+    make: ghabitatship
+        Start: 1
 	supplyship: ghabitatship
 		Facings: -32
 		UseClassicFacingFudge: True
@@ -290,6 +294,10 @@ gaderrick:
 		Length: *
 	stand:
 		Length: *
+	deployed:
+		Length: 1
+	make:
+		Length: 1
 	icon: gaderrickicon
 	anticovertteturret: gacplatform
 		Facings: -32

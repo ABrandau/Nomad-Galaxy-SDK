@@ -11,6 +11,36 @@ GMOTHERSHIP:
 		Range: 5c0
 		AffectsParent: False
 
+GCIVSHIP:
+	Inherits: CORESHIP
+	Inherits@2: ^CivShipHP
+	Transforms:
+		IntoActor: dgcivship
+		Offset: 0,0
+		Facing: 128
+
+GADERRICK:
+	Inherits@2: ^Building
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	RevealsShroud:
+		Range: 2c0
+		Type: CenterPosition
+	AppearsOnRadar:
+		UseLocation: True
+	RenderSprites:
+	Selectable:
+		Priority: 5
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+	LineBuildNode:
+		Types: PowerLinkNode
+		SegmentsRequireNode: True
+	Tooltip:
+		Name: Power Node
+
 GHABITATSHIP:
 	Inherits: ^CapitalShip
 	Inherits@1: ^SupplyShipHP

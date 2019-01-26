@@ -2,14 +2,42 @@
 # G KOR
 #################################################################################
 
-GCIVSHIP:
-	Inherits: CIVILIANCORESHIP
-	Inherits@2: ^CivShipHP
+DGCIVSHIP:
+	Inherits@1: ^Building
+	Inherits@1: ^SupplyShipHP
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
 		Prerequisites: ~mothership
-		Description: Upgradable ship, it can assume different utility roles depending on the upgrade.\n\nCurrent roles are the following.\n- Fleet capacity provider (Supply ship).\n- Radar provider & Mercenary Contractor (Survey Frigate).\n- Repairs and static defence builder (Engineering Crew)\n- Tech Center and upgrader (Research Ship).
+		Description: \nConnects ships to improve their usefulness.
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	AppearsOnRadar:
+		UseLocation: True
+	Transforms:
+		IntoActor: gcivship
+		Offset: 0,0
+		Facing: 128
+	RenderSprites:
+		Image: gcivship
+	Selectable:
+		Priority: 5
+	Power@2:
+		Amount: 40
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+	LineBuild:
+		Range: 10
+		NodeTypes: PowerLinkNode
+		SegmentType: gaderrick
+		SegmentsRequireNode: true
+	LineBuildNode:
+		Types: PowerLinkNode
 
 GMINER:
 	Inherits: MINER
@@ -37,36 +65,6 @@ GRESEARCHCORESHIP:
 		Prerequisites: gproductionship, gminer, gcivship
 		Description: Upgradable ship, provides different bonuses depending on the upgrade.\n\nCurrent roles are the following.\n- Mercenary Provider (Mercenary Hub).\n- Late game tech provider (Research Ship).\n- Faction specific buffs (Core ships)\n- Map detection (Sensor array)\n- Instant travel (Warp Gate)
 	ProvidesPrerequisite@GRESEARCHCORESHIP: 
-
-GADERRICK:
-	Inherits: ^DefenceStation
-	Valued:
-		Cost: 400
-	Interactable:
-		Bounds: 40,40
-	ExplodeWeapon:
-		Weapon: GKorGasBulletSpawner
-		RequiresCondition: antifighterstation
-	ExplodeWeapon@1:
-		Weapon: GKorGasBulletSpawner
-		RequiresCondition: antifighterstation
-	WithSpriteBody:
-		RequiresCondition: !antifighterstation && !anticorvettestation
-	WithSpriteBody@antifighterstation:
-		Sequence: antifighteridle
-		RequiresCondition: antifighterstation
-	WithSpriteTurret@anticorvettestation:
-		RequiresCondition: anticorvettestation
-		Sequence: anticovertteturret
-	Tooltip:
-		Name: Defence Station
-		RequiresCondition: !antifighterstation && !anticorvettestation
-	Tooltip@antifighterstation:
-		Name: Acid Turret (Anti Fighter)
-		RequiresCondition: antifighterstation
-	Tooltip@anticorvettestation:
-		Name: Needler Turret (Anti Corvette)
-		RequiresCondition: anticorvettestation
 
 GBC2:
 	Inherits: ^CapitalShip

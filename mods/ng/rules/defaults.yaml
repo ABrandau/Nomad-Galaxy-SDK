@@ -707,9 +707,9 @@
 		RequiresBaseProvider: True
 	WithSpriteBody:
 	GivesBuildableArea:
-		AreaTypes: building
+		AreaTypes: station
 	RequiresBuildableArea:
-		AreaTypes: building
+		AreaTypes: station
 		Adjacent: 3
 	ActorLostNotification:
 		Notification: BuildingLost
@@ -772,7 +772,6 @@
 	WithColoredOverlay:
 		Palette: disabled
 		RequiresCondition: empdisable
-
 
 ^CivFieldHusk:
 	Inherits@1: ^SpriteActor
@@ -1206,7 +1205,6 @@ MOTHERSHIP:
 		Capacity: 1000
 	Refinery:
 		DockOffset: 0,0
-	RallyPoint:
 	Power:
 		Amount: 30
 	RevealsShroud:
@@ -1254,6 +1252,34 @@ MOTHERSHIP:
 	ProvidesPrerequisite@mothership:
 		Prerequisite: mothership
 	ProvidesPrerequisite@buildingname:
+	GivesBuildableArea:
+		AreaTypes: station
+	BaseProvider:
+
+CORESHIP:
+	Inherits: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Core Ship
+	Health:
+		HP: 400000
+	RevealsShroud:
+		Range: 5c0
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	RenderSprites:
+	Selectable:
+		Priority: 5
+		Bounds: 80,80
+	SelectionDecorations:
+		VisualBounds: 80,80
+	RenderSprites:
+	SpawnActorOnDeath:
+		Actor: ghabitatshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
 
 CIVILIANCORESHIP:
 	Inherits: ^CapitalShip
