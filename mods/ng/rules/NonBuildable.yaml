@@ -9,16 +9,14 @@ GMOTHERSHIP:
 	LineBuild:
 		Range: 10
 		NodeTypes: PowerLinkNode
-		SegmentType: gaderrick
+		SegmentType: gtube
 		SegmentsRequireNode: true
 	LineBuildNode:
 		Types: PowerLinkNode
 
-GADERRICK:
+GTUBE:
 	Inherits@2: ^Building
-	Building:
-		Dimensions: 1,1
-		Footprint: =
+	-Building:
 	RevealsShroud:
 		Range: 2c0
 		Type: CenterPosition
@@ -27,16 +25,17 @@ GADERRICK:
 	RenderSprites:
 	Selectable:
 		Priority: 5
-	WithMakeAnimation:
-	WithSpriteBody:
-		Sequence: deployed
+	-WithSpriteBody:
+	WithWallSpriteBody:
 	LineBuild:
-		Range: 10
 		NodeTypes: PowerLinkNode
-		SegmentType: gaderrick
+		SegmentType: gtube
 		SegmentsRequireNode: true
 	Tooltip:
 		Name: Power Node
+	EnergyWall:
+		ActiveCondition: active-posts == 2
+		Weapon: EngineerCrewFighterSpawn
 
 GHABITATSHIP:
 	Inherits: ^CapitalShip

@@ -710,7 +710,7 @@
 		AreaTypes: station
 	RequiresBuildableArea:
 		AreaTypes: station
-		Adjacent: 3
+		Adjacent: 1
 	ActorLostNotification:
 		Notification: BuildingLost
 	Guardable:
@@ -1192,7 +1192,7 @@ MOTHERSHIP:
 	ProvidesPrerequisite@buildingname:
 	Building:
 		Dimensions: 1,1
-		Footprint: =
+		Footprint: X
 	CashTrickler:
 	Health:
 		HP: 1500000

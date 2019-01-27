@@ -19,7 +19,7 @@ DGCIVSHIP:
 	AppearsOnRadar:
 		UseLocation: True
 	RenderSprites:
-		Image: gcivship
+		Image: gaderrick
 	Selectable:
 		Priority: 5
 	Power@2:
@@ -30,10 +30,13 @@ DGCIVSHIP:
 	LineBuild:
 		Range: 10
 		NodeTypes: PowerLinkNode
-		SegmentType: gaderrick
+		SegmentType: gtube
 		SegmentsRequireNode: true
 	LineBuildNode:
 		Types: PowerLinkNode
+	RequiresBuildableArea:
+		AreaTypes: station
+		Adjacent: 5
 
 DGHABITATSHIP:
 	Inherits@1: ^Building
@@ -72,7 +75,7 @@ GMINER:
 	Buildable:
 		Queue: BaseShipQueue
 		Prerequisites: ghabitatship
-		BuildPaletteOrder: 2
+		BuildPaletteOrder: 1
 		Description: Utility Ship
 	RenderSprites:
 		Image: grefinery
@@ -87,8 +90,8 @@ DGPATROLCRUISER:
 		Prerequisites: ~mothership
 		Description: \nProduces small warships.
 	Building:
-		Dimensions: 1,1
-		Footprint: x
+		Dimensions: 2,2
+		Footprint: xx xx
 	Tooltip:
 		Name: Light Shipyarrd
 	RevealsShroud:
@@ -119,8 +122,8 @@ DGFRIGATEASSEMBLYBAY:
 		Prerequisites: ~mothership
 		Description: \Produces large warships.
 	Building:
-		Dimensions: 1,1
-		Footprint: x
+		Dimensions: 2,2
+		Footprint: xx xx
 	Tooltip:
 		Name: Heavy Shipyard
 	RevealsShroud:

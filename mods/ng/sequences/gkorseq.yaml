@@ -305,6 +305,16 @@ gaderrick:
 	antifighterturret: gturret
 		Facings: -32
 
+gtube:
+	idle:
+		Length: 16
+	scratched-idle:
+		Start: 16
+		Length: 16
+	damaged-idle:
+		Start: 32
+		Length: 16
+
 gaiplatform:
 	idle:
 	turret: gturret
