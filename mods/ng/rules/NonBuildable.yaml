@@ -6,24 +6,19 @@ GMOTHERSHIP:
 	Inherits: MOTHERSHIP
 	Tooltip:
 		Name: G'kor Mothership
-	ProximityExternalCondition@LogisticShipWanderer:
-		Condition: LogisticShipWanderer
-		Range: 5c0
-		AffectsParent: False
-
-GCIVSHIP:
-	Inherits: CORESHIP
-	Inherits@2: ^CivShipHP
-	Transforms:
-		IntoActor: dgcivship
-		Offset: 0,0
-		Facing: 128
+	LineBuild:
+		Range: 10
+		NodeTypes: PowerLinkNode
+		SegmentType: gaderrick
+		SegmentsRequireNode: true
+	LineBuildNode:
+		Types: PowerLinkNode
 
 GADERRICK:
 	Inherits@2: ^Building
 	Building:
 		Dimensions: 1,1
-		Footprint: x
+		Footprint: =
 	RevealsShroud:
 		Range: 2c0
 		Type: CenterPosition
@@ -35,9 +30,11 @@ GADERRICK:
 	WithMakeAnimation:
 	WithSpriteBody:
 		Sequence: deployed
-	LineBuildNode:
-		Types: PowerLinkNode
-		SegmentsRequireNode: True
+	LineBuild:
+		Range: 10
+		NodeTypes: PowerLinkNode
+		SegmentType: gaderrick
+		SegmentsRequireNode: true
 	Tooltip:
 		Name: Power Node
 
@@ -49,7 +46,7 @@ GHABITATSHIP:
 	RenderSprites:
 		Image: ghabitatship
 	Transforms:
-		IntoActor: dgsupplyship
+		IntoActor: ghabitatship
 		Offset: 0,0
 		Facing: 128
 	ProvidesPrerequisite@ghabitatship:

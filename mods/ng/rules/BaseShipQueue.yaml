@@ -18,10 +18,6 @@ DGCIVSHIP:
 		Type: CenterPosition
 	AppearsOnRadar:
 		UseLocation: True
-	Transforms:
-		IntoActor: gcivship
-		Offset: 0,0
-		Facing: 128
 	RenderSprites:
 		Image: gcivship
 	Selectable:
@@ -39,6 +35,38 @@ DGCIVSHIP:
 	LineBuildNode:
 		Types: PowerLinkNode
 
+DGHABITATSHIP:
+	Inherits@1: ^Building
+	Inherits@1: ^SupplyShipHP
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: \nIncreases fleet capacity.
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	AppearsOnRadar:
+		UseLocation: True
+	Transforms:
+		IntoActor: ghabitatship
+		Offset: 0,0
+		Facing: 128
+	RenderSprites:
+		Image: ghabitatship
+	Selectable:
+		Priority: 5
+	Power@2:
+		Amount: 40
+	Refinery:
+		DockOffset: 0,0
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
 GMINER:
 	Inherits: MINER
 	Buildable:
@@ -49,22 +77,226 @@ GMINER:
 	RenderSprites:
 		Image: grefinery
 
-GPRODUCTIONSHIP:
-	Inherits: PRODUCTIONSHIP
+DGPATROLCRUISER:
+	Inherits@1: ^Building
+	Inherits@2: ^ProducesCorvettes
+	Inherits@3: ^PatrolCruiserHP
 	Buildable:
 		Queue: BaseShipQueue
-		BuildPaletteOrder: 3
-		Prerequisites: ghabitatship
-		Description: Upgradable Ship, it can assume different utility roles depending on the upgrade.\n\nCurrent queues are the following.\n- Fighter and Corvette production\n- Frigate production.\n- Core ship production.
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: \nProduces small warships.
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	Tooltip:
+		Name: Light Shipyarrd
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gpatrolcruiser
+		Offset: 0,0
+		Facing: 64
+	RenderSprites:
+		Image: gpatrolcruiser
+	Selectable:
+		Priority: 5
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+	RallyPoint:
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
 
-GRESEARCHCORESHIP:
-	Inherits: RESEARCHCORESHIP
+DGFRIGATEASSEMBLYBAY:
+	Inherits@1: ^Building
+	Inherits@2: ^ProducesFrigates
+	Inherits@3: ^FrigateAssemblyBayHP
 	Buildable:
 		Queue: BaseShipQueue
-		BuildPaletteOrder: 4
-		Prerequisites: gproductionship, gminer, gcivship
-		Description: Upgradable ship, provides different bonuses depending on the upgrade.\n\nCurrent roles are the following.\n- Mercenary Provider (Mercenary Hub).\n- Late game tech provider (Research Ship).\n- Faction specific buffs (Core ships)\n- Map detection (Sensor array)\n- Instant travel (Warp Gate)
-	ProvidesPrerequisite@GRESEARCHCORESHIP: 
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: \Produces large warships.
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	Tooltip:
+		Name: Heavy Shipyard
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gfrigateassemblybay
+		Offset: 0,0
+		Facing: 192
+	RenderSprites:
+		Image: gfrigateassemblybay
+	Selectable:
+		Priority: 5
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+	RallyPoint:
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
+DGSURVEYFRIGATE:
+	Inherits@1: ^Building
+	Inherits@2: ^SurveyFrigateShipLogo
+	Inherits@3: ^SurveyFrigateHP
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: \nImproves ship detection.
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	Transforms:
+		IntoActor: gsurveyfrigate
+		Offset: 0,0
+		Facing: 0
+	RenderSprites:
+		Image: gsurveyfrigate
+	Selectable:
+		Priority: 5
+	ProvidesRadar:
+	RevealsShroud@surveyfrigate:
+		Range: 20c0
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
+DGENGINEER:
+	Inherits@1: ^Building
+	Inherits@2: ^EngineerShipLogo
+	Inherits@3: ^EngineerCrewHP
+	Inherits@4: ^AutoTargetAll
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gengineer
+		Offset: 0,0
+		Facing: 64
+	RenderSprites:
+		Image: gengineer
+	RenderRangeCircle:
+	Selectable:
+		Priority: 5
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+	AttackOmni:
+	ExplodeWeapon:
+		Weapon: EngineerCrewFighterSpawn
+	CarrierMaster:
+		Actors: gfighter3, gfighter3, gfighter3
+		RespawnTicks: 10
+		ReamTicks: 10
+		NoRegeneration: True
+		InstaRepair: true
+		SpawnAllAtOnce: True
+	Armament@PRIMARY:
+		Weapon: EngineerCrewFighterSpawn
+		TargetStances: Ally
+	AutoTargetPriority@DEFAULT:
+		RequiresCondition: !stance-attackanything
+		ValidTargets: CapitalShip, Frigate, Corvette, Fighter, Station
+		InvalidTargets: NoAutoTarget
+		Priority: 2
+
+DGMERCENARYHUB:
+	Inherits@1: ^Building
+	Inherits@2: ^ResearchShipBuffer
+	Inherits@3: ^MercenaryHubHP
+	Inherits@4: ^AutoTargetAll
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gmercenaryhub
+		Offset: 0,0
+	RenderSprites:
+		Image: gmercenaryhub
+	ProvidesPrerequisite@gmercenaryhub:
+		Prerequisite: gmercenaryhub
+    Exit:
+	Selectable:
+		Priority: 5
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+	ProductionQueue:
+		Type: MercContract
+		Factions: gkor, terran
+		Group: Aircraft
+		LowPowerSlowdown: 10
+		QueuedAudio: Building
+		ReadyAudio: ConstructionComplete
+	Production:
+        Produces: MercContract
+        RequiresCondition: !ContractsFinished
+	GrantConditionOnPrerequisite@T2Contract:
+		Condition: ContractsFinished
+		Prerequisites: T2Contract
+
+DGRESEARCHSHIP:
+	Inherits@1: ^Building
+	Inherits@2: ^ResearchShipBuffer
+	Inherits@3: ^ResearchShipHP
+	Inherits@4: ^AutoTargetAll
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gresearchship
+		Offset: 0,0
+	RenderSprites:
+		Image: gresearchship
+	Selectable:
+		Priority: 5
+	ProvidesPrerequisite@gresearchship:
+		Prerequisite: gresearchship
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+
+DGSHIPYARD:
+	Inherits@1: ^Building
+	Inherits@2: ^ProducesBaseShips
+	Inherits@3: ^ShipyardHP
+	Building:
+		Dimensions: 1,1
+		Footprint: x
+	Tooltip:
+		Name: Shipyard
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+	Transforms:
+		IntoActor: gshipyard
+		Offset: 0,0
+	RenderSprites:
+		Image: gshipyard
+	Selectable:
+		Priority: 5
+	ProvidesPrerequisite@T1Carrier: 
+		Prerequisite: gproductionship
+	RallyPoint:
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
 
 GBC2:
 	Inherits: ^CapitalShip
@@ -121,26 +353,3 @@ GBC2:
 		LocalOffset: 250,250,0
 	ExternalCondition@BeamReady:
 		Condition: BeamReady
-
-	# # WithDecoration@Role:
-	# 	# Image: rank
-	# 	# Sequence: vialicon
-	# 	# Palette: effect
-	# 	# ReferencePoint: Top, Right
-	# 	# RequiresCondition: !weonqloweonlawea
-	# 	# ZOffset: 256
-	# # WithIdleOverlay@HyperSpaceGenerator:
-	# 	# Sequence: subpessanimship
-	# 	# Palette: darkbluepal
-	# 	# Offset: 25,0,-500
-	# 	# RequiresCondition: HyperSpaceGenerator && !HyperSpaceFadeOut
-	# # GrantTimedConditionOnDeploy:
-	# 	# DeployedCondition: HyperSpaceGenerator
-	# 	# CooldownTicks: 1500
-	# 	# DeployedTicks: 350
-	# 	# StartsFullyCharged: True
-	# # ExplodeWeapon@HyperSpace:
-	# 	# Weapon: HyperSpaceGenerator
-	# 	# RequiresCondition: HyperSpaceGenerator && !HyperSpaceFadeOut
-	# # ExternalCondition@HyperSpaceGenerator:
-	# 	# Condition: HyperSpaceGenerator

@@ -736,6 +736,8 @@
 		Bounds: 60,60
 	MapEditorData:
 		Categories: Station or Deployed Ship
+	GivesBuildableArea:
+		AreaTypes: station
 
 ^BuildableStation:
 	Inherits: ^Building

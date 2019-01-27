@@ -117,9 +117,6 @@ FrigateExplode:
 	Warhead@2Eff: CreateEffect
 		Explosions: jtwlt050b, jtwlt050, jstumu42b, jstumu30b, jsbang48, jexplomed
 		ExplosionPalette: gensmkexploj
-	Warhead@4Ore: CreateResource
-		AddsResourceType: Junk
-		Size: 0,0
 
 CapShipExplode:
 	Inherits: FrigateExplode
@@ -151,9 +148,6 @@ CapShipExplode:
 	Warhead@2Eff: CreateEffect
 		Explosions: jtwlt100, jtwlt100b, jtwlt070, jtwlt070b, jsclsn58, jexplolrg
 		ExplosionPalette: gensmkexploj
-	Warhead@4Ore: CreateResource
-		AddsResourceType: Junk
-		Size: 0,0
 
 MotherShipExplode:
 	Inherits: CapShipExplode
@@ -173,9 +167,6 @@ MotherShipExplode:
 	Warhead@2Eff: CreateEffect
 		Explosions: jtwlt100, jtwlt100b, jtwlt070, jtwlt070b, jsclsn58, jexplolrg
 		ExplosionPalette: gensmkexploj
-	Warhead@4Ore: CreateResource
-		AddsResourceType: Junk
-		Size: 1,0
 
 CrystalExplosion:
 	Inherits: FighterExplode
