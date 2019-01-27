@@ -15,41 +15,26 @@ GMOTHERSHIP:
 		Types: PowerLinkNode
 
 GTUBE:
-	Inherits@2: ^Building
-	-Building:
-	RevealsShroud:
-		Range: 2c0
-		Type: CenterPosition
-	AppearsOnRadar:
-		UseLocation: True
-	RenderSprites:
-	Selectable:
-		Priority: 5
-	-WithSpriteBody:
-	WithWallSpriteBody:
-	LineBuild:
-		NodeTypes: PowerLinkNode
-		SegmentType: gtube
-		SegmentsRequireNode: true
-	Tooltip:
-		Name: Power Node
-	EnergyWall:
-		ActiveCondition: active-posts == 2
-		Weapon: EngineerCrewFighterSpawn
+	Inherits: ^LogisticTube
 
 GHABITATSHIP:
 	Inherits: ^CapitalShip
-	Inherits@1: ^SupplyShipHP
+	Inherits@2: ^HabitatShipCommons
 	Valued:
 		Cost: 900
 	RenderSprites:
 		Image: ghabitatship
 	Transforms:
-		IntoActor: ghabitatship
+		IntoActor: dghabitatship2
 		Offset: 0,0
 		Facing: 128
 	ProvidesPrerequisite@ghabitatship:
 		Prerequisite: ghabitatship
+
+GMINER:
+	Inherits: MINER
+	RenderSprites:
+		Image: grefinery
 
 GENGINEER:
 	Inherits: ^CapitalShip

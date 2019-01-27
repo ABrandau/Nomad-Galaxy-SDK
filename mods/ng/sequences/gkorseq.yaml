@@ -308,12 +308,15 @@ gaderrick:
 gtube:
 	idle:
 		Length: 16
+		ZOffset: -1000
 	scratched-idle:
 		Start: 16
 		Length: 16
+		ZOffset: -1000
 	damaged-idle:
 		Start: 32
 		Length: 16
+		ZOffset: -1000
 
 gaiplatform:
 	idle:

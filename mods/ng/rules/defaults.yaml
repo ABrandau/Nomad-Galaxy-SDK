@@ -702,7 +702,7 @@
 	Building:
 		Dimensions: 3,3
 		Footprint: ___ _x_ ___
-		TerrainTypes: Clear, Ground
+		TerrainTypes: Clear, Ground, SpaceGreen, SpaceBlue, SpaceRed, SpaceGray, SpaceGreen2, SpaceBlue2, SpaceRed2, SpaceGray2
 		Adjacent: 2
 		RequiresBaseProvider: True
 	WithSpriteBody:
@@ -718,12 +718,6 @@
 	Tooltip:
 		GenericName: Structure
 	FrozenUnderFog:
-	SelfHealing@CombatCapitalShipAutoRepair:
-		Step: 0
-		PercentageStep: 1
-		DamageCooldown: 100
-		Delay: 100
-		HealIfBelow: 105
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
@@ -1011,6 +1005,23 @@
 	ProvidesPrerequisite@gcivship:
 		Prerequisite: gcivship
 
+^HabitatShipCommons:
+	Health:
+		HP: 400000
+	Tooltip:
+		Name: Habitat Ship
+	ProvidesPrerequisite@ghabitatship:
+		Prerequisite: ghabitatship
+	SpawnActorOnDeath@husk:
+		Actor: ghabitatshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	Power:
+		Amount: 50
+	RevealsShroud:
+		Range: 5c0
+		Type: CenterPosition
+
 ^SupplyShipHP:
     Inherits: ^CivShipHP
 	Health:
@@ -1258,57 +1269,105 @@ MOTHERSHIP:
 		AreaTypes: station
 	BaseProvider:
 
-CORESHIP:
-	Inherits: ^CapitalShip
-	Inherits@1: ^AIWanderer
-	Valued:
-		Cost: 300
+^DLogisticCore:
+	Inherits@1: ^Building
 	Tooltip:
-		Name: Core Ship
+		Name: Logistic Core
+	ProvidesPrerequisite@UnitName:
+        Prerequisite: Unit
+	Building:
+		Dimensions: 1,1
+		Footprint: x
 	Health:
 		HP: 400000
 	RevealsShroud:
 		Range: 5c0
-	MustBeDestroyed:
-		RequiredForShortGame: true
-	RenderSprites:
+		Type: CenterPosition
+	AppearsOnRadar:
+		UseLocation: True
 	Selectable:
 		Priority: 5
-		Bounds: 80,80
-	SelectionDecorations:
-		VisualBounds: 80,80
-	RenderSprites:
-	SpawnActorOnDeath:
+	Power@2:
+		Amount: 10
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+	LineBuild:
+		Range: 10
+		NodeTypes: PowerLinkNode
+		SegmentType: gtube
+		SegmentsRequireNode: true
+	LineBuildNode:
+		Types: PowerLinkNode
+	RequiresBuildableArea:
+		AreaTypes: station
+		Adjacent: 8
+	StoresResources:
+		PipCount: 10
+		Capacity: 500
+	SpawnActorOnDeath@husk:
 		Actor: ghabitatshiph
 		OwnerType: InternalName
 		InternalOwner: Neutral
+	Replacement:
+		ReplaceableTypes: LogisticNode
+	GrantConditionOnDeploy@Detonate:
+		DeployedCondition: Detonate
+		CanDeployOnRamps: True
+	ExternalCondition@Detonate:
+		Condition: Detonate
+	KillsSelf@Detonate:
+		RemoveInstead: False
+		RequiresCondition: Detonate
 
-CIVILIANCORESHIP:
-	Inherits: ^CapitalShip
-	Inherits@1: ^AIWanderer
-	Inherits@2: ^DeployableText
-	Valued:
-		Cost: 300
-	Tooltip:
-		Name: Coreship
-		RequiresCondition: !supplyship && !surveyfrigate && !engineeringcrew && !antismallturret && !antifighterturret
-	Health:
-		HP: 400000
+^LogisticTube:
+	Inherits@2: ^Building
+	-Building:
 	RevealsShroud:
-		Range: 5c0
-	MustBeDestroyed:
-		RequiredForShortGame: true
+		Range: 2c0
+		Type: CenterPosition
+	AppearsOnRadar:
+		UseLocation: True
 	RenderSprites:
+	-Selectable:
+	-WithSpriteBody:
+	WithWallSpriteBody:
+	LineBuild:
+		NodeTypes: PowerLinkNode
+		SegmentType: gtube
+		SegmentsRequireNode: true
+	Tooltip:
+		Name: Power Node
+	EnergyWall:
+		ActiveCondition: active-posts == 2
+		Weapon: EngineerCrewFighterSpawn
+	-Targetable:
+	-Armor:
+	Replaceable:
+		Types: LogisticNode
+
+^DHABITATSHIP:
+	Inherits@1: ^Building
+	Inherits@2: ^HabitatShipCommons
+	Tooltip:
+		Name: Habitat Ship
+	ProvidesPrerequisite@UnitName:
+	Building:
+		Dimensions: 1,1
+		Footprint: =
+	AppearsOnRadar:
+		UseLocation: True
 	Selectable:
 		Priority: 5
-		Bounds: 80,80
-	SelectionDecorations:
-		VisualBounds: 80,80
-	RenderSprites:
-	SpawnActorOnDeath:
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
+	SpawnActorOnDeath@husk:
 		Actor: ghabitatshiph
 		OwnerType: InternalName
 		InternalOwner: Neutral
+	Refinery:
+		DockOffset: 0,0
 
 REFINERY:
 	Inherits: ^CapitalShip
@@ -1495,7 +1554,7 @@ MINER:
 		Range: 5c0
 	MustBeDestroyed:
 	Harvester:
-		DeliveryBuildings: dgrefinery, gmothership, dgsupplyship
+		DeliveryBuildings: gmothership, dghabitatship, dghabitatship2
 		Resources: CyanOre, BlueOre, Gas, Junk, Minerals
 		BaleLoadDelay: 12
 		BaleUnloadDelay: 3

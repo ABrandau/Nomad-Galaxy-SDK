@@ -2,83 +2,40 @@
 # G KOR
 #################################################################################
 
-DGCIVSHIP:
-	Inherits@1: ^Building
-	Inherits@1: ^SupplyShipHP
+GLOGISTICCORE:
+	Inherits@1: ^DLogisticCore
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
 		Prerequisites: ~mothership
 		Description: \nConnects ships to improve their usefulness.
-	Building:
-		Dimensions: 1,1
-		Footprint: x
-	RevealsShroud:
-		Range: 5c0
-		Type: CenterPosition
-	AppearsOnRadar:
-		UseLocation: True
-	RenderSprites:
-		Image: gaderrick
-	Selectable:
-		Priority: 5
-	Power@2:
-		Amount: 40
-	WithMakeAnimation:
-	WithSpriteBody:
-		Sequence: deployed
-	LineBuild:
-		Range: 10
-		NodeTypes: PowerLinkNode
-		SegmentType: gtube
-		SegmentsRequireNode: true
-	LineBuildNode:
-		Types: PowerLinkNode
-	RequiresBuildableArea:
-		AreaTypes: station
-		Adjacent: 5
+    RenderSprites:
+        Image: gaderrick
+	Tooltip:
+		Name: Logistic Core
 
 DGHABITATSHIP:
-	Inherits@1: ^Building
-	Inherits@1: ^SupplyShipHP
+	Inherits@1: ^DHABITATSHIP
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
 		Prerequisites: ~mothership
-		Description: \nIncreases fleet capacity.
-	Building:
-		Dimensions: 1,1
-		Footprint: x
-	RevealsShroud:
-		Range: 5c0
-		Type: CenterPosition
-	AppearsOnRadar:
-		UseLocation: True
+		Description: \n- Increases fleet capacity.\n- Serves as a drop off point.
 	Transforms:
 		IntoActor: ghabitatship
 		Offset: 0,0
 		Facing: 128
 	RenderSprites:
 		Image: ghabitatship
-	Selectable:
-		Priority: 5
-	Power@2:
-		Amount: 40
-	Refinery:
-		DockOffset: 0,0
-	WithMakeAnimation:
-	WithSpriteBody:
-		Sequence: deployed
+    FreeActor:
+        Actor: gminer
 
-GMINER:
-	Inherits: MINER
-	Buildable:
-		Queue: BaseShipQueue
-		Prerequisites: ghabitatship
-		BuildPaletteOrder: 1
-		Description: Utility Ship
-	RenderSprites:
-		Image: grefinery
+DGHABITATSHIP2:
+    Inherits: DGHABITATSHIP
+    -Buildable:
+    -FreeActor:
+    RenderSprites:
+		Image: ghabitatship
 
 DGPATROLCRUISER:
 	Inherits@1: ^Building
@@ -93,7 +50,7 @@ DGPATROLCRUISER:
 		Dimensions: 2,2
 		Footprint: xx xx
 	Tooltip:
-		Name: Light Shipyarrd
+		Name: Light Shipyard
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
