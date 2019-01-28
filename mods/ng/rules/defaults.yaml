@@ -437,6 +437,11 @@
 		EmptyWeapon: CapShipExplode
 	MapEditorData:
 		Categories: Capital Ships
+		EmptyWeapon: CapShipExplode
+	Selectable:
+		Bounds: 80,80
+	Interactable:
+		Bounds: 80,80
 
 ^CombatCapitalShip:
 	Inherits@1: ^CapitalShip
@@ -474,9 +479,9 @@
 		RequiresCondition: !HyperSpaceFadeOut
 	Health:
 	Selectable:
-		Bounds: 60,60
+		Bounds: 40,40
 	SelectionDecorations:
-		VisualBounds: 60,60
+		VisualBounds: 40,40
 	Hovers:
 	Targetable:
 		TargetTypes: Frigate
@@ -1016,31 +1021,15 @@
 		Actor: ghabitatshiph
 		OwnerType: InternalName
 		InternalOwner: Neutral
+	Valued:
+		Cost: 1300
 	Power:
-		Amount: 50
+		Amount: 40
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
 
-^SupplyShipHP:
-    Inherits: ^CivShipHP
-	Health:
-		HP: 400000
-	Tooltip:
-		Name: Supply Ship
-	ProvidesPrerequisite@ghabitatship:
-		Prerequisite: ghabitatship
-	StoresResources:
-		PipCount: 10
-		Capacity: 250
-	SpawnActorOnDeath@husk:
-		Actor: ghabitatshiph
-		OwnerType: InternalName
-		InternalOwner: Neutral
-	Power:
-		Amount: 50
-
-^SurveyFrigateHP:
+^SurveyFrigateCommons:
     Inherits: ^CivShipHP
 	Health:
 		HP: 400000
@@ -1048,8 +1037,10 @@
 		Name: Survey Frigate
 	ProvidesPrerequisite@gsurveyfrigate:
 		Prerequisite: gsurveyfrigate
+	Valued:
+		Cost: 1500
 	Power:
-		Amount: -15
+		Amount: -30
     DetectCloaked:
 		Range: 10c0
 	RevealsShroud:
@@ -1059,13 +1050,21 @@
 		Actor: gsurveyfrigateh
 		OwnerType: InternalName
 		InternalOwner: Neutral
+	WithDecoration@surveyfrigate:
+		Image: rank
+		Sequence: dishicon
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
 
-^EngineerCrewHP:
+^EngineerCrewCommons:
     Inherits: ^CivShipHP
 	Health:
 		HP: 400000
+	Valued:
+		Cost: 1000
 	Power:
-		Amount: -15
+		Amount: -20
 	Tooltip:
 		Name: Engineering Crew
 	ProvidesPrerequisite@gengineer:
@@ -1074,10 +1073,30 @@
 		Actor: gengineerh
 		OwnerType: InternalName
 		InternalOwner: Neutral
+	WithDecoration@engineeringcrew:
+		Image: rank
+		Sequence: wrenchicon
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
 
-^ResearchCoreShipHP:
-	ProvidesPrerequisite@gresearchcoreship:
-		Prerequisite: gresearchcoreship
+^ResearchShipCommons:
+    Inherits@1: ^ResearchShipLogo
+	Health:
+		HP: 400000
+	Tooltip:
+		Name: Research Ship
+	Valued:
+		Cost: 3000
+	Power:
+		Amount: -50
+	ProvidesPrerequisite@RearchshipAI:
+		Prerequisite: gresearchship
+		RequiresCondition: AIWanderer
+	SpawnActorOnDeath@husk:
+		Actor: gresearchshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
 
 ^ResearchShipBuffer:
 	CarrierMaster:
@@ -1098,26 +1117,12 @@
 		Priority: 2
 	AttackOmni:
 
-^ResearchShipHP:
-    Inherits: ^ResearchCoreShipHP
+^MercenaryHubCommons:
+    Inherits@1: ^ResearchShipLogo
 	Health:
 		HP: 400000
-	Tooltip:
-		Name: Research Ship
-	Power:
-		Amount: -50
-	ProvidesPrerequisite@RearchshipAI:
-		Prerequisite: gresearchship
-		RequiresCondition: AIWanderer
-	SpawnActorOnDeath@husk:
-		Actor: gresearchshiph
-		OwnerType: InternalName
-		InternalOwner: Neutral
-
-^MercenaryHubHP:
-    Inherits: ^ResearchCoreShipHP
-	Health:
-		HP: 400000
+	Valued:
+		Cost: 1000
 	Tooltip:
 		Name: Mercenary Hub
 	Power:
@@ -1147,9 +1152,8 @@
 		InternalOwner: Neutral
 	Power:
 		Amount: -20
-	StoresResources:
-		PipCount: 5
-		Capacity: 500
+	Valued:
+		Cost: 500
 
 ^FrigateAssemblyBayHP:
 	Inherits: ^ProductionShipHP
@@ -1161,10 +1165,9 @@
 		OwnerType: InternalName
 		InternalOwner: Neutral
 	Power:
-		Amount: -40
-	StoresResources:
-		PipCount: 5
-		Capacity: 500
+		Amount: -20
+	Valued:
+		Cost: 1750
 
 ^ShipyardHP:
 	Inherits: ^ProductionShipHP
@@ -1176,10 +1179,12 @@
 		OwnerType: InternalName
 		InternalOwner: Neutral
 	Power:
-		Amount: -40
-	StoresResources:
-		PipCount: 5
-		Capacity: 500
+		Amount: -20
+	Valued:
+		Cost: 1500
+	GivesBuildableArea:
+		AreaTypes: station
+	BaseProvider:
 
 ^SupportShipHP:
 	Health:
@@ -1216,8 +1221,6 @@ MOTHERSHIP:
 	StoresResources:
 		PipCount: 10
 		Capacity: 1000
-	Refinery:
-		DockOffset: 0,0
 	Power:
 		Amount: 30
 	RevealsShroud:
@@ -1231,18 +1234,6 @@ MOTHERSHIP:
 		Step: 0
 		PercentageStep: 1
 		Delay: 50
-	Exit:
-		ExitCell: -1,-1
-		SpawnOffset: 0,0,0
-	Exit@1:
-		ExitCell: 1,1
-		SpawnOffset: 0,0,0
-	Exit@2:
-		ExitCell: -1,1
-		SpawnOffset: 0,0,0
-	Exit@3:
-		ExitCell: 1,-1
-		SpawnOffset: 0,0,0
 	ExplodeWeapon:
 		Weapon: FieldDefenceLaserSpawnMothership
 		LocalOffset: 0,-500,1150
@@ -1259,9 +1250,6 @@ MOTHERSHIP:
 		TargetTypes: CargoFreighterMagnet
 	MustBeDestroyed:
 		RequiredForShortGame: true
-	ProximityExternalCondition@ChaseMothership:
-		Condition: ChaseMothership
-		Range: 3c0
 	ProvidesPrerequisite@mothership:
 		Prerequisite: mothership
 	ProvidesPrerequisite@buildingname:
@@ -1280,6 +1268,8 @@ MOTHERSHIP:
 		Footprint: x
 	Health:
 		HP: 400000
+	Valued:
+		Cost: 300
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
@@ -1287,13 +1277,13 @@ MOTHERSHIP:
 		UseLocation: True
 	Selectable:
 		Priority: 5
-	Power@2:
-		Amount: 10
+	Power:
+		Amount: 20
 	WithMakeAnimation:
 	WithSpriteBody:
 		Sequence: deployed
 	LineBuild:
-		Range: 10
+		Range: 6
 		NodeTypes: PowerLinkNode
 		SegmentType: gtube
 		SegmentsRequireNode: true
@@ -1304,7 +1294,7 @@ MOTHERSHIP:
 		Adjacent: 8
 	StoresResources:
 		PipCount: 10
-		Capacity: 500
+		Capacity: 3000
 	SpawnActorOnDeath@husk:
 		Actor: ghabitatshiph
 		OwnerType: InternalName
@@ -1333,9 +1323,12 @@ MOTHERSHIP:
 	-WithSpriteBody:
 	WithWallSpriteBody:
 	LineBuild:
+		Range: 6
 		NodeTypes: PowerLinkNode
 		SegmentType: gtube
 		SegmentsRequireNode: true
+	LineBuildNode:
+		Types: PowerLinkNode
 	Tooltip:
 		Name: Power Node
 	EnergyWall:
@@ -1447,50 +1440,6 @@ PRODUCTIONSHIP:
 		Group: Vehicle
 		LowPowerSlowdown: 10
 
-RESEARCHCORESHIP:
-	Inherits: ^CapitalShip
-	Inherits@1: ^AIWanderer
-	Inherits@3: ^DeployableText
-	Inherits@4: ^ResearchCoreShipHP
-	ProvidesPrerequisite@T1Carrier: 
-	Valued:
-		Cost: 800
-	Tooltip:
-		Name: Research Coreship
-	BaseBuilding:
-	Health:
-		HP: 800000
-	Power:
-		Amount: -20
-	RenderSprites:
-	Mobile:
-		Speed: 40
-	Exit:
-        SpawnOffset: 99999,99999,99999
-        ExitCell: 3,3
-	RevealsShroud:
-		Range: 5c0
-	MustBeDestroyed:
-	Selectable:
-		Priority: 5
-		Bounds: 80,80
-	SelectionDecorations:
-		VisualBounds: 80,80
-	RenderSprites:
-	SpawnActorOnDeath:
-		Actor: gfrigateassemblybayh
-		OwnerType: InternalName
-		InternalOwner: Neutral
-	WithFacingSpriteBody:
-		RequiresCondition: !mercenaryhub && !researchship && !Coreship1 && !Coreship2 && !warpgate
-	#######################################
-	# PRODUCTION
-	#######################################
-	ProductionQueue@ResearchShipUpgrade:
-		Type: ResearchShipUpgrade
-		Group: Vehicle
-		LowPowerSlowdown: 10
-
 SERVICEFRIGATE:
 	Inherits: ^TurretedFrigate
 	Valued:
@@ -1554,7 +1503,7 @@ MINER:
 		Range: 5c0
 	MustBeDestroyed:
 	Harvester:
-		DeliveryBuildings: gmothership, dghabitatship, dghabitatship2
+		DeliveryBuildings: dghabitatship, dghabitatship2
 		Resources: CyanOre, BlueOre, Gas, Junk, Minerals
 		BaleLoadDelay: 12
 		BaleUnloadDelay: 3

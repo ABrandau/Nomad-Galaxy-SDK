@@ -20,8 +20,6 @@ GTUBE:
 GHABITATSHIP:
 	Inherits: ^CapitalShip
 	Inherits@2: ^HabitatShipCommons
-	Valued:
-		Cost: 900
 	RenderSprites:
 		Image: ghabitatship
 	Transforms:
@@ -31,15 +29,9 @@ GHABITATSHIP:
 	ProvidesPrerequisite@ghabitatship:
 		Prerequisite: ghabitatship
 
-GMINER:
-	Inherits: MINER
-	RenderSprites:
-		Image: grefinery
-
 GENGINEER:
 	Inherits: ^CapitalShip
-	Inherits@1: ^EngineerShipLogo
-	Inherits@2: ^EngineerCrewHP
+	Inherits@2: ^EngineerCrewCommons
 	Transforms:
 		IntoActor: dgengineer
 		Offset: 0,0
@@ -49,7 +41,7 @@ GENGINEER:
 
 GSURVEYFRIGATE:
 	Inherits: ^CapitalShip
-	Inherits@3: ^SurveyFrigateHP
+	Inherits@3: ^SurveyFrigateCommons
 	Transforms:
 		IntoActor: dgsurveyfrigate
 		Offset: 0,0
@@ -62,7 +54,7 @@ GSURVEYFRIGATE:
 GMERCENARYHUB:
 	Inherits: ^CapitalShip
 	Inherits@2: ^AIWanderer
-	Inherits@3: ^MercenaryHubHP
+	Inherits@3: ^MercenaryHubCommons
 	Transforms:
 		IntoActor: dgmercenaryhub
 		Offset: 0,0
@@ -75,8 +67,7 @@ GMERCENARYHUB:
 
 GRESEARCHSHIP:
 	Inherits: ^CapitalShip
-	Inherits@2: ^AIWanderer
-	Inherits@3: ^ResearchShipHP
+	Inherits@3: ^ResearchShipCommons
 	Transforms:
 		IntoActor: dgresearchship
 		Offset: 0,0
@@ -166,8 +157,6 @@ GSHIPYARD:
 	Inherits: ^CapitalShip
 	Inherits@1: ^AIWanderer
 	Inherits@2: ^AIBaseShipProduction
-	Exit:
-	RallyPoint:
 	Tooltip:
 		Name: Shipyard
 	Transforms:

@@ -7,22 +7,6 @@
 		ZOffset: 256
 		RequiresCondition: !surveyfrigate && !engineeringcrew && !researchship && !antismallturret && !antifighterturret
 
-^EngineerShipLogo:
-	WithDecoration@engineeringcrew:
-		Image: rank
-		Sequence: wrenchicon
-		Palette: effect
-		ReferencePoint: Top, Right
-		ZOffset: 256
-
-^SurveyFrigateShipLogo:
-	WithDecoration@surveyfrigate:
-		Image: rank
-		Sequence: dishicon
-		Palette: effect
-		ReferencePoint: Top, Right
-		ZOffset: 256
-
 ^ResearchShipLogo:
 	WithDecoration@researchship:
 		Image: rank

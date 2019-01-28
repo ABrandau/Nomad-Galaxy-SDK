@@ -2,6 +2,15 @@
 # G KOR
 #################################################################################
 
+GMINER:
+	Inherits: MINER
+	Buildable:
+		Queue: FrigateQueue
+		BuildPaletteOrder: 1
+		Description: Collects resources to fuel the war machine.
+	RenderSprites:
+		Image: grefinery
+
 GFRIG3:
 	Inherits: ^AFrontalFrigate
 	Inherits@2: ^FighterTargetPriority

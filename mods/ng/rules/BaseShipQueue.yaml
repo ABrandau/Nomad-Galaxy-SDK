@@ -8,7 +8,7 @@ GLOGISTICCORE:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
 		Prerequisites: ~mothership
-		Description: \nConnects ships to improve their usefulness.
+		Description: \nConnects ships to improve their usefulness.\n- Can be detonated when deployed.
     RenderSprites:
         Image: gaderrick
 	Tooltip:
@@ -47,8 +47,8 @@ DGPATROLCRUISER:
 		Prerequisites: ~mothership
 		Description: \nProduces small warships.
 	Building:
-		Dimensions: 2,2
-		Footprint: xx xx
+		Dimensions: 2,1
+		Footprint: xx 
 	Tooltip:
 		Name: Light Shipyard
 	RevealsShroud:
@@ -66,7 +66,8 @@ DGPATROLCRUISER:
 		Prerequisite: gproductionship
 	RallyPoint:
 	WithMakeAnimation:
-	WithSpriteBody:
+	-WithSpriteBody:
+	WithWallSpriteBody:
 		Sequence: deployed
 
 DGFRIGATEASSEMBLYBAY:
@@ -96,15 +97,15 @@ DGFRIGATEASSEMBLYBAY:
 		Priority: 5
 	ProvidesPrerequisite@T1Carrier: 
 		Prerequisite: gproductionship
+	-WithSpriteBody:
+	WithWallSpriteBody:
+		Sequence: deployed
 	RallyPoint:
 	WithMakeAnimation:
-	WithSpriteBody:
-		Sequence: deployed
 
 DGSURVEYFRIGATE:
 	Inherits@1: ^Building
-	Inherits@2: ^SurveyFrigateShipLogo
-	Inherits@3: ^SurveyFrigateHP
+	Inherits@3: ^SurveyFrigateCommons
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
@@ -125,14 +126,19 @@ DGSURVEYFRIGATE:
 	RevealsShroud@surveyfrigate:
 		Range: 20c0
 	WithMakeAnimation:
-	WithSpriteBody:
+	-WithSpriteBody:
+	WithWallSpriteBody:
 		Sequence: deployed
 
 DGENGINEER:
 	Inherits@1: ^Building
-	Inherits@2: ^EngineerShipLogo
-	Inherits@3: ^EngineerCrewHP
+	Inherits@3: ^EngineerCrewCommons
 	Inherits@4: ^AutoTargetAll
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: \nImproves ship detection.
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -173,8 +179,13 @@ DGENGINEER:
 DGMERCENARYHUB:
 	Inherits@1: ^Building
 	Inherits@2: ^ResearchShipBuffer
-	Inherits@3: ^MercenaryHubHP
+	Inherits@3: ^MercenaryHubCommons
 	Inherits@4: ^AutoTargetAll
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: \nImproves ship detection.
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -211,8 +222,13 @@ DGMERCENARYHUB:
 DGRESEARCHSHIP:
 	Inherits@1: ^Building
 	Inherits@2: ^ResearchShipBuffer
-	Inherits@3: ^ResearchShipHP
+	Inherits@3: ^ResearchShipCommons
 	Inherits@4: ^AutoTargetAll
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: \nImproves ship detection.
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -236,11 +252,16 @@ DGSHIPYARD:
 	Inherits@1: ^Building
 	Inherits@2: ^ProducesBaseShips
 	Inherits@3: ^ShipyardHP
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: \n- Allows the construciton of base ships.
 	Building:
 		Dimensions: 1,1
 		Footprint: x
 	Tooltip:
-		Name: Shipyard
+		Name: Construction Ship.
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
@@ -253,10 +274,19 @@ DGSHIPYARD:
 		Priority: 5
 	ProvidesPrerequisite@T1Carrier: 
 		Prerequisite: gproductionship
-	RallyPoint:
 	WithMakeAnimation:
 	WithSpriteBody:
 		Sequence: deployed
+	GivesBuildableArea:
+		AreaTypes: station
+	BaseProvider:
+	LineBuild:
+		Range: 10
+		NodeTypes: PowerLinkNode
+		SegmentType: gtube
+		SegmentsRequireNode: true
+	LineBuildNode:
+		Types: PowerLinkNode
 
 GBC2:
 	Inherits: ^CapitalShip
