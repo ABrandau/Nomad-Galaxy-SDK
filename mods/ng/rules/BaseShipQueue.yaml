@@ -9,10 +9,28 @@ GLOGISTICCORE:
 		BuildPaletteOrder: 1
 		Prerequisites: ~mothership
 		Description: \nConnects ships to improve their usefulness.\n- Can be detonated when deployed.
-    RenderSprites:
-        Image: gaderrick
+	RenderSprites:
+		Image: gaderrick
 	Tooltip:
 		Name: Logistic Core
+	ProximityExternalCondition:
+		Condition: HabitatChain2
+		RequiresCondition: HabitatChain && !ChainBreak
+		Range: 2c0
+	ExternalCondition@HabitatChain:
+		Condition: HabitatChain
+	ExternalCondition@HabitatChain2:
+		Condition: HabitatChain2
+	ExternalCondition@ChainBreak:
+		Condition: ChainBreak
+	ProximityExternalCondition@asdf:
+		Condition: ChainBreak2
+		RequiresCondition: ChainBreak
+		Range: 12c0
+	GrantPeriodicCondition:
+		Condition: ChainBreak
+		CooldownDuration: 50
+		ActiveDuration: 1
 
 DGHABITATSHIP:
 	Inherits@1: ^DHABITATSHIP
@@ -66,9 +84,11 @@ DGPATROLCRUISER:
 		Prerequisite: gproductionship
 	RallyPoint:
 	WithMakeAnimation:
-	-WithSpriteBody:
-	WithWallSpriteBody:
+	WithSpriteBody:
 		Sequence: deployed
+	# WithWallSpriteBody:
+    LineBuildNode:
+        Types: PowerLinkNode
 
 DGFRIGATEASSEMBLYBAY:
 	Inherits@1: ^Building
@@ -102,6 +122,9 @@ DGFRIGATEASSEMBLYBAY:
 		Sequence: deployed
 	RallyPoint:
 	WithMakeAnimation:
+	ProximityExternalCondition:
+		Condition: HabitatChain
+		Range: 3c0
 
 DGSURVEYFRIGATE:
 	Inherits@1: ^Building

@@ -1280,7 +1280,8 @@ MOTHERSHIP:
 	Power:
 		Amount: 20
 	WithMakeAnimation:
-	WithSpriteBody:
+	-WithSpriteBody
+	WithWallSpriteBody:
 		Sequence: deployed
 	LineBuild:
 		Range: 6
@@ -1302,7 +1303,7 @@ MOTHERSHIP:
 	Replacement:
 		ReplaceableTypes: LogisticNode
 	GrantConditionOnDeploy@Detonate:
-		DeployedCondition: Detonate
+		DeployedCondition: ChainBreak#Detonate
 		CanDeployOnRamps: True
 	ExternalCondition@Detonate:
 		Condition: Detonate

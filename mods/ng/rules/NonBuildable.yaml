@@ -16,6 +16,21 @@ GMOTHERSHIP:
 
 GTUBE:
 	Inherits: ^LogisticTube
+	ProximityExternalCondition:
+		Condition: HabitatChain2
+		RequiresCondition: HabitatChain2 && !ChainBreak2
+		Range: 3c0
+	ExternalCondition@HabitatChain2:
+		Condition: HabitatChain2
+	ExternalCondition@ChainBreak2:
+		Condition: ChainBreak2
+	WithDecoration@researchship:
+		Image: rank
+		Sequence: vialicon
+		Palette: effect
+		ReferencePoint: Top, Right
+		ZOffset: 256
+		RequiresCondition: HabitatChain2
 
 GHABITATSHIP:
 	Inherits: ^CapitalShip
