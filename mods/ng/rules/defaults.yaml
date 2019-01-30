@@ -1029,6 +1029,25 @@
 		Range: 5c0
 		Type: CenterPosition
 
+^RefineryCommons
+	Health:
+		HP: 400000
+	Tooltip:
+		Name: Refinery
+	ProvidesPrerequisite@ghabitatship:
+		Prerequisite: refinery
+	Power:
+		Amount: -20
+	SpawnActorOnDeath@husk:
+		Actor: ghabitatshiph
+		OwnerType: InternalName
+		InternalOwner: Neutral
+	Valued:
+		Cost: 1300
+	StoresResources:
+		PipCount: 10
+		Capacity: 1000
+
 ^SurveyFrigateCommons:
     Inherits: ^CivShipHP
 	Health:
@@ -1303,7 +1322,7 @@ MOTHERSHIP:
 	Replacement:
 		ReplaceableTypes: LogisticNode
 	GrantConditionOnDeploy@Detonate:
-		DeployedCondition: ChainBreak#Detonate
+		DeployedCondition: Detonate
 		CanDeployOnRamps: True
 	ExternalCondition@Detonate:
 		Condition: Detonate
@@ -1360,38 +1379,31 @@ MOTHERSHIP:
 		Actor: ghabitatshiph
 		OwnerType: InternalName
 		InternalOwner: Neutral
-	Refinery:
-		DockOffset: 0,0
 
-REFINERY:
-	Inherits: ^CapitalShip
-	Inherits@1: ^AIWanderer
-	Valued:
-		Cost: 800
+^DRefinery:
+	Inherits@1: ^Building
+	Inherits@2: ^RefineryCommons
 	Tooltip:
 		Name: Refinery
+	Building:
+		Dimensions: 1,1
+		Footprint: =
 	Selectable:
 		Priority: 5
-	Mobile:
-		Speed: 30
-		TerrainSpeeds:
-		TurnSpeed: 3
-	Power:
-		Amount: -10
-	Health:
-		HP: 400000
 	MustBeDestroyed:
 	RenderSprites:
 	MustBeDestroyed:
+	WithMakeAnimation:
+	WithSpriteBody:
+		Sequence: deployed
 	WithDecoration@Role:
 		Image: rank
 		Sequence: houseicon
 		Palette: effect
 		ReferencePoint: Top, Right
 		ZOffset: 256
-	StoresResources:
-		PipCount: 10
-		Capacity: 1000
+	Refinery:
+		DockOffset: 0,0
 
 PRODUCTIONSHIP:
 	Inherits: ^CapitalShip
@@ -1504,7 +1516,7 @@ MINER:
 		Range: 5c0
 	MustBeDestroyed:
 	Harvester:
-		DeliveryBuildings: dghabitatship, dghabitatship2
+		DeliveryBuildings: dgrefinery, dgrefinery2
 		Resources: CyanOre, BlueOre, Gas, Junk, Minerals
 		BaleLoadDelay: 12
 		BaleUnloadDelay: 3

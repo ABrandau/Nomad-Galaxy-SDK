@@ -13,6 +13,8 @@ mothership:
 
 upgradeicon:
 	icon:
+        Start: 0
 
 crystalicon:
 	icon:
+        Start: 0

@@ -76,13 +76,10 @@ ghabitatship:
 
 grefinery:
 	Inherits: ^shipdefault
-	idle:
-		ZOffset: -1000
-	harvest: harvestanim
-	crystal: orecrystal
-		Facings: -32
-	box: box
-		Facings: -20
+	deployed: grefinerymake
+		Start: 43
+	make: grefinerymake
+		Length: *
 	icon: grefineryicon
 
 gfrigateassemblybay:
@@ -161,8 +158,15 @@ gstationt1:
 		Offset: 0,15
 	idle:
 		Tick: 75
+
 gstationt2:
-	Inherits: stationt1
+	subpessanimship: subpessanimship
+		Length: *
+	idle:
+		length: 1
+	icon: gsubspessicon
+	make: gsubspessmake
+		Length: 68
 
 gstationt3:
 	Inherits: stationt1	

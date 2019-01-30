@@ -38,11 +38,17 @@ GHABITATSHIP:
 	RenderSprites:
 		Image: ghabitatship
 	Transforms:
-		IntoActor: dghabitatship2
+		IntoActor: dghabitatship
 		Offset: 0,0
 		Facing: 128
-	ProvidesPrerequisite@ghabitatship:
-		Prerequisite: ghabitatship
+
+GREFINERY:
+	Inherits: ^CapitalShip
+	Inherits@2: ^RefineryCommons
+	Transforms:
+		IntoActor: dgrefinery2
+		Offset: 0,0
+		Facing: 128
 
 GENGINEER:
 	Inherits: ^CapitalShip

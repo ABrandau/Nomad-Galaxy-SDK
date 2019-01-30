@@ -8,8 +8,6 @@ GMINER:
 		Queue: FrigateQueue
 		BuildPaletteOrder: 1
 		Description: Collects resources to fuel the war machine.
-	RenderSprites:
-		Image: grefinery
 
 GFRIG3:
 	Inherits: ^AFrontalFrigate

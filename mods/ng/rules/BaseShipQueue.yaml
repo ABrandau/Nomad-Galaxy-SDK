@@ -38,22 +38,37 @@ DGHABITATSHIP:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
 		Prerequisites: ~mothership
-		Description: \n- Increases fleet capacity.\n- Serves as a drop off point.
+		Description: \n- Increases fleet capacity.
 	Transforms:
 		IntoActor: ghabitatship
 		Offset: 0,0
 		Facing: 128
 	RenderSprites:
 		Image: ghabitatship
+
+DGREFINERY:
+	Inherits@1: ^DRefinery
+	Buildable:
+		Queue: BaseShipQueue
+		BuildPaletteOrder: 1
+		Prerequisites: ~mothership
+		Description: \n- Provides a spot to store resources.\n- Serves as a resource drop off point.
+	Transforms:
+		IntoActor: grefinery
+		Offset: 0,0
+		Facing: 128
+	RenderSprites:
+		Image: grefinery
     FreeActor:
         Actor: gminer
+        SpawnOffset: -1,-1
 
-DGHABITATSHIP2:
-    Inherits: DGHABITATSHIP
+DGREFINERY2:
+    Inherits: DGREFINERY
     -Buildable:
     -FreeActor:
     RenderSprites:
-		Image: ghabitatship
+		Image: grefinery
 
 DGPATROLCRUISER:
 	Inherits@1: ^Building

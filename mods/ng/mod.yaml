@@ -74,22 +74,15 @@ Rules:
 
 Sequences:
 	ng|sequences/defaultseq.yaml
-	ng|sequences/structures.yaml
-	ng|sequences/vehicles.yaml
 	ng|sequences/spaceobjects.yaml
-	ng|sequences/infantry.yaml
-	ng|sequences/aircraft.yaml
 	ng|sequences/neutralstuff.yaml
-	ng|sequences/decorations.yaml
 	ng|sequences/misc.yaml
-	ng|sequences/civilian.yaml
 	ng|sequences/baseseq.yaml
 	ng|sequences/gkorseq.yaml
 	ng|sequences/terranseq.yaml
 	ng|sequences/mercseq.yaml
 	ng|sequences/huskseq.yaml
 	ng|sequences/upgrades.yaml
-	ng|sequences/campaign.yaml
 
 TileSets:
 	ng|tilesets/space.yaml
