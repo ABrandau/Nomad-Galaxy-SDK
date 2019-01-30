@@ -1022,9 +1022,9 @@
 		OwnerType: InternalName
 		InternalOwner: Neutral
 	Valued:
-		Cost: 1300
+		Cost: 400
 	Power:
-		Amount: 40
+		Amount: 70
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
@@ -1226,8 +1226,8 @@ MOTHERSHIP:
 		Name: Mothership
 	ProvidesPrerequisite@buildingname:
 	Building:
-		Dimensions: 1,1
-		Footprint: X
+		Dimensions: 3,3
+		Footprint: =x= xxx =x=
 	CashTrickler:
 	Health:
 		HP: 1500000
@@ -1288,7 +1288,7 @@ MOTHERSHIP:
 	Health:
 		HP: 400000
 	Valued:
-		Cost: 300
+		Cost: 100
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
@@ -1296,8 +1296,6 @@ MOTHERSHIP:
 		UseLocation: True
 	Selectable:
 		Priority: 5
-	Power:
-		Amount: 20
 	WithMakeAnimation:
 	-WithSpriteBody
 	WithWallSpriteBody:
@@ -1499,7 +1497,7 @@ MINER:
 		Priority: 6
 		Class: Miner
 	Power:
-		Amount: -15
+		Amount: -5
 	Armor:
 		Type: Medium
 	Health:

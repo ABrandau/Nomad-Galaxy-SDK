@@ -169,7 +169,10 @@ gstationt2:
 		Length: 68
 
 gstationt3:
-	Inherits: stationt1	
+	Inherits: stationt1
+	idle:
+		Length: 1
+		Tick: 75
 
 gfrig1:
 	Inherits: ^shipdefault

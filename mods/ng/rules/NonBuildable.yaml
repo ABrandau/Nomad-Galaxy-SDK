@@ -5,7 +5,7 @@
 GMOTHERSHIP:
 	Inherits: MOTHERSHIP
 	Tooltip:
-		Name: G'kor Mothership
+		Name: G'kor Home Station
 	LineBuild:
 		Range: 10
 		NodeTypes: PowerLinkNode
@@ -13,6 +13,8 @@ GMOTHERSHIP:
 		SegmentsRequireNode: true
 	LineBuildNode:
 		Types: PowerLinkNode
+	RenderSprites:
+		Image: gstationt3
 
 GTUBE:
 	Inherits: ^LogisticTube
