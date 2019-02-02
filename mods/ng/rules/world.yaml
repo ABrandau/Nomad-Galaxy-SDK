@@ -124,6 +124,7 @@
 			SpaceBlue2: 100
 			SpaceRed: 130
 			SpaceRed2: 130
+	TerrainRenderer:
 
 World:
 	Inherits: ^BaseWorld
@@ -138,7 +139,6 @@ World:
 	ProductionQueueFromSelection:
 		ProductionTabsWidget: PRODUCTION_TABS
 	DomainIndex:
-	TerrainRenderer:
 	SmudgeLayer@SCORCH:
 		Type: Scorch
 		Sequence: scorches

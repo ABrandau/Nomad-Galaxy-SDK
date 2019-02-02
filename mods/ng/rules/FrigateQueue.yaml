@@ -5,7 +5,7 @@
 GMINER:
 	Inherits: MINER
 	Buildable:
-		Queue: FrigateQueue
+		Queue: Miner
 		BuildPaletteOrder: 1
 		Description: Collects resources to fuel the war machine.
 

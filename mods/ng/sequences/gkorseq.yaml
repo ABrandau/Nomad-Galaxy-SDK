@@ -306,10 +306,11 @@ gaderrick:
 	make:
 		Length: 1
 	icon: gaderrickicon
-	anticovertteturret: gacplatform
+	aiturret: gturret
 		Facings: -32
-	antifighteridle: gaiplatform
-	antifighterturret: gturret
+	gcturret: gacplatform
+		Facings: -32
+	gpturret: gapplatform
 		Facings: -32
 
 gtube:
@@ -340,18 +341,18 @@ gacplatform:
 		Facings: -32
 	icon: gacplatformicon
 
+gapplatform:
+	Inherits: ^shipdefault
+	turret:
+		Facings: -32
+	icon: gapplatformicon
+
 gasensorplatform:
 	idle:
 		Length: 1
 	stand:
 		Length: 1
 	icon: gasensorplatformicon
-
-gapplatform:
-	Inherits: ^shipdefault
-	turret:
-		Facings: -32
-	icon: gapplatformicon
 
 garepairplatform:
 	Inherits: ^shipdefault

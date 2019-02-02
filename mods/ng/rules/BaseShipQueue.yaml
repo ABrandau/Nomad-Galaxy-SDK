@@ -11,8 +11,35 @@ GLOGISTICCORE:
 		Description: \nConnects ships to improve their usefulness.\n- Can be detonated when deployed.
 	RenderSprites:
 		Image: gaderrick
-	Tooltip:
-		Name: Logistic Core
+	Tooltip@antifighterturret:
+		Name: Acid Turret
+		RequiresCondition: antifighterturret
+	Tooltip@gcturret:
+		Name: Needler Turret
+		RequiresCondition: antismallturret
+	Tooltip@gapplatform:
+		Name: Cannon Turret
+		RequiresCondition: gapplatform
+	WithSpriteTurret@aiturret:
+		Sequence: aiturret
+		RequiresCondition: antifighterturret
+	WithSpriteTurret@gcturret:
+		Sequence: gcturret
+		RequiresCondition: antismallturret
+	WithSpriteTurret@gapplatform:
+		Sequence: gpturret
+		RequiresCondition: antiarmorturret
+	Armament@aiturret:
+		Weapon: GPlatformBullet
+		RequiresCondition: antifighterturret
+	Armament@gcturret:
+		Weapon: GPlatformNeedle
+		LocalYaw: 255, -255, 255, -255, 255, -255
+		LocalOffset: 175, -250, 5, 175, 250, 5, 0, -250, 5, 0, 250, 5, -175, -250, 5, -175, 250, 5
+		RequiresCondition: antismallturret
+	Armament@gapplatform:
+		Weapon: GPlatformCannon
+		RequiresCondition: antiarmorturret
 
 DGHABITATSHIP:
 	Inherits@1: ^DHABITATSHIP
@@ -43,7 +70,7 @@ DGREFINERY:
 	Transforms:
 		IntoActor: grefinery
 		Offset: 0,0
-		Facing: 128
+		Facing: 0
 	RenderSprites:
 		Image: grefinery
 	FreeActor:

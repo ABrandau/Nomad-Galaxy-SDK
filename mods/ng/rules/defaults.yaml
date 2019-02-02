@@ -213,8 +213,6 @@
 	Targetable@DeployedShip:
 		TargetTypes: DeployedShip
 		RequiresCondition: deployed
-	# # Mobile:
-	# 	# RequiresCondition: !deployed
 	GrantConditionOnDeploy:
 		DeployedCondition: deployed
 	GrantConditionOnMovement:
@@ -950,19 +948,26 @@
 	ProductionQueue:
 		Type: CorvetteQueue
 		Group: Defence
-        LowPowerSlowdown: 10
+		LowPowerSlowdown: 10
 	Production:
 		Produces: CorvetteQueue
 	ProductionBar:
 		ProductionType: CorvetteQueue
 	Exit:
+		ExitCell: -1,1
+	Exit@1:
+		ExitCell: 1,-1
+	Exit@2:
+		ExitCell: 1,1
+	Exit@3:
+		ExitCell: -1,-1
 
 ^ProducesFrigates:
 	Inherits: ^ProducesCorvettes
 	ProductionQueue:
 		Type: FrigateQueue
 		Group: Infantry
-        LowPowerSlowdown: 10
+		LowPowerSlowdown: 10
 	Production:
 		Produces: FrigateQueue
 	ProductionBar:
@@ -1254,10 +1259,10 @@ MOTHERSHIP:
 
 ^DLogisticCore:
 	Inherits@1: ^Building
+	Inherits@2: ^AutoTargetAll
 	Tooltip:
 		Name: Logistic Core
-	ProvidesPrerequisite@UnitName:
-		Prerequisite: Unit
+		RequiresCondition: !antismallturret && !antifighterturret && !antiarmorturret
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -1276,6 +1281,7 @@ MOTHERSHIP:
 	-WithSpriteBody
 	WithWallSpriteBody:
 		Sequence: deployed
+		RequiresCondition: !antismallturret && !antifighterturret && !antiarmorturret
 	LineBuild:
 		Range: 6
 		NodeTypes: PowerLinkNode
@@ -1288,9 +1294,6 @@ MOTHERSHIP:
 		Adjacent: 8
 	GivesBuildableArea:
 		AreaTypes: station
-	StoresResources:
-		PipCount: 10
-		Capacity: 3000
 	SpawnActorOnDeath@husk:
 		Actor: ghabitatshiph
 		OwnerType: InternalName
@@ -1343,6 +1346,30 @@ MOTHERSHIP:
 		Condition: ChainBreak
 		CooldownDuration: 50
 		ActiveDuration: 1
+	Exit:
+		SpawnOffset: 99999,99999,99999
+		ExitCell: 3,3
+	ProvidesPrerequisite@unitname:
+	ProductionBar:
+		ProductionType: CivilianShipUpgrade
+	ProductionQueue@CivilianShipUpgrade:
+		Type: CivilianShipUpgrade
+		Group: Vehicle
+		LowPowerSlowdown: 10
+	Production@CivilianShipUpgrade:
+		Produces: CivilianShipUpgrade
+		RequiresCondition: !antismallturret && !antifighterturret && !antiarmorturret
+	GrantConditionOnProduction@antismallturret:
+		Condition: antismallturret
+		Actors: upgrade.antismallturret
+	GrantConditionOnProduction@antifighterturret:
+		Condition: antifighterturret
+		Actors: upgrade.antifighterturret
+	GrantConditionOnProduction@antiarmorturret:
+		Condition: antiarmorturret
+		Actors: upgrade.antiarmorturret
+	AttackTurreted:
+	Turreted:
 
 ^LogisticTube:
 	Inherits@1: ^Building
@@ -1430,6 +1457,22 @@ MOTHERSHIP:
 		ZOffset: 256
 	Refinery:
 		DockOffset: 0,0
+	ProductionBar@Miner:
+		ProductionType: Miner
+	ProductionQueue@Miner:
+		Type: Miner
+		Group: Miner
+		LowPowerSlowdown: 10
+	Production@Miner:
+		Produces: Miner
+	Exit:
+		ExitCell: -1,1
+	Exit@1:
+		ExitCell: 1,-1
+	Exit@2:
+		ExitCell: 1,1
+	Exit@3:
+		ExitCell: -1,-1
 
 PRODUCTIONSHIP:
 	Inherits: ^CapitalShip
@@ -1544,9 +1587,9 @@ MINER:
 	Harvester:
 		DeliveryBuildings: dgrefinery, dgrefinery2
 		Resources: CyanOre, BlueOre, Gas, Junk, Minerals
-		BaleLoadDelay: 12
+		BaleLoadDelay: 6
 		BaleUnloadDelay: 3
-		Capacity: 30
+		Capacity: 12
 		SearchForDeliveryBuildingDelay: 150
 		MaxIdleDuration: 20
 		WaitDuration: 20

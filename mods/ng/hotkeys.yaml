@@ -17,3 +17,7 @@ ProductionTypeVehicle: Y
 ProductionTypeAircraft: U
 	Description: Aircraft Tab
 	Types: Production
+
+ProductionTypeMiner: I
+	Description: Miners Tab
+	Types: Production

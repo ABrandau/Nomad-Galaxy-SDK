@@ -526,6 +526,9 @@ production-icons: chrome.png
 	support: 464,0,16,16
 	support-disabled: 464,16,16,16
 	support-alert: 464,32,16,16
+	miner: 448,0,16,16
+	miner-disabled: 448,16,16,16
+	miner-alert: 448,32,16,16
 
 order-icons: chrome.png
 	options: 480,0,16,16

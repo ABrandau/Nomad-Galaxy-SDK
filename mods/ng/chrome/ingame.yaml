@@ -643,7 +643,7 @@ Container@PLAYER_WIDGETS:
 					Height: 30
 					Children:
 						ProductionTypeButton@BUILDING:
-							Width: 30
+							Width: 25
 							Height: 30
 							TooltipText: Baseships
 							TooltipContainer: TOOLTIP_CONTAINER
@@ -655,8 +655,8 @@ Container@PLAYER_WIDGETS:
 									Y: 7
 									ImageCollection: production-icons
 						ProductionTypeButton@DEFENCE:
-							X: 35
-							Width: 30
+							X: 30
+							Width: 25
 							Height: 30
 							TooltipText: Corvettes & Fighters
 							TooltipContainer: TOOLTIP_CONTAINER
@@ -668,8 +668,8 @@ Container@PLAYER_WIDGETS:
 									Y: 7
 									ImageCollection: production-icons
 						ProductionTypeButton@INFANTRY:
-							X: 70
-							Width: 30
+							X: 60
+							Width: 25
 							Height: 30
 							TooltipText: Frigates & Capital Ships
 							TooltipContainer: TOOLTIP_CONTAINER
@@ -681,8 +681,8 @@ Container@PLAYER_WIDGETS:
 									Y: 7
 									ImageCollection: production-icons
 						ProductionTypeButton@VEHICLE:
-							X: 105
-							Width: 30
+							X: 90
+							Width: 25
 							Height: 30
 							TooltipText: Upgrades
 							TooltipContainer: TOOLTIP_CONTAINER
@@ -694,13 +694,26 @@ Container@PLAYER_WIDGETS:
 									Y: 7
 									ImageCollection: production-icons
 						ProductionTypeButton@AIRCRAFT:
-							X: 140
-							Width: 30
+							X: 120
+							Width: 25
 							Height: 30
 							TooltipText: Research
 							TooltipContainer: TOOLTIP_CONTAINER
 							ProductionGroup: Aircraft
 							Key: ProductionTypeAircraft
+							Children:
+								Image@ICON:
+									X: 7
+									Y: 7
+									ImageCollection: production-icons
+						ProductionTypeButton@MINER:
+							X: 150
+							Width: 25
+							Height: 30
+							TooltipText: Miners
+							TooltipContainer: TOOLTIP_CONTAINER
+							ProductionGroup: Miner
+							Key: ProductionTypeMiner
 							Children:
 								Image@ICON:
 									X: 7

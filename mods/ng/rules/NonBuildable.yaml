@@ -52,7 +52,7 @@ GREFINERY:
 	Transforms:
 		IntoActor: dgrefinery2
 		Offset: 0,0
-		Facing: 128
+		Facing: 0
 	ProvidesPrerequisite@UnitName:
 		Prerequisite: grefinery
 
