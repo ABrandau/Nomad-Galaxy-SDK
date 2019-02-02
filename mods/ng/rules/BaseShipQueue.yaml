@@ -66,7 +66,7 @@ DGREFINERY:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
 		Prerequisites: ~mothership, ghabitatship
-		Description: \n- Provides a spot to store resources.\n- Serves as a resource drop off point.
+		Description:- Specialized mining vessel. \n- Spawns with a miner after its first deployment.\n- Serves as a resource drop off point.\n- Can store up to 2000 minerals.\n- Can produce extra miners.
 	Transforms:
 		IntoActor: grefinery
 		Offset: 0,0

@@ -45,7 +45,7 @@ GFRIG1:
 		Queue: FrigateQueue
 		BuildPaletteOrder: 2
 		Description: Combat craft armed with three Heavy Cannon.\nEffective against Frigates, Capital Ships.\nModerate against Corvettes.\nIneffective against Fighters.
-		Prerequisites: gmercenaryhub
+		Prerequisites: gsurveyfrigate
 	Valued:
 		Cost: 1100
 	Tooltip:
@@ -144,7 +144,7 @@ GBC1:
 	Buildable:
 		Queue: FrigateQueue
 		BuildPaletteOrder: 4
-		Prerequisites: gresearchship
+		Prerequisites: gresearchship, gmercenaryhub
 		Description: Basic capital ship armed with heavy cannons and point defence lasers.\nEffective against Frigates and Capital Ships.
 	Valued:
 		Cost: 4000

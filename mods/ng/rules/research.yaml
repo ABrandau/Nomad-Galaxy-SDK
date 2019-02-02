@@ -54,21 +54,6 @@ research.Crystal.Harvest:
 	# CIVILIAN SHIP UPGRADES
 	###############################################################
 
-upgrade.antifighterturret:
-	Inherits: ^default.upgrade
-	Tooltip:
-		Name: Acid Turret
-	Buildable:
-		Queue: CivilianShipUpgrade
-		Description: Anti fighter defence
-		Prerequisites: gsurveyfrigate
-		BuildLimit: 3
-		IconPalette: terrain
-	Valued:
-		Cost: 250
-	RenderSprites:
-		Image: gaiplatform
-
 upgrade.antismallturret:
 	Inherits: ^default.upgrade
 	Tooltip:
@@ -83,6 +68,21 @@ upgrade.antismallturret:
 	RenderSprites:
 		Image: gacplatform
 
+upgrade.antifighterturret:
+	Inherits: ^default.upgrade
+	Tooltip:
+		Name: Acid Turret
+	Buildable:
+		Queue: CivilianShipUpgrade
+		Description: Anti fighter defence
+		Prerequisites: gsurveyfrigate
+		BuildLimit: 1
+		IconPalette: terrain
+	Valued:
+		Cost: 250
+	RenderSprites:
+		Image: gaiplatform
+
 upgrade.antiarmorturret:
 	Inherits: ^default.upgrade
 	Tooltip:
@@ -91,7 +91,7 @@ upgrade.antiarmorturret:
 		Queue: CivilianShipUpgrade
 		Description: Anti Frigate defence
 		Prerequisites: grefinery
-		BuildLimit: 2
+		BuildLimit: 1
 		IconPalette: terrain
 	Valued:
 		Cost: 250
