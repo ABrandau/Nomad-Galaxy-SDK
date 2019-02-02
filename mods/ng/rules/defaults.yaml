@@ -616,9 +616,9 @@
 		HealIfBelow: 25
 	ExternalCondition@SlowdownFighter:
 		Condition: SlowdownFighter
-    GrantConditionOnAttack@SlowdownFighter:
-        Condition: DogfightEnabled
-        RevokeDelay: 100
+	GrantConditionOnAttack@SlowdownFighter:
+		Condition: DogfightEnabled
+		RevokeDelay: 100
 	Voiced:
 		VoiceSet: GFighterVoice
 	MustBeDestroyed:
@@ -647,7 +647,7 @@
 		SharesCell: True
 		Locomotor: Corvette
 	AttackTurreted:
-    Turreted:
+	Turreted:
 	Targetable:
 		TargetTypes: Corvette
 	RevealsShroud:
@@ -711,8 +711,6 @@
 		Adjacent: 2
 		RequiresBaseProvider: True
 	WithSpriteBody:
-	GivesBuildableArea:
-		AreaTypes: station
 	RequiresBuildableArea:
 		AreaTypes: station
 		Adjacent: 1
@@ -736,7 +734,12 @@
 	MapEditorData:
 		Categories: Station or Deployed Ship
 	GivesBuildableArea:
-		AreaTypes: station
+		AreaTypes: node
+	ExternalCondition@HabitatChain2:
+		Condition: HabitatChain2
+	DamageMultiplier@HabitatChain2:
+		RequiresCondition: HabitatChain2
+		Modifier: 75
 
 ^BuildableStation:
 	Inherits: ^Building
@@ -966,15 +969,17 @@
 		ProductionType: FrigateQueue
 
 ^ProducesBaseShips:
-	Inherits: ^ProducesCorvettes
 	ProductionQueue:
 		Type: BaseShipQueue
 		Group: Building
-        LowPowerSlowdown: 1
+		LowPowerSlowdown: 1
 	Production:
 		Produces: BaseShipQueue
 	ProductionBar:
 		ProductionType: BaseShipQueue
+	GivesBuildableArea:
+		AreaTypes: station, node
+	BaseProvider:
 
 ^AICorvetteProduction:
 	Inherits: ^ProducesCorvettes
@@ -1024,7 +1029,7 @@
 	Valued:
 		Cost: 400
 	Power:
-		Amount: 70
+		Amount: 100
 	RevealsShroud:
 		Range: 5c0
 		Type: CenterPosition
@@ -1049,7 +1054,7 @@
 		Capacity: 1000
 
 ^SurveyFrigateCommons:
-    Inherits: ^CivShipHP
+	Inherits: ^CivShipHP
 	Health:
 		HP: 400000
 	Tooltip:
@@ -1060,7 +1065,7 @@
 		Cost: 1500
 	Power:
 		Amount: -30
-    DetectCloaked:
+	DetectCloaked:
 		Range: 10c0
 	RevealsShroud:
 		Range: 10c0
@@ -1077,7 +1082,7 @@
 		ZOffset: 256
 
 ^EngineerCrewCommons:
-    Inherits: ^CivShipHP
+	Inherits: ^CivShipHP
 	Health:
 		HP: 400000
 	Valued:
@@ -1100,7 +1105,7 @@
 		ZOffset: 256
 
 ^ResearchShipCommons:
-    Inherits@1: ^ResearchShipLogo
+	Inherits@1: ^ResearchShipLogo
 	Health:
 		HP: 400000
 	Tooltip:
@@ -1109,35 +1114,13 @@
 		Cost: 3000
 	Power:
 		Amount: -50
-	ProvidesPrerequisite@RearchshipAI:
-		Prerequisite: gresearchship
-		RequiresCondition: AIWanderer
 	SpawnActorOnDeath@husk:
 		Actor: gresearchshiph
 		OwnerType: InternalName
 		InternalOwner: Neutral
 
-^ResearchShipBuffer:
-	CarrierMaster:
-		Actors: gfighter4
-		RespawnTicks: 10
-		ReamTicks: 10
-		NoRegeneration: True
-		InstaRepair: true
-		SpawnAllAtOnce: True
-	RenderRangeCircle:
-	Armament@PRIMARY:
-		Weapon: ResearchShipFighterSpawn
-		TargetStances: Ally
-	AutoTargetPriority@DEFAULT:
-		RequiresCondition: !stance-attackanything
-		ValidTargets: CapitalShip, Frigate, Corvette, Fighter, Station
-		InvalidTargets: NoAutoTarget
-		Priority: 2
-	AttackOmni:
-
 ^MercenaryHubCommons:
-    Inherits@1: ^ResearchShipLogo
+	Inherits@1: ^ResearchShipLogo
 	Health:
 		HP: 400000
 	Valued:
@@ -1146,9 +1129,6 @@
 		Name: Mercenary Hub
 	Power:
 		Amount: -25
-	ProvidesPrerequisite@gmercenaryhubAI:
-		Prerequisite: gmercenaryhub
-		RequiresCondition: AIWanderer
 	SpawnActorOnDeath@husk:
 		Actor: gresearchshiph
 		OwnerType: InternalName
@@ -1228,7 +1208,6 @@ MOTHERSHIP:
 	Building:
 		Dimensions: 3,3
 		Footprint: =x= xxx =x=
-	CashTrickler:
 	Health:
 		HP: 1500000
 	AppearsOnRadar:
@@ -1272,16 +1251,13 @@ MOTHERSHIP:
 	ProvidesPrerequisite@mothership:
 		Prerequisite: mothership
 	ProvidesPrerequisite@buildingname:
-	GivesBuildableArea:
-		AreaTypes: station
-	BaseProvider:
 
 ^DLogisticCore:
 	Inherits@1: ^Building
 	Tooltip:
 		Name: Logistic Core
 	ProvidesPrerequisite@UnitName:
-        Prerequisite: Unit
+		Prerequisite: Unit
 	Building:
 		Dimensions: 1,1
 		Footprint: x
@@ -1308,8 +1284,10 @@ MOTHERSHIP:
 	LineBuildNode:
 		Types: PowerLinkNode
 	RequiresBuildableArea:
-		AreaTypes: station
+		AreaTypes: node
 		Adjacent: 8
+	GivesBuildableArea:
+		AreaTypes: station
 	StoresResources:
 		PipCount: 10
 		Capacity: 3000
@@ -1327,9 +1305,47 @@ MOTHERSHIP:
 	KillsSelf@Detonate:
 		RemoveInstead: False
 		RequiresCondition: Detonate
+	ProximityExternalCondition@HabitatChain:
+		Condition: HabitatChain2
+		RequiresCondition: HabitatChain && !ChainBreak
+		Range: 2c0
+	ExternalCondition@HabitatChain:
+		Condition: HabitatChain
+	ProximityExternalCondition@EngineerChain2:
+		Condition: EngineerChain2
+		RequiresCondition: EngineerChain && !ChainBreak
+		Range: 2c0
+	ExternalCondition@EngineerChain:
+		Condition: EngineerChain
+	ProximityExternalCondition@ConstructionChain2:
+		Condition: ConstructionChain2
+		RequiresCondition: ConstructionChain2 && !ChainBreak
+		Range: 2c0
+	ExternalCondition@ConstructionChain:
+		Condition: ConstructionChain
+	ProximityExternalCondition@ResearchChain2:
+		Condition: ResearchChain2
+		RequiresCondition: ResearchChain2 && !ChainBreak
+		Range: 2c0
+	ExternalCondition@ResearchChain2:
+		Condition: ResearchChain
+	ProximityExternalCondition@MercChain2:
+		Condition: MercChain2
+		RequiresCondition: MercChain && !ChainBreak
+		Range: 2c0
+	ExternalCondition@MercChain2:
+		Condition: MercChain
+	ProximityExternalCondition@asdf:
+		Condition: ChainBreak2
+		RequiresCondition: ChainBreak
+		Range: 12c0
+	GrantPeriodicCondition:
+		Condition: ChainBreak
+		CooldownDuration: 50
+		ActiveDuration: 1
 
 ^LogisticTube:
-	Inherits@2: ^Building
+	Inherits@1: ^Building
 	-Building:
 	RevealsShroud:
 		Range: 2c0
@@ -1345,8 +1361,6 @@ MOTHERSHIP:
 		NodeTypes: PowerLinkNode
 		SegmentType: gtube
 		SegmentsRequireNode: true
-	LineBuildNode:
-		Types: PowerLinkNode
 	Tooltip:
 		Name: Power Node
 	EnergyWall:
@@ -1356,6 +1370,20 @@ MOTHERSHIP:
 	-Armor:
 	Replaceable:
 		Types: LogisticNode
+	GivesBuildableArea:
+		AreaTypes: station
+	ExternalCondition@HabitatChain2:
+		Condition: HabitatChain2
+	ExternalCondition@EngineerChain2:
+		Condition: EngineerChain2
+	ExternalCondition@ConstructionChain2:
+		Condition: ConstructionChain2
+	ExternalCondition@MercChain2:
+		Condition: MercChain2
+	ExternalCondition@ResearchChain2:
+		Condition: ResearchChain2
+	ExternalCondition@ChainBreak:
+		Condition: ChainBreak
 
 ^DHABITATSHIP:
 	Inherits@1: ^Building
@@ -1507,7 +1535,7 @@ MINER:
 	Explodes:
 		Weapon: CorvetteExplode
 	Mobile:
-		Speed: 40
+		Speed: 60
 		SharesCell: False
 		TurnSpeed: 20
 	RevealsShroud:

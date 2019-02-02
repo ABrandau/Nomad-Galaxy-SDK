@@ -2,43 +2,6 @@
 # G KOR
 #################################################################################
 
-GFIGHTER1:
-	Inherits: ^Fighter
-	Valued:
-		Cost: 50
-	Tooltip:
-		Name: Interceptor
-	Health:
-		HP: 30000
-	Aircraft:
-		Speed: 90
-    -SelectionDecorations:
-    -Selectable:
-    Interactable:
-    RejectsOrders:
-	Armament:
-		Weapon: InterceptorBullet
-	Armament@1:
-		Weapon: DummyContinuousInterceptorBullet
-
-GFIGHTER2B:
-	Inherits: ^Fighter
-	Tooltip:
-		Name: Bomber
-	Health:
-		HP: 15000
-	Valued:
-		Cost: 50
-	Armament:
-		Weapon: BomberAcid
-    -SelectionDecorations:
-    -Selectable:
-    Interactable:
-	Aircraft:
-		Speed: 95
-	RenderSprites:
-		Image: gfighter2
-
 GCORV1:
 	Inherits: ^Corvette
 	Inherits@2: ^CorvetteTargetPriority
@@ -55,7 +18,7 @@ GCORV1:
 	Health:
 		HP: 170000
 	-WithFacingSpriteBody:
-    WithSpriteTurret:
+	WithSpriteTurret:
 	RevealsShroud:
 		Range: 5c0
 	Armament:
@@ -80,7 +43,7 @@ GCORV3:
 	Buildable:
 		Queue: CorvetteQueue
 		BuildPaletteOrder: 4
-		Prerequisites: gmercenaryhub
+		Prerequisites: gsurveyfrigate
 		Description: Light corvette equipped to engage fighters and missiles.
 	-WithFacingSpriteBody:
 	Power:
@@ -93,7 +56,7 @@ GCORV3:
 		Weapon: CorvetteMissile
 	MustBeDestroyed:
 	AttackFrontal:
-    WithSpriteTurret:
+	WithSpriteTurret:
 
 GCORV2:
 	Inherits: ^Corvette
@@ -121,3 +84,54 @@ GCORV2:
 		LocalOffset: 200, 0, 0
 		RequiresCondition: !HyperSpaceFadeOut
 	MustBeDestroyed:
+
+GFIGHTERCARRIER:
+	Inherits: SERVICEFRIGATE
+	Buildable:
+		Queue: CorvetteQueue
+		BuildPaletteOrder: 5
+		Prerequisites: gsurveyfrigate
+		Description: Carrier.
+
+GFIGHTER1:
+	Inherits: SlaveFighter
+	Valued:
+		Cost: 50
+	Tooltip:
+		Name: Interceptor
+	Health:
+		HP: 30000
+	Aircraft:
+		Speed: 90
+	Interactable:
+	RejectsOrders:
+	Armament:
+		Weapon: InterceptorBullet
+	Armament@1:
+		Weapon: DummyContinuousInterceptorBullet
+
+GBOMBERCARRIER:
+	Inherits: SERVICEFRIGATE
+	Buildable:
+		Queue: CorvetteQueue
+		BuildPaletteOrder: 5
+		Prerequisites: gsurveyfrigate
+		Description: Cloaked corvette, fires glaives that bounce 6 times.
+	CarrierMaster:
+		Actors: gfighter2b, gfighter2b, gfighter2b, gfighter2b
+
+GFIGHTER2B:
+	Inherits: SlaveFighter
+	Tooltip:
+		Name: Bomber
+	Health:
+		HP: 15000
+	Valued:
+		Cost: 50
+	Armament:
+		Weapon: BomberAcid
+	Interactable:
+	Aircraft:
+		Speed: 95
+	RenderSprites:
+		Image: gfighter2

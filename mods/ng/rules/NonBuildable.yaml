@@ -43,6 +43,8 @@ GHABITATSHIP:
 		IntoActor: dghabitatship
 		Offset: 0,0
 		Facing: 128
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: ghabitatship
 
 GREFINERY:
 	Inherits: ^CapitalShip
@@ -51,16 +53,34 @@ GREFINERY:
 		IntoActor: dgrefinery2
 		Offset: 0,0
 		Facing: 128
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: grefinery
 
-GENGINEER:
-	Inherits: ^CapitalShip
-	Inherits@2: ^EngineerCrewCommons
+GPATROLCRUISER:
+	Inherits@1: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Inherits@2: ^AICorvetteProduction
+	Tooltip:
+		Name: Patrol Cruiser
 	Transforms:
-		IntoActor: dgengineer
+		IntoActor: dgpatrolcruiser
 		Offset: 0,0
 		Facing: 64
-	RenderSprites:
-		Image: gengineer
+	ProvidesPrerequisite@glightshipyard: 
+		Prerequisite: glightshipyard
+
+GFRIGATEASSEMBLYBAY:
+	Inherits: ^CapitalShip
+	Inherits@1: ^AIWanderer
+	Inherits@2: ^AIFrigateProduction
+	Tooltip:
+		Name: Frigate Assembly Bay
+	Transforms:
+		IntoActor: dgfrigateassemblybay
+		Offset: 0,0
+		Facing: 192
+	ProvidesPrerequisite@UnitName: 
+		Prerequisite: gheavyshipyard
 
 GSURVEYFRIGATE:
 	Inherits: ^CapitalShip
@@ -73,6 +93,20 @@ GSURVEYFRIGATE:
 		Actor: gsurveyfrigateh
 		OwnerType: InternalName
 		InternalOwner: Neutral
+	ProvidesPrerequisite@UnitName: 
+		Prerequisite: gsurveyfrigate
+
+GENGINEER:
+	Inherits: ^CapitalShip
+	Inherits@2: ^EngineerCrewCommons
+	Transforms:
+		IntoActor: dgengineer
+		Offset: 0,0
+		Facing: 64
+	RenderSprites:
+		Image: gengineer
+	ProvidesPrerequisite@UnitName: 
+		Prerequisite: gengineer
 
 GMERCENARYHUB:
 	Inherits: ^CapitalShip
@@ -87,6 +121,8 @@ GMERCENARYHUB:
 		InternalOwner: Neutral
 	RenderSprites:
 		Image: gmercenaryhub
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: gmercenaryhub
 
 GRESEARCHSHIP:
 	Inherits: ^CapitalShip
@@ -100,11 +136,24 @@ GRESEARCHSHIP:
 		InternalOwner: Neutral
 	RenderSprites:
 		Image: gresearchship
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: gresearchship
+
+GSHIPYARD:
+	Inherits: ^CapitalShip
+	Inherits@2: ^AIBaseShipProduction
+	Tooltip:
+		Name: Shipyard
+	Transforms:
+		IntoActor: dgshipyard
+		Offset: 0,0
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: gconstructionship
 
 GSUBSPESS:
 	Inherits: ^CapitalShip
 	Inherits@2: ^CivilianShipWeaponsGkor
-    Inherits@3: ^SubspessHP
+	Inherits@3: ^SubspessHP
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -130,7 +179,7 @@ GFIGHTERTURRET:
 	WithRangeCircle:
 		Range: 7c0
 		Type: GkorFlakTurret
-    
+
 GNORMALTURRET:
 	Inherits: ^DeployableTurret
 	Inherits@Autotarget: ^AutoTargetAll
@@ -140,7 +189,7 @@ GNORMALTURRET:
 	Interactable:
 		Bounds: 60,60
 	Selectable:
-  		Bounds: 60,60      
+		Bounds: 60,60
 	Tooltip:
 		Name: Needler Defence
 	Armament@AntiCorvette:
@@ -149,44 +198,6 @@ GNORMALTURRET:
 		LocalOffset: 175, -250, 5, 175, 250, 5, 0, -250, 5, 0, 250, 5, -175, -250, 5, -175, 250, 5
 		RequiresCondition: !deployed
 	RenderRangeCircle:
-
-GPATROLCRUISER:
-	Inherits@1: ^CapitalShip
-	Inherits@1: ^AIWanderer
-	Inherits@2: ^AICorvetteProduction
-	Tooltip:
-		Name: Patrol Cruiser
-	Transforms:
-		IntoActor: dgpatrolcruiser
-		Offset: 0,0
-		Facing: 64
-	ProvidesPrerequisite@T1Carrier: 
-		Prerequisite: gproductionship
-
-GFRIGATEASSEMBLYBAY:
-	Inherits: ^CapitalShip
-	Inherits@1: ^AIWanderer
-	Inherits@2: ^AIFrigateProduction
-	Tooltip:
-		Name: Frigate Assembly Bay
-	Transforms:
-		IntoActor: dgfrigateassemblybay
-		Offset: 0,0
-		Facing: 192
-	ProvidesPrerequisite@T1Carrier: 
-		Prerequisite: gproductionship
-
-GSHIPYARD:
-	Inherits: ^CapitalShip
-	Inherits@1: ^AIWanderer
-	Inherits@2: ^AIBaseShipProduction
-	Tooltip:
-		Name: Shipyard
-	Transforms:
-		IntoActor: dgshipyard
-		Offset: 0,0
-	ProvidesPrerequisite@T1Carrier: 
-		Prerequisite: gproductionship
 
 #######Fighter
 

@@ -13,24 +13,6 @@ GLOGISTICCORE:
 		Image: gaderrick
 	Tooltip:
 		Name: Logistic Core
-	ProximityExternalCondition:
-		Condition: HabitatChain2
-		RequiresCondition: HabitatChain && !ChainBreak
-		Range: 2c0
-	ExternalCondition@HabitatChain:
-		Condition: HabitatChain
-	ExternalCondition@HabitatChain2:
-		Condition: HabitatChain2
-	ExternalCondition@ChainBreak:
-		Condition: ChainBreak
-	ProximityExternalCondition@asdf:
-		Condition: ChainBreak2
-		RequiresCondition: ChainBreak
-		Range: 12c0
-	GrantPeriodicCondition:
-		Condition: ChainBreak
-		CooldownDuration: 50
-		ActiveDuration: 1
 
 DGHABITATSHIP:
 	Inherits@1: ^DHABITATSHIP
@@ -45,13 +27,18 @@ DGHABITATSHIP:
 		Facing: 128
 	RenderSprites:
 		Image: ghabitatship
+	ProximityExternalCondition@HabitatChain:
+		Condition: HabitatChain
+		Range: 3c0
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: ghabitatship
 
 DGREFINERY:
 	Inherits@1: ^DRefinery
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
-		Prerequisites: ~mothership
+		Prerequisites: ~mothership, ghabitatship
 		Description: \n- Provides a spot to store resources.\n- Serves as a resource drop off point.
 	Transforms:
 		IntoActor: grefinery
@@ -59,15 +46,17 @@ DGREFINERY:
 		Facing: 128
 	RenderSprites:
 		Image: grefinery
-    FreeActor:
-        Actor: gminer
-        SpawnOffset: -1,-1
+	FreeActor:
+		Actor: gminer
+		SpawnOffset: -1,-1
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: grefinery
 
 DGREFINERY2:
-    Inherits: DGREFINERY
-    -Buildable:
-    -FreeActor:
-    RenderSprites:
+	Inherits: DGREFINERY
+	-Buildable:
+	-FreeActor:
+	RenderSprites:
 		Image: grefinery
 
 DGPATROLCRUISER:
@@ -77,7 +66,7 @@ DGPATROLCRUISER:
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
-		Prerequisites: ~mothership
+		Prerequisites: ~mothership, ghabitatship
 		Description: \nProduces small warships.
 	Building:
 		Dimensions: 2,1
@@ -95,15 +84,13 @@ DGPATROLCRUISER:
 		Image: gpatrolcruiser
 	Selectable:
 		Priority: 5
-	ProvidesPrerequisite@T1Carrier: 
-		Prerequisite: gproductionship
 	RallyPoint:
 	WithMakeAnimation:
-	WithSpriteBody:
+	-WithSpriteBody:
+	WithWallSpriteBody:
 		Sequence: deployed
-	# WithWallSpriteBody:
-    LineBuildNode:
-        Types: PowerLinkNode
+	ProvidesPrerequisite@glightshipyard: 
+		Prerequisite: glightshipyard
 
 DGFRIGATEASSEMBLYBAY:
 	Inherits@1: ^Building
@@ -112,7 +99,7 @@ DGFRIGATEASSEMBLYBAY:
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
-		Prerequisites: ~mothership
+		Prerequisites: ~mothership, grefinery
 		Description: \Produces large warships.
 	Building:
 		Dimensions: 2,2
@@ -130,16 +117,13 @@ DGFRIGATEASSEMBLYBAY:
 		Image: gfrigateassemblybay
 	Selectable:
 		Priority: 5
-	ProvidesPrerequisite@T1Carrier: 
-		Prerequisite: gproductionship
+	ProvidesPrerequisite@UnitName: 
+		Prerequisite: gheavyshipyard
 	-WithSpriteBody:
 	WithWallSpriteBody:
 		Sequence: deployed
 	RallyPoint:
 	WithMakeAnimation:
-	ProximityExternalCondition:
-		Condition: HabitatChain
-		Range: 3c0
 
 DGSURVEYFRIGATE:
 	Inherits@1: ^Building
@@ -147,7 +131,7 @@ DGSURVEYFRIGATE:
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
-		Prerequisites: ~mothership
+		Prerequisites: ~mothership, grefinery
 		Description: \nImproves ship detection.
 	Building:
 		Dimensions: 1,1
@@ -167,6 +151,8 @@ DGSURVEYFRIGATE:
 	-WithSpriteBody:
 	WithWallSpriteBody:
 		Sequence: deployed
+	ProvidesPrerequisite@UnitName: 
+		Prerequisite: gsurveyfrigate
 
 DGENGINEER:
 	Inherits@1: ^Building
@@ -175,7 +161,7 @@ DGENGINEER:
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
-		Prerequisites: ~mothership
+		Prerequisites: ~mothership, gheavyshipyard
 		Description: \nImproves ship detection.
 	Building:
 		Dimensions: 1,1
@@ -213,16 +199,20 @@ DGENGINEER:
 		ValidTargets: CapitalShip, Frigate, Corvette, Fighter, Station
 		InvalidTargets: NoAutoTarget
 		Priority: 2
+	ProximityExternalCondition@EngineerChain:
+		Condition: EngineerChain
+		Range: 3c0
+	ProvidesPrerequisite@UnitName: 
+		Prerequisite: gengineer
 
 DGMERCENARYHUB:
 	Inherits@1: ^Building
-	Inherits@2: ^ResearchShipBuffer
 	Inherits@3: ^MercenaryHubCommons
 	Inherits@4: ^AutoTargetAll
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
-		Prerequisites: ~mothership
+		Prerequisites: ~mothership, gsurveyfrigate
 		Description: \nImproves ship detection.
 	Building:
 		Dimensions: 1,1
@@ -235,9 +225,7 @@ DGMERCENARYHUB:
 		Offset: 0,0
 	RenderSprites:
 		Image: gmercenaryhub
-	ProvidesPrerequisite@gmercenaryhub:
-		Prerequisite: gmercenaryhub
-    Exit:
+	Exit:
 	Selectable:
 		Priority: 5
 	WithMakeAnimation:
@@ -251,21 +239,25 @@ DGMERCENARYHUB:
 		QueuedAudio: Building
 		ReadyAudio: ConstructionComplete
 	Production:
-        Produces: MercContract
-        RequiresCondition: !ContractsFinished
+		Produces: MercContract
+		RequiresCondition: !ContractsFinished
 	GrantConditionOnPrerequisite@T2Contract:
 		Condition: ContractsFinished
 		Prerequisites: T2Contract
+	ProximityExternalCondition@MercenaryChain:
+		Condition: MercenaryChain
+		Range: 3c0
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: gmercenaryhub
 
 DGRESEARCHSHIP:
 	Inherits@1: ^Building
-	Inherits@2: ^ResearchShipBuffer
 	Inherits@3: ^ResearchShipCommons
 	Inherits@4: ^AutoTargetAll
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
-		Prerequisites: ~mothership
+		Prerequisites: ~mothership, gsurveyfrigate
 		Description: \nImproves ship detection.
 	Building:
 		Dimensions: 1,1
@@ -285,6 +277,11 @@ DGRESEARCHSHIP:
 	WithMakeAnimation:
 	WithSpriteBody:
 		Sequence: deployed
+	ProximityExternalCondition@ResearchChain:
+		Condition: ResearchChain
+		Range: 3c0
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: gresearchship
 
 DGSHIPYARD:
 	Inherits@1: ^Building
@@ -293,7 +290,7 @@ DGSHIPYARD:
 	Buildable:
 		Queue: BaseShipQueue
 		BuildPaletteOrder: 1
-		Prerequisites: ~mothership
+		Prerequisites: ~mothership, gengineer
 		Description: \n- Allows the construciton of base ships.
 	Building:
 		Dimensions: 1,1
@@ -318,13 +315,8 @@ DGSHIPYARD:
 	GivesBuildableArea:
 		AreaTypes: station
 	BaseProvider:
-	LineBuild:
-		Range: 10
-		NodeTypes: PowerLinkNode
-		SegmentType: gtube
-		SegmentsRequireNode: true
-	LineBuildNode:
-		Types: PowerLinkNode
+	ProvidesPrerequisite@UnitName:
+		Prerequisite: gconstructionship
 
 GBC2:
 	Inherits: ^CapitalShip

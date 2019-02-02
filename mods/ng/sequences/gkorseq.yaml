@@ -37,10 +37,10 @@ gproductionship:
 gcivship:
 	Inherits: ^shipdefault
 	##### Civ Stuff
-    deployed: ghabitatship
-        Start: 1
-    make: ghabitatship
-        Start: 1
+	deployed: ghabitatship
+		Start: 1
+	make: ghabitatship
+		Start: 1
 	supplyship: ghabitatship
 		Facings: -32
 		UseClassicFacingFudge: True
@@ -77,7 +77,7 @@ ghabitatship:
 grefinery:
 	Inherits: ^shipdefault
 	deployed: grefinerymake
-		Start: 43
+		Start: 53
 	make: grefinerymake
 		Length: *
 	icon: grefineryicon
@@ -248,7 +248,7 @@ gcorv2:
 gcorv3:
 	Inherits: ^shipdefault
 	icon: gcorv3icon
-    turret: #gturret2
+	turret: #gturret2
 		Facings: -32
 
 gminer:
@@ -273,13 +273,13 @@ gbombercarrier:
 gfighter1:
 	Inherits: ^shipdefault
 	Inherits@2: ^fighterdefault
-    dot: dot
+	dot: dot
 	icon: gfighter1icon
 
 gfighter2:
 	Inherits: ^shipdefault
 	Inherits@2: ^fighterdefault
-    dot: dot
+	dot: dot
 	icon: gfighter2icon
 
 gfighter3:

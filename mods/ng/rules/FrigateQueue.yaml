@@ -36,7 +36,7 @@ GFRIG3:
 		OwnerType: InternalName
 		InternalOwner: Neutral
 	AttackFrontal:
-        FacingTolerance: 100
+		FacingTolerance: 100
 
 GFRIG1:
 	Inherits: ^TurretedFrigate
@@ -66,12 +66,12 @@ GFRIG1:
 		Weapon: FrigateCannon
 		RequiresCondition: !HyperSpaceFadeOut
 		Turret: Secondary
-        FireDelay: 6
+		FireDelay: 6
 	Armament@2:
 		Weapon: FrigateCannon
 		RequiresCondition: !HyperSpaceFadeOut
 		Turret: Tertiary
-        FireDelay: 15
+		FireDelay: 15
 	Armament@3:
 		Weapon: DummyContinuousFrigateCannon
 		RequiresCondition: !HyperSpaceFadeOut
@@ -80,12 +80,12 @@ GFRIG1:
 		Weapon: DummyContinuousFrigateCannon
 		RequiresCondition: !HyperSpaceFadeOut
 		Turret: Secondary
-        FireDelay: 6
+		FireDelay: 6
 	Armament@5:
 		Weapon: DummyContinuousFrigateCannon
 		RequiresCondition: !HyperSpaceFadeOut
 		Turret: Tertiary
-        FireDelay: 15
+		FireDelay: 15
 	Turreted:
 		Turret: Primary
 		Offset: -300, -400, 50
