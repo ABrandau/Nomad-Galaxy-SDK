@@ -258,7 +258,7 @@
 		AllowModifiers: false
 	PaletteFromJasc32File@standardjascblue:
 		Name: gensmkexplojFBlue
-		Filename: gensmkexplojFBlue.pal
+		Filename: gensmkexplojFblue.pal
 		Premultiply: false
 		AllowModifiers: false
 	PaletteFromJasc32File@standardjascred:
