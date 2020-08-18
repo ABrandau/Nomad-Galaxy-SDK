@@ -212,9 +212,6 @@ Fonts:
 		Font: common|FreeSansBold.ttf
 		Size:10
 
-Missions:
-	./mods/ng/missions.yaml
-
 MapGrid:
 	TileSize: 54,54
 	Type: Rectangular
